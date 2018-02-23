@@ -102,3 +102,12 @@ ENV/
 
 # other
 .vscode/
+
+# Node Modules
+node_modules/
+
+# Environment
+envgenex/
+
+# Bundle
+bundle.js
