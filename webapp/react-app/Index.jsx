@@ -1,6 +1,11 @@
-import Hello from './Hello';
+import DatasetSelectAndGroup from './components/DatasetSelectAndGroup';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-ReactDOM.render(<Hello/>, document.getElementById('app'));
+
+var App = () => (
+    <DatasetSelectAndGroup/>
+)
+
+ReactDOM.render(<App/>, document.getElementById('app'));
 
