@@ -27,6 +27,7 @@ class DatasetSelectAndGroup extends React.Component {
     }
 
     render() {
+        // TODO: separate text and value
         const allDatasets  = this.props
                                  .allDatasets.map(ds => ({ key: ds, text: ds, value: ds }));
         const allDistances = this.props
