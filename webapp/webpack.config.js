@@ -2,7 +2,7 @@ var webpack = require('webpack')
 var path = require('path')
 
 module.exports = {
-	entry: './react-app/Index.jsx',
+	entry: './react-app/App.jsx',
 	output: {
 		path: path.resolve(__dirname, 'app/static'),
 		filename: 'bundle.js'
