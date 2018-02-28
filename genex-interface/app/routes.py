@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, jsonify, request,url_for
+from flask import render_template, jsonify, request, url_for
 import json
 
 
@@ -14,7 +14,6 @@ def datasets():
 		datasets = json.load(datasets_json)
 	keys = ['ID','name']
 	datasets = [{k: x[k] for k in keys} for x in datasets]
-	datasets_json.close()
 	return jsonify(datasets)
 
 
