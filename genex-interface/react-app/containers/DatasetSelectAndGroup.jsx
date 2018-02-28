@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Form, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-import { requestLoadAndGroupDataset } from '../actions/preprocess'
+import { requestLoadAndGroupDataset, requestGetAllDatasets } from '../actions/preprocess'
 
 class DatasetSelectAndGroup extends React.Component {
 
@@ -26,10 +26,14 @@ class DatasetSelectAndGroup extends React.Component {
                                 this.state.st);
     }
 
+    componentDidMount() {
+        // Get the list of all datasets when the component is first mounted
+        this.props.getAllDatasets();
+    }
+
     render() {
-        // TODO: separate text and value
         const allDatasets  = this.props
-                                 .allDatasets.map(ds => ({ key: ds, text: ds, value: ds }));
+                                 .allDatasets.map(ds => ({ key: ds.ID, text: ds.name, value: ds.ID }));
         const allDistances = this.props
                                  .allDistances.map(dist => ({ key: dist, text: dist, value: dist }));
 
@@ -71,6 +75,7 @@ class DatasetSelectAndGroup extends React.Component {
 DatasetSelectAndGroup.propTypes = {
     isGrouping: PropTypes.bool.isRequired,
     onGroupClick: PropTypes.func.isRequired,
+    getAllDatasets: PropTypes.func.isRequired,
     allDatasets: PropTypes.array.isRequired,
     allDistances: PropTypes.array.isRequired,
 }
@@ -84,6 +89,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onGroupClick(dataset, distance, st) {
         dispatch(requestLoadAndGroupDataset(dataset, distance, st));
+    },
+    getAllDatasets() {
+        dispatch(requestGetAllDatasets());
     }
 });
 

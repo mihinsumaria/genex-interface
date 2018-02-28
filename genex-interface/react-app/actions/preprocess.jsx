@@ -1,7 +1,25 @@
-import { LOAD_AND_GROUP_DATASET } from './actionTypes'
+import { LOAD_AND_GROUP_DATASET, GET_ALL_DATASETS } from './actionTypes'
+
+/** Makes request for a list of all datasets */
+const requestGetAllDatasets = () => {
+    return (dispatch) => {
+        // TODO: add report here if error occurs
+        fetch('/datasets')
+        .then( response => (response.json()))
+        .then( result => {
+            dispatch(getAllDatasets(result));
+        })
+    }
+}
+
+/** Updates the app state with the returned list of datasets */
+const getAllDatasets = (allDatasets) => ({
+    type: GET_ALL_DATASETS,
+    allDatasets
+})
 
 /**
- * Make request for loading and grouping data. When the response returns,
+ * Makes request for loading and grouping data. When the response returns,
  * {@link loadAndGroupDataset} is called.
  * @param {string} dataset id of a dataset to load and group.
  * @param {string} distance id of a distance used in grouping.
@@ -23,14 +41,12 @@ const requestLoadAndGroupDataset = (dataset, distance, st) => {
  * @param {string} [distance] distance used in grouping.
  * @param {number} [st] similarity threshold used in grouping.
  */
-const loadAndGroupDataset = (isGrouping, dataset, distance, st) => {
-    return {
-        type: LOAD_AND_GROUP_DATASET,
-        isGrouping,
-        dataset,
-        distance,
-        st,
-    }
-}
+const loadAndGroupDataset = (isGrouping, dataset, distance, st) => ({
+    type: LOAD_AND_GROUP_DATASET,
+    isGrouping,
+    dataset,
+    distance,
+    st,
+})
 
-export { requestLoadAndGroupDataset, loadAndGroupDataset };
+export { requestLoadAndGroupDataset, requestGetAllDatasets };

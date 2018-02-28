@@ -1,8 +1,8 @@
-import { LOAD_AND_GROUP_DATASET } from '../actions/actionTypes'
+import { LOAD_AND_GROUP_DATASET, GET_ALL_DATASETS } from '../actions/actionTypes'
 
 export default (
     state = {
-        allDatasets: ['dataset1', 'dataset2'],
+        allDatasets: [],
         allDistances: ['euclidean', 'manhattan'],
         dataset: '',
         distance: '',
@@ -12,6 +12,10 @@ export default (
     action
 ) => {
     switch (action.type) {
+        case GET_ALL_DATASETS:
+            return Object.assign({}, state, {
+                allDatasets: action.allDatasets
+            });
         case LOAD_AND_GROUP_DATASET:
             let newState = Object.assign({}, state, {
                 isGrouping: action.isGrouping
@@ -21,7 +25,7 @@ export default (
                     dataset: action.dataset,
                     distance: action.distance,
                     st: action.st,
-                })
+                });
             }
             return newState;
         default:
