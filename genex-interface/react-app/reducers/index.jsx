@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import dataset from './dataset';
+import params from './params';
 
 export default combineReducers({
-    dataset
+    params
 });

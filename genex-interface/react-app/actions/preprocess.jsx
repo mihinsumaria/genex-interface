@@ -1,16 +1,20 @@
 import { LOAD_AND_GROUP_DATASET } from './actionTypes'
 
-const requestLoadAndGroupDataset = dataset => {
+const requestLoadAndGroupDataset = (dataset, distance, st) => {
     return (dispatch) => {
-        dispatch(loadAndGroupDataset(dataset, true));
+        dispatch(loadAndGroupDataset(true));
+        // Make AJAX call here
+        dispatch(loadAndGroupDataset(false, dataset, distance, st));
     }
 }
 
-const loadAndGroupDataset = (dataset, isGrouping) => {
+const loadAndGroupDataset = (isGrouping, dataset, distance, st) => {
     return {
         type: LOAD_AND_GROUP_DATASET,
+        isGrouping,
         dataset,
-        isGrouping
+        distance,
+        st,
     }
 }
 
