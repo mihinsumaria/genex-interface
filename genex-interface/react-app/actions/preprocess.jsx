@@ -1,4 +1,4 @@
-import { LOAD_AND_GROUP_DATASET, GET_ALL_DATASETS } from './actionTypes'
+import { LOAD_AND_GROUP_DATASET, GET_ALL_DATASETS, GET_ALL_DISTANCES } from './actionTypes'
 
 /** Makes request for a list of all datasets */
 const requestGetAllDatasets = () => {
@@ -16,6 +16,23 @@ const requestGetAllDatasets = () => {
 const getAllDatasets = (allDatasets) => ({
     type: GET_ALL_DATASETS,
     allDatasets
+})
+
+const requestGetAllDistances = () => {
+    return (dispatch) => {
+        // TODO: add report here if error occurs
+        fetch('/distances')
+        .then( response => (response.json()))
+        .then( result => {
+            dispatch(getAllDistances(result));
+        })
+    }
+}
+
+/** Updates the app state with the returned list of datasets */
+const getAllDistances = (allDistances) => ({
+    type: GET_ALL_DISTANCES,
+    allDistances
 })
 
 /**
@@ -49,4 +66,4 @@ const loadAndGroupDataset = (isGrouping, dataset, distance, st) => ({
     st,
 })
 
-export { requestLoadAndGroupDataset, requestGetAllDatasets };
+export { requestLoadAndGroupDataset, requestGetAllDatasets, requestGetAllDistances };
