@@ -9,6 +9,6 @@ cmake ..
 make -j
 
 mkdir -p $ROOT/webapp
-cp -v pygenex.so $ROOT/genex-interface/app/pygenex.so
+cp -v pygenex.so $ROOT/genex-interface/pygenex.so
 
 echo "=============== DONE ==============="
