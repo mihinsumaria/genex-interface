@@ -1,6 +1,7 @@
 from app import app
 from flask import render_template, jsonify, request, url_for
 import json
+import pygenex
 
 @app.route('/')
 @app.route('/index')
@@ -15,4 +16,12 @@ def get_datasets():
     keys = ['ID', 'name']
     datasets = [{k: x[k] for k in keys} for x in datasets]
     return jsonify(datasets)
+
+@app.route('/distances')
+def get_distances():
+	alldistances = pygenex.getAllDistances()
+	alldistances = [x for x in alldistances if 'dtw' not in x]
+	return jsonify(alldistances)
+
+
 
