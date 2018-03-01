@@ -1,9 +1,9 @@
-import { LOAD_AND_GROUP_DATASET, GET_ALL_DATASETS } from '../actions/actionTypes'
+import { LOAD_AND_GROUP_DATASET, GET_ALL_DATASETS, GET_ALL_DISTANCES } from '../actions/actionTypes'
 
 export default (
     state = {
         allDatasets: [],
-        allDistances: ['euclidean', 'manhattan'],
+        allDistances: [],
         dataset: '',
         distance: '',
         st: 0.3,
@@ -15,6 +15,10 @@ export default (
         case GET_ALL_DATASETS:
             return Object.assign({}, state, {
                 allDatasets: action.allDatasets
+            });
+        case GET_ALL_DISTANCES:
+            return Object.assign({}, state, {
+                allDistances: action.allDistances
             });
         case LOAD_AND_GROUP_DATASET:
             let newState = Object.assign({}, state, {

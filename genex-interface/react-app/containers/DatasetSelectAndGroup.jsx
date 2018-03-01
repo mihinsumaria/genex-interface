@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Form, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-import { requestLoadAndGroupDataset, requestGetAllDatasets } from '../actions/preprocess'
+import { requestLoadAndGroupDataset, requestGetAllDatasets, requestGetAllDistances } from '../actions/preprocess'
 
 class DatasetSelectAndGroup extends React.Component {
 
@@ -29,6 +29,7 @@ class DatasetSelectAndGroup extends React.Component {
     componentDidMount() {
         // Get the list of all datasets when the component is first mounted
         this.props.getAllDatasets();
+        this.props.getAllDistances();
     }
 
     render() {
@@ -76,6 +77,7 @@ DatasetSelectAndGroup.propTypes = {
     isGrouping: PropTypes.bool.isRequired,
     onGroupClick: PropTypes.func.isRequired,
     getAllDatasets: PropTypes.func.isRequired,
+    getAllDistances: PropTypes.func.isRequired,
     allDatasets: PropTypes.array.isRequired,
     allDistances: PropTypes.array.isRequired,
 }
@@ -92,6 +94,9 @@ const mapDispatchToProps = dispatch => ({
     },
     getAllDatasets() {
         dispatch(requestGetAllDatasets());
+    },
+    getAllDistances() {
+        dispatch(requestGetAllDistances());
     }
 });
 
