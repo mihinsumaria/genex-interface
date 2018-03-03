@@ -1,6 +1,15 @@
+backports.functools-lru-cache==1.5
 click==6.7
+cycler==0.10.0
 Flask==0.12.2
 itsdangerous==0.24
 Jinja2==2.10
 MarkupSafe==1.0
+matplotlib==2.1.2
+numpy==1.14.1
+pyparsing==2.2.0
+python-dateutil==2.6.1
+pytz==2018.3
+six==1.11.0
+subprocess32==3.2.7
 Werkzeug==0.14.1
