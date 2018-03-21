@@ -7,14 +7,6 @@ import numpy as np
 from io import BytesIO
 import base64
 
-html = '''
-<html>
-    <body>
-        <img src="data:image/png;base64, {}" />
-    </body>
-</html>
-'''
-
 def get_base64_encoding(data):
 	fig = plt.figure(figsize=(15, 3))
 	ax = fig.add_subplot(1, 1, 1)
