@@ -15,6 +15,15 @@ html = '''
 </html>
 '''
 
+def get_base64_encoding(data):
+	fig = plt.figure(figsize=(15, 3))
+	ax = fig.add_subplot(1, 1, 1)
+	ax.plot(data)
+	io = BytesIO()
+	fig.savefig(io, format='png')
+	base64_form = base64.encodestring(io.getvalue()).decode()
+	return html.format(base64_form)
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -39,10 +48,4 @@ def get_distances():
 def get_base64_thumb():
 	data_name = pygenex.loadDataset('ItalyPowerDemand', 'datasets/test/ItalyPowerDemand_DATA')
 	data = pygenex.getTimeSeries(data_name['name'], 1, 3, 10)
-	fig = plt.figure(figsize=(15, 3))
-	ax = fig.add_subplot(1, 1, 1)
-	ax.plot(data)
-	io = BytesIO()
-	fig.savefig(io, format='png')
-	data = base64.encodestring(io.getvalue())
-	return html.format(data.decode())
+	return get_base64_encoding(data)
