@@ -21,8 +21,7 @@ def get_base64_encoding(data):
 	ax.plot(data)
 	io = BytesIO()
 	fig.savefig(io, format='png')
-	base64_form = base64.encodestring(io.getvalue()).decode()
-	return html.format(base64_form)
+	return base64.encodestring(io.getvalue()).decode()
 
 @app.route('/')
 @app.route('/index')
@@ -32,7 +31,7 @@ def index():
 
 @app.route('/datasets')
 def get_datasets():
-    with open('datasets.json', 'r') as datasets_json:
+    with open('datasets.json', 'r') as datasets_json:t 
         datasets = json.load(datasets_json)
     keys = ['ID', 'name']
     datasets = [{k: x[k] for k in keys} for x in datasets]
@@ -43,9 +42,3 @@ def get_distances():
 	alldistances = pygenex.getAllDistances()
 	alldistances = [x for x in alldistances if 'dtw' not in x]
 	return jsonify(alldistances)
-
-@app.route('/test_base64')
-def get_base64_thumb():
-	data_name = pygenex.loadDataset('ItalyPowerDemand', 'datasets/test/ItalyPowerDemand_DATA')
-	data = pygenex.getTimeSeries(data_name['name'], 1, 3, 10)
-	return get_base64_encoding(data)
