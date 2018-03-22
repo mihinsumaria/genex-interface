@@ -44,7 +44,7 @@ def preprocess_data():
 		st = float(request.form['st'])
 		distance = str(request.form['distance'])
 
-		key = str(dataset) + distance + str(st)
+		key = (dataset,distance,st)
 		if key in preprocessed:
 			return jsonify(preprocessed[key])	
 
