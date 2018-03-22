@@ -1,11 +1,14 @@
-from app import app
-from flask import render_template, jsonify, request, url_for
+import base64
 import json
-import pygenex
+from io import BytesIO
+
 import matplotlib.pyplot as plt
 import numpy as np
-from io import BytesIO
-import base64
+
+import pygenex
+from app import app
+from flask import jsonify, render_template, request, url_for
+
 
 def get_base64_encoding(data):
     fig = plt.figure(figsize=(15, 3))
@@ -14,6 +17,7 @@ def get_base64_encoding(data):
     io = BytesIO()
     fig.savefig(io, format='png')
     return base64.encodestring(io.getvalue()).decode()
+
 
 @app.route('/')
 @app.route('/index')
@@ -28,6 +32,7 @@ def get_datasets():
     keys = ['ID', 'name']
     datasets = [{k: datasets[ID][k] for k in keys} for ID in datasets]
     return jsonify(datasets)
+
 
 @app.route('/distances')
 def get_distances():
