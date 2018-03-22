@@ -37,27 +37,34 @@ def get_distances():
 
 preprocessed = {}
 
-@app.route('/preprocess', methods = ['GET','POST'])
+@app.route('/preprocess', methods = ['POST'])
 def preprocess_data():
-	if request.method == "POST":
-		dataset = int(request.form['dataset'])
-		st = float(request.form['st'])
-		distance = str(request.form['distance'])
+	dataset = request.form['dataset']
+	st = float(request.form['st'])
+	distance = str(request.form['distance'])
 
-		key = (dataset,distance,st)
-		if key in preprocessed:
-			return jsonify(preprocessed[key])	
+	key = (dataset, distance, st)
+	if key in preprocessed:
+		return jsonify(preprocessed[key])	
+	else:
+		with open('datasets.json','r') as datasets_json:
+			datasets = json.load(datasets_json)
 
-		else:
-			
-			with open('datasets.json','r') as datasets_json:
-				datasets = json.load(datasets_json)
+		name = str(datasets[dataset]['name'])
+		path = str(datasets[dataset]['path'])
+		loaddetails = pygenex.loadDataset(name, path)
+		groupdetails = pygenex.group(name, st, distance)
+		subsequences = loaddetails['count'] * loaddetails['length']\
+		 * (loaddetails['length']-1)/2
 
-			name = str(datasets[dataset-1]['name'])
-			path = str(datasets[dataset-1]['path'])
-			loaddetails = pygenex.loadDataset(name,path)
-			groupdetails = pygenex.group(name,st,distance)
-			subsequences = loaddetails['count']*loaddetails['length']*(loaddetails['length']-1)/2
-
-			preprocessed[key] = {'ID':dataset,'name':name,'st':st,'distance':distance,'count':loaddetails['count'], 'length':loaddetails['length'],'subsequences':subsequences,'groups':groupdetails}
-			return jsonify(preprocessed[key])
+		preprocessed[key] = {
+			'ID':dataset,
+			'name':name,
+			'st':st,
+			'distance':distance,
+			'count':loaddetails['count'], 
+			'length':loaddetails['length'],
+			'subsequences':subsequences,
+			'groups':groupdetails
+		}
+		return jsonify(preprocessed[key])
