@@ -31,9 +31,9 @@ def get_datasets():
 
 @app.route('/distances')
 def get_distances():
-	alldistances = pygenex.getAllDistances()
-	alldistances = [x for x in alldistances if 'dtw' not in x]
-	return jsonify(alldistances)
+	all_distances = pygenex.getAllDistances()
+	all_distances = [x for x in all_distances if 'dtw' not in x]
+	return jsonify(all_distances)
 
 preprocessed = {}
 
@@ -52,19 +52,16 @@ def preprocess_data():
 
 		name = str(datasets[dataset]['name'])
 		path = str(datasets[dataset]['path'])
-		loaddetails = pygenex.loadDataset(name, path)
-		groupdetails = pygenex.group(name, st, distance)
+		load_details = pygenex.loadDataset(name, path)
+		group_details = pygenex.group(name, st, distance)
 		subsequences = loaddetails['count'] * loaddetails['length']\
-		 * (loaddetails['length']-1)/2
+		 				* (loaddetails['length'] - 1) / 2
 
 		preprocessed[key] = {
-			'ID':dataset,
-			'name':name,
-			'st':st,
 			'distance':distance,
-			'count':loaddetails['count'], 
-			'length':loaddetails['length'],
+			'count':load_details['count'], 
+			'length':load_details['length'],
 			'subsequences':subsequences,
-			'groups':groupdetails
+			'groups':group_details
 		}
 		return jsonify(preprocessed[key])
