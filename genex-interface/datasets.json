@@ -1,10 +1,12 @@
 {
 	"1": {
-		"name":"ItalyPowerDemand",
-		"path":"./datasets/test/ItalyPowerDemand_DATA"
+		"ID": "1",
+		"name": "ItalyPowerDemand",
+		"path": "./datasets/test/ItalyPowerDemand_DATA"
 	},
-	"2": {
-		"name":"Test",
-		"path":"./datasets/test/test_10_20_space.txt"
+	"test": {
+		"ID": "test",
+		"name": "Test",
+		"path": "./datasets/test/test_10_20_space.txt"
 	}
 }
