@@ -84,7 +84,14 @@ const requestLoadAndGroupDataset = (dataset, distance, st) => {
  * @param {string} [distance] distance used in grouping.
  * @param {number} [st] similarity threshold used in grouping.
  */
-const loadAndGroupDataset = (isGrouping, dataset, distance, st, count, length, subseq, groups) => ({
+const loadAndGroupDataset = (isGrouping
+                             , dataset
+                             , distance
+                             , st
+                             , count
+                             , length
+                             , subseq
+                             , groups) => ({
     type: LOAD_AND_GROUP_DATASET,
     isGrouping,
     dataset,
