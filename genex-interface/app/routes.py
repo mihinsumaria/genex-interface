@@ -50,8 +50,7 @@ def load_and_group_dataset(dataset, st, distance):
     else:
         with open('datasets.json','r') as datasets_json:
             datasets = json.load(datasets_json)
-
-        name = str(datasets[dataset]['name'])
+        name = str(datasets[dataset]['name']) + str(st) + str(distance)
         path = str(datasets[dataset]['path'])
         load_details = pygenex.loadDataset(name, path)
         group_details = pygenex.group(name, st, distance)
@@ -59,7 +58,6 @@ def load_and_group_dataset(dataset, st, distance):
                      * (load_details['length'] - 1) / 2
 
         preprocessed[key] = {
-            'distance': distance,
             'count': load_details['count'], 
             'length': load_details['length'],
             'subsequences': subsequences,
@@ -68,7 +66,7 @@ def load_and_group_dataset(dataset, st, distance):
         return preprocessed[key]
 
 
-@app.route('/preprocess', methods = ['POST'])
+@app.route('/preprocess', methods=['POST'])
 def preprocess_data():
     dataset = request.form['dataset']
     st = float(request.form['st'])
