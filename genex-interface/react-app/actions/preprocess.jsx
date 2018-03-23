@@ -47,7 +47,7 @@ const requestLoadAndGroupDataset = (dataset, distance, st) => {
         dispatch(loadAndGroupDataset(true));
         // Make AJAX call here
         var formData = new FormData();
-        //formData.append('isGrouping',isGrouping)
+
         formData.append('dataset', dataset);
         formData.append('distance', distance);
         formData.append('st', st);
