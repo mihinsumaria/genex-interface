@@ -46,7 +46,33 @@ const requestLoadAndGroupDataset = (dataset, distance, st) => {
     return (dispatch) => {
         dispatch(loadAndGroupDataset(true));
         // Make AJAX call here
-        dispatch(loadAndGroupDataset(false, dataset, distance, st));
+        var formData = new FormData();
+        //formData.append('isGrouping',isGrouping)
+        formData.append('dataset', dataset);
+        formData.append('distance', distance);
+        formData.append('st', st);
+
+        fetch('/preprocess', {
+            method: 'post',
+            body: formData
+        })
+        .then(response => (response.json()))
+        .then(json => {
+            dispatch(loadAndGroupDataset(
+                false, 
+                dataset,
+                distance,
+                st,
+                json.count,
+                json.length,
+                json.subseq,
+                json.groups
+                )
+            )
+        })
+        .catch(err => {
+            console.log('error: ',err)
+        })
     }
 }
 
@@ -58,12 +84,16 @@ const requestLoadAndGroupDataset = (dataset, distance, st) => {
  * @param {string} [distance] distance used in grouping.
  * @param {number} [st] similarity threshold used in grouping.
  */
-const loadAndGroupDataset = (isGrouping, dataset, distance, st) => ({
+const loadAndGroupDataset = (isGrouping, dataset, distance, st, count, length, subseq, groups) => ({
     type: LOAD_AND_GROUP_DATASET,
     isGrouping,
     dataset,
     distance,
     st,
+    count,
+    length,
+    subseq,
+    groups
 })
 
 export { requestLoadAndGroupDataset, requestGetAllDatasets, requestGetAllDistances };
