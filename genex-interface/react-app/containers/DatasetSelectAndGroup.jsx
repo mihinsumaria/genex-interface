@@ -41,7 +41,7 @@ class DatasetSelectAndGroup extends React.Component {
         const { dataset, distance, st, errorMessage } = this.state;
         const hasError = errorMessage != '';
         return (
-            <Form style={{margin: '20px'}} loading={this.props.isGrouping} error={hasError}>
+            <Form loading={this.props.isGrouping} error={hasError}>
                 <Form.Select
                     label='Choose a dataset:'
                     name='dataset'

@@ -1,0 +1,24 @@
+html,
+body {
+    min-height: 100%;
+}
+
+#app {
+    display: table;
+    width: 100%;
+    height: inherit;
+}
+
+.pushable {
+    display: table-cell;
+    height: inherit;
+}
+
+#controller {
+    box-shadow: 0 0 2px rgba(34,36,38,.15);
+    padding: 15px;
+}
+
+#result-area {
+    padding: 15px;
+}
