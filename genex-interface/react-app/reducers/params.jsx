@@ -4,10 +4,16 @@ export default (
     state = {
         allDatasets: [],
         allDistances: [],
-        dataset: '',
+        dataset: {
+            ID: '',
+            name: '',
+            count: 0,
+            length: 0,
+            subseq: 0
+        },
         distance: '',
         st: 0.3,
-        isGrouping: false
+        isGrouping: false,
     },
     action
 ) => {
@@ -24,9 +30,18 @@ export default (
             let newState = Object.assign({}, state, {
                 isGrouping: action.isGrouping
             });
+            let datasetID = action.datasetID
+            let datasetInfo = state.allDatasets
+                                   .filter(ds => (ds.ID === datasetID));
+            
+            let datasetName = datasetInfo.length > 0 ? datasetInfo[0].name : '';
+            let dataset = Object.assign({}, state.dataset, {
+                ID: datasetID,
+                name: datasetName
+            })
             if (!action.isGrouping) {
                 newState = Object.assign(newState, {
-                    dataset: action.dataset,
+                    dataset: dataset,
                     distance: action.distance,
                     st: action.st,
                 });

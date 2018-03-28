@@ -57,7 +57,7 @@ class DatasetSelectAndGroup extends React.Component {
                     value={distance}
                 />
                 <Form.Input
-                    label={`Select a similarity threshold: ${st} `}
+                    label={`Select a similarity threshold: ${st}`}
                     min={0}
                     max={1}
                     name='st'
