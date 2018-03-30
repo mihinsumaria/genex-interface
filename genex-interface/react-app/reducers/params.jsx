@@ -46,7 +46,6 @@ export default (
                     ID: datasetID,
                     name: datasetName,
                     count: datasetCount,
-                    groups: datasetGroups,
                     subseq: datasetSubseq,
                     length: datasetLength                    
                 })
@@ -55,6 +54,7 @@ export default (
                     dataset: dataset,
                     distance: action.distance,
                     st: action.st,
+                    groups: datasetGroups
                 });
             }
             return newState;

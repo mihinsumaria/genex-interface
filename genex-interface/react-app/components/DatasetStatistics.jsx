@@ -6,13 +6,13 @@ import PropTypes from 'prop-types'
 export default function DatasetStatistics(props) {
 	return (
 		<List>
-			<List.Item>Dataset name: {props.dataset.name}</List.Item>
-			<List.Item>Distance: {props.distance}</List.Item>
-			<List.Item>ST: {props.st}</List.Item>
-			<List.Item>Count: {props.dataset.count}</List.Item>
-			<List.Item>Groups: {props.dataset.groups}</List.Item>
-			<List.Item>Length: {props.dataset.length}</List.Item>
-			<List.Item>Subsequences: {props.dataset.subseq}</List.Item>
+			<List.Item><b>Dataset name:</b> {props.dataset.name}</List.Item>
+			<List.Item><b>Distance:</b> {props.distance}</List.Item>
+			<List.Item><b>ST:</b> {props.st}</List.Item>
+			<List.Item><b>Count:</b> {props.dataset.count}</List.Item>
+			<List.Item><b>Groups:</b> {props.groups}</List.Item>
+			<List.Item><b>Length:</b> {props.dataset.length}</List.Item>
+			<List.Item><b>Subsequences:</b> {props.dataset.subseq}</List.Item>
 		</List>
 	)
 }
@@ -22,5 +22,3 @@ DatasetStatistics.propTypes = {
 	distance: PropTypes.string.isRequired,
 	st: PropTypes.number.isRequired,
 };
-
-//export default DatasetStatistics
