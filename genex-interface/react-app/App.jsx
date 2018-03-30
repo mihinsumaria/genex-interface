@@ -5,22 +5,53 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import logger from 'redux-logger'
 import thunk from 'redux-thunk'
-import { Sidebar, Segment } from 'semantic-ui-react'
+import { Sidebar, Segment, Divider, Header, Grid } from 'semantic-ui-react'
 
 import reducer from './reducers'
 import DatasetSelectAndGroup from './containers/DatasetSelectAndGroup'
 import DatasetOverviewContainer from './containers/DatasetOverviewContainer'
+import ResultVisualizationContainer from './containers/ResultVisualizationContainer'
 
-const App = () => (
-	<Sidebar.Pushable>
-		<Sidebar animation='slide along' width='wide' visible={true} id='controller'>
-			<DatasetSelectAndGroup />
-		</Sidebar>
-		<Sidebar.Pusher id='result-area'>
-			<DatasetOverviewContainer />
-		</Sidebar.Pusher>
-	</Sidebar.Pushable>
-)
+const Banner = () => {
+	let style={ 
+				'padding': '10px',
+				'box-shadow': '0 4px 2px rgba(34,36,38,.15)',
+				'text-align': 'center',
+				'font-size': '1.5em',
+				'font-weight': 'bold',
+				'background-color': 'rgb(220, 20, 60)',
+				'color': 'rgb(240,255,255)'
+			};
+	return <div style={style}>GENEX</div>;
+};
+
+const App = () => {
+	let disableShadow   = { 'box-shadow': '0 0 2px rgba(34,36,38,.15)' };
+	let controllerStyle = { 'padding': '10px' };
+	let resultAreaStyle = { 'padding': '15px' };
+	let sidebarFullHeight = { 
+								'display': 'table-cell',
+							  	'height': 'inherit'
+							};
+	return (
+		<Sidebar.Pushable style={sidebarFullHeight}>
+			<Sidebar animation='slide along' width='wide' visible={true} style={disableShadow}>
+				<Banner />
+				<div style={controllerStyle}>
+					<Header as='h4' icon='options' dividing content='Parameters' />
+					<DatasetSelectAndGroup />
+					<Divider />
+				</div>
+			</Sidebar>
+			<Sidebar.Pusher style={resultAreaStyle}>
+				<Grid>
+					<DatasetOverviewContainer />
+					<ResultVisualizationContainer />
+				</Grid>
+			</Sidebar.Pusher>
+		</Sidebar.Pushable>
+	);
+};
 
 const store = createStore(
 	reducer,

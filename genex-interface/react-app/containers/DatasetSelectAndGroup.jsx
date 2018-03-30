@@ -67,9 +67,9 @@ class DatasetSelectAndGroup extends React.Component {
                     value={st}
                 />
                 { hasError && <Message error content={errorMessage} /> }
-                <Form.Button content='Group' onClick={this.onGroupClick}/>
+                <Form.Button content='Group' icon='compress' onClick={this.onGroupClick}/>
             </Form>
-        )
+        );
     }
 };
 
