@@ -60,7 +60,7 @@ def load_and_group_dataset(dataset, st, distance):
         preprocessed[key] = {
             'count': load_details['count'], 
             'length': load_details['length'],
-            'subsequences': subsequences,
+            'subseq': subsequences,
             'groups': group_details
         }
         return preprocessed[key]

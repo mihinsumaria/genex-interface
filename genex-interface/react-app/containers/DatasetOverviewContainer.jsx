@@ -1,3 +1,4 @@
+
 import React from 'react';
 import PropTypes from 'prop-types'
 import { List } from 'semantic-ui-react'
@@ -10,7 +11,11 @@ class DatasetOverviewContainer extends React.Component {
 		return (
 			<DatasetStatistics dataset={this.props.dataset}
 							   distance={this.props.distance}
-							   st={this.props.st}/>
+							   st={this.props.st}
+							   count={this.props.dataset.count}
+							   groups={this.props.dataset.groups}
+							   length={this.props.dataset.length}
+							   subseq={this.props.dataset.subseq}/>
 		)
 	}
 }
@@ -18,7 +23,7 @@ class DatasetOverviewContainer extends React.Component {
 DatasetOverviewContainer.propTypes = {
 	dataset: PropTypes.object.isRequired,
 	distance: PropTypes.string.isRequired,
-	st: PropTypes.number.isRequired
+	st: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => ({
