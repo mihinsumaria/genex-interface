@@ -13,7 +13,7 @@ class DatasetOverviewContainer extends React.Component {
 							   distance={this.props.distance}
 							   st={this.props.st}
 							   count={this.props.dataset.count}
-							   groups={this.props.dataset.groups}
+							   groups={this.props.groups}
 							   length={this.props.dataset.length}
 							   subseq={this.props.dataset.subseq}/>
 		)
@@ -30,6 +30,7 @@ const mapStateToProps = state => ({
 	dataset: state.params.dataset,
 	distance: state.params.distance,
 	st: state.params.st,
+	groups: state.params.groups
 });
 
 export default connect(mapStateToProps)(DatasetOverviewContainer);
