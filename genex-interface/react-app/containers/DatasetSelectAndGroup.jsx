@@ -58,13 +58,13 @@ class DatasetSelectAndGroup extends React.Component {
                 />
                 <Form.Input
                     label={`Select a similarity threshold: ${st}`}
+                    type='range'
                     min={0.1}
                     max={1}
+                    step={0.1}                    
                     name='st'
-                    onChange={this.onParamChange}
-                    step={0.1}
-                    type='range'
                     value={st}
+                    onChange={this.onParamChange}
                 />
                 { hasError && <Message error content={errorMessage} /> }
                 <Form.Button content='Group' icon='compress' fluid onClick={this.onGroupClick}/>
@@ -80,7 +80,7 @@ DatasetSelectAndGroup.propTypes = {
     getAllDistances: PropTypes.func.isRequired,
     allDatasets: PropTypes.array.isRequired,
     allDistances: PropTypes.array.isRequired,
-}
+};
 
 const mapStateToProps = state => ({
     isGrouping: state.params.isGrouping,

@@ -23,7 +23,7 @@ class DatasetOverviewContainer extends React.Component {
 			</Grid.Row>
 		)
 	}
-}
+};
 
 DatasetOverviewContainer.propTypes = {
 	dataset: PropTypes.object,

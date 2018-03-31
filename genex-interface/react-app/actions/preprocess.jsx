@@ -76,7 +76,7 @@ const requestLoadAndGroupDataset = (datasetID, distance, st) => {
             );
         })
         .catch(err => {
-            console.log('error: ',err)
+            console.log('error: ', err)
         })
     }
 }
@@ -85,9 +85,10 @@ const requestLoadAndGroupDataset = (datasetID, distance, st) => {
  * If isGrouping is true, other params are optional. Otherwise, these params
  * are used to update the current state of the app.
  * @param {bool} isGrouping indicate grouping is in progress.
- * @param {string} [datasetID] ID of the grouped dataset.
+ * @param {object} [dataset] object containing information about the dataset.
  * @param {string} [distance] distance used in grouping.
  * @param {number} [st] similarity threshold used in grouping.
+ * @param {object} [groups] object containing information about the groups.
  */
 
 const loadAndGroupDataset = (isGrouping
