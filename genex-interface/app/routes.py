@@ -10,6 +10,7 @@ from .picture import get_group_density_base64, get_line_thumbnail_base64
 
 GROUPS_SIZE_FOLDER = 'local/groupsize'
 
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -48,8 +49,7 @@ def load_and_group_dataset(dataset, st, distance):
         # Load, normalize, and group the dataset
         load_details = pygenex.loadDataset(name, path)
         pygenex.normalize(name)
-        group_details = pygenex.group(name, st, distance)
-
+        group_count = pygenex.group(name, st, distance)
         # Save group size
         if not os.path.exists(GROUPS_SIZE_FOLDER):
             os.makedirs(GROUPS_SIZE_FOLDER)
@@ -64,7 +64,7 @@ def load_and_group_dataset(dataset, st, distance):
             'count': load_details['count'], 
             'length': load_details['length'],
             'subseq': subsequences,
-            'groupCount': group_details,
+            'groupCount': group_count,
             'groupDensity': density
         }
         return preprocessed[key]
