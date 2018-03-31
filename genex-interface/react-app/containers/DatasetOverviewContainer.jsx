@@ -28,7 +28,7 @@ class DatasetOverviewContainer extends React.Component {
 DatasetOverviewContainer.propTypes = {
 	dataset: PropTypes.object,
 	distance: PropTypes.string,
-	st: PropTypes.string,
+	st: PropTypes.number,
 	groups: PropTypes.object
 };
 

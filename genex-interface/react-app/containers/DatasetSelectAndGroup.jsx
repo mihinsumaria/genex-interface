@@ -23,7 +23,7 @@ class DatasetSelectAndGroup extends React.Component {
         this.setState( { errorMessage: '' });
         this.props.onGroupClick(this.state.dataset,
                                 this.state.distance,
-                                this.state.st);
+                                parseFloat(this.state.st));
     }
 
     componentDidMount() {
@@ -58,7 +58,7 @@ class DatasetSelectAndGroup extends React.Component {
                 />
                 <Form.Input
                     label={`Select a similarity threshold: ${st}`}
-                    min={0}
+                    min={0.1}
                     max={1}
                     name='st'
                     onChange={this.onParamChange}

@@ -12,7 +12,7 @@ export default (
             subseq: 0
         },
         distance: '',
-        st: '0.3',
+        st: 0.3,
         isGrouping: false,
         groups: {
             count: 0,
