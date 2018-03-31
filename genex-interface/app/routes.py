@@ -1,23 +1,14 @@
-import base64
 import json
-from io import BytesIO
+import os
 
-import matplotlib.pyplot as plt
-import numpy as np
+from flask import jsonify, render_template, request
 
 import pygenex
 from app import app
-from flask import jsonify, render_template, request, url_for
 
+from .picture import get_group_density_base64, get_line_thumbnail_base64
 
-def get_base64_encoding(data):
-    fig = plt.figure(figsize=(15, 3))
-    ax = fig.add_subplot(1, 1, 1)
-    ax.plot(data)
-    io = BytesIO()
-    fig.savefig(io, format='png')
-    return base64.encodestring(io.getvalue()).decode()
-
+GROUPS_SIZE_FOLDER = 'local/groupsize'
 
 @app.route('/')
 @app.route('/index')
@@ -48,20 +39,33 @@ def load_and_group_dataset(dataset, st, distance):
     if key in preprocessed:
         return preprocessed[key]
     else:
+        # Read dataset list
         with open('datasets.json','r') as datasets_json:
             datasets = json.load(datasets_json)
         name = str(datasets[dataset]['name']) + str(st) + str(distance)
         path = str(datasets[dataset]['path'])
+
+        # Load, normalize, and group the dataset
         load_details = pygenex.loadDataset(name, path)
+        pygenex.normalize(name)
         group_details = pygenex.group(name, st, distance)
+
+        # Save group size
+        if not os.path.exists(GROUPS_SIZE_FOLDER):
+            os.makedirs(GROUPS_SIZE_FOLDER)
+        group_size_path = os.path.join(GROUPS_SIZE_FOLDER, name)
+        pygenex.saveGroupsSize(name, group_size_path)
+
+        # Cache the results and return
         subsequences = load_details['count'] * load_details['length']\
                      * (load_details['length'] - 1) / 2
-
+        density = get_group_density_base64(group_size_path)
         preprocessed[key] = {
             'count': load_details['count'], 
             'length': load_details['length'],
             'subseq': subsequences,
-            'groups': group_details
+            'groupCount': group_details,
+            'groupDensity': density
         }
         return preprocessed[key]
 

@@ -17,18 +17,18 @@ import pygenex
 logger = logging.getLogger(__name__)
 
 MAX_RECT = 500
-COUNT_PCT = 0.25
+COUNT_PCT = 0.5
 
-HEATMAP_WIDTH = 10
-HEATMAP_HEIGHT = 5
+HEATMAP_WIDTH = 5
+HEATMAP_HEIGHT = 2
 LINEPLOT_WIDTH = 5
 LINEPLOT_HEIGHT = 1
-DPI = 90
+DPI = 100
 
 def _get_base64_encoding(fig):
     io = BytesIO()
     fig.savefig(io, format='png', dpi=DPI, bbox_inches='tight')
-    return base64.encodestring(io.getvalue()).decode()
+    return base64.b64encode(io.getvalue())
 
 
 def _read_groups_size(path):

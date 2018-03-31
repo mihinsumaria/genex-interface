@@ -15,14 +15,10 @@ class DatasetOverviewContainer extends React.Component {
 					<DatasetStatistics 
 						dataset={this.props.dataset}
 						distance={this.props.distance}
-						st={this.props.st}
-						count={this.props.dataset.count}
-						groups={this.props.groups}
-						length={this.props.dataset.length}
-						subseq={this.props.dataset.subseq}/>
+						st={this.props.st}/>
 				</Grid.Column>
 				<Grid.Column width={12}>
-					<GroupDensity />
+					<GroupDensity groups={this.props.groups} />
 				</Grid.Column>
 			</Grid.Row>
 		)
@@ -30,9 +26,10 @@ class DatasetOverviewContainer extends React.Component {
 }
 
 DatasetOverviewContainer.propTypes = {
-	dataset: PropTypes.object.isRequired,
-	distance: PropTypes.string.isRequired,
-	st: PropTypes.number.isRequired,
+	dataset: PropTypes.object,
+	distance: PropTypes.string,
+	st: PropTypes.string,
+	groups: PropTypes.object
 };
 
 const mapStateToProps = state => ({

@@ -103,6 +103,7 @@ envgenex/
 
 # other
 .vscode/
+local/
 
 # Node Modules
 node_modules/

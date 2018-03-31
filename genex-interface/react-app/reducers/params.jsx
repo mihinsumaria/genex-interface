@@ -12,8 +12,12 @@ export default (
             subseq: 0
         },
         distance: '',
-        st: 0.3,
+        st: '0.3',
         isGrouping: false,
+        groups: {
+            count: 0,
+            density: '',
+        }
     },
     action
 ) => {
@@ -32,29 +36,19 @@ export default (
             });
             
             if (!action.isGrouping) {
-                let datasetID = action.datasetID
+                // Search and include dataset name into action.dataset object
+                let datasetID = action.dataset.ID;
                 let datasetInfo = state.allDatasets
                                        .filter(ds => (ds.ID === datasetID));
                 
                 let datasetName = datasetInfo.length > 0 ? datasetInfo[0].name : '';
-                let datasetCount = action.count
-                let datasetGroups = action.groups
-                let datasetSubseq = action.subseq
-                let datasetLength = action.length
-
-                let dataset = Object.assign({}, state.dataset, {
-                    ID: datasetID,
-                    name: datasetName,
-                    count: datasetCount,
-                    subseq: datasetSubseq,
-                    length: datasetLength                    
-                })
-
+                action.dataset.name = datasetName;
+                
                 newState = Object.assign(newState, {
-                    dataset: dataset,
+                    dataset: action.dataset,
                     distance: action.distance,
                     st: action.st,
-                    groups: datasetGroups
+                    groups: action.groups
                 });
             }
             return newState;

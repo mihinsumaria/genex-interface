@@ -57,17 +57,23 @@ const requestLoadAndGroupDataset = (datasetID, distance, st) => {
         })
         .then(response => (response.json()))
         .then(json => {
+            let dataset = {
+                ID: datasetID,
+                count: json.count,
+                length: json.length,
+                subseq: json.subseq
+            };;
+            let groups = {
+                count: json.groupCount,
+                density: json.groupDensity
+            };
             dispatch(loadAndGroupDataset(
                 false, 
-                datasetID,
+                dataset,
                 distance,
                 st,
-                json.count,
-                json.length,
-                json.subseq,
-                json.groups
-                )
-            )
+                groups)
+            );
         })
         .catch(err => {
             console.log('error: ',err)
@@ -85,21 +91,15 @@ const requestLoadAndGroupDataset = (datasetID, distance, st) => {
  */
 
 const loadAndGroupDataset = (isGrouping
-                             , datasetID
+                             , dataset
                              , distance
                              , st
-                             , count
-                             , length
-                             , subseq
                              , groups) => ({
     type: LOAD_AND_GROUP_DATASET,
     isGrouping,
-    datasetID,
+    dataset,
     distance,
     st,
-    count,
-    length,
-    subseq,
     groups
 })
 

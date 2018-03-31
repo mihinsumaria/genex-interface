@@ -15,18 +15,18 @@ import ResultVisualizationContainer from './containers/ResultVisualizationContai
 const Banner = () => {
 	let style={ 
 				'padding': '10px',
-				'box-shadow': '0 4px 2px rgba(34,36,38,.15)',
-				'text-align': 'center',
-				'font-size': '1.5em',
-				'font-weight': 'bold',
-				'background-color': 'rgb(220, 20, 60)',
+				'boxShadow': '0 4px 2px rgba(34,36,38,.15)',
+				'textAlign': 'center',
+				'fontSize': '1.5em',
+				'fontWeight': 'bold',
+				'backgroundColor': 'rgb(220, 20, 60)',
 				'color': 'rgb(240,255,255)'
 			};
 	return <div style={style}>GENEX</div>;
 };
 
 const App = () => {
-	let disableShadow   = { 'box-shadow': '0 0 2px rgba(34,36,38,.15)' };
+	let disableShadow   = { 'boxShadow': '0 0 2px rgba(34,36,38,.15)' };
 	let controllerStyle = { 'padding': '10px' };
 	let resultAreaStyle = { 'padding': '15px' };
 	let sidebarFullHeight = { 
