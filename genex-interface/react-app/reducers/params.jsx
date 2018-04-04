@@ -1,4 +1,4 @@
-import { LOAD_AND_GROUP_DATASET, GET_ALL_DATASETS, GET_ALL_DISTANCES } from '../actions/actionTypes'
+import { LOAD_AND_GROUP_DATASET, GET_ALL_DATASETS, GET_ALL_DISTANCES, UPDATE_OPERATOR } from '../actions/actionTypes'
 
 export default (
     state = {
@@ -17,10 +17,13 @@ export default (
         groups: {
             count: 0,
             density: '',
+        },
+        operator: {
+            current: 'kbest',
+            'kbest': {k: 1},
         }
     },
-    action
-) => {
+    action) => {
     switch (action.type) {
         case GET_ALL_DATASETS:
             return Object.assign({}, state, {
@@ -52,6 +55,15 @@ export default (
                 });
             }
             return newState;
+        case UPDATE_OPERATOR:
+            let operator = Object.assign({}, state.operator, {
+                current: action.currentOperator,
+                [action.currentOperator]: action.params
+            });
+            return Object.assign({}, state, {
+                operator: operator
+            })
+
         default:
             return state;
     }
