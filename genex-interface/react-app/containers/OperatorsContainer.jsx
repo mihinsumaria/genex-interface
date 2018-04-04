@@ -8,7 +8,6 @@ import FindMotif from '../components/FindMotif.jsx'
 
 class OperatorsContainer extends React.Component {
 	onTabChange = (e, data) => {
-		console.log("Inside switch", data);
 		switch (data.activeIndex) {
 			case 0:
 				this.props.performUpdateOperator('kbest', {k: this.props.operator['kbest'].k});
@@ -21,9 +20,6 @@ class OperatorsContainer extends React.Component {
 		}
 	}
 	render() {
-		//console.log('Inside OperatorsContainer', this.props.operator['kbest'])
-	
-		//console.log('Inside OperatorsContainer updateOperator', this.props.performUpdateOperator)
 		let params = this.props.operator['kbest'];
 		let panes = [
 			{

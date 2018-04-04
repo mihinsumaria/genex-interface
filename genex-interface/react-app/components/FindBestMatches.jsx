@@ -4,8 +4,6 @@ import { Form , Input} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 export default function FindBestMatches(props) {
-	//console.log("Inside FindBestMatches", props.params);
-	//console.log("Inside FindBestMatches updateOperator", props.performUpdateOperator);
 
 	const handleChange = (e, {name, value}) => {
 		props.performUpdateOperator('kbest',{k: value})
