@@ -11,6 +11,7 @@ import reducer from './reducers'
 import DatasetSelectAndGroup from './containers/DatasetSelectAndGroup'
 import DatasetOverviewContainer from './containers/DatasetOverviewContainer'
 import ResultVisualizationContainer from './containers/ResultVisualizationContainer'
+import OperatorsContainer from './containers/OperatorsContainer'
 
 const Banner = () => {
 	let style={ 
@@ -40,6 +41,8 @@ const App = () => {
 				<div style={controllerStyle}>
 					<Header as='h4' icon='options' dividing content='Parameters' />
 					<DatasetSelectAndGroup />
+					<Header as='h4' dividing content='Operators' />
+					<OperatorsContainer />
 					<Divider />
 				</div>
 			</Sidebar>
