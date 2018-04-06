@@ -20,7 +20,7 @@ export default (
         },
         operator: {
             current: 'kbest',
-            'kbest': {k: 1},
+            'kbest': { k: 1 },
         }
     },
     action) => {
@@ -37,16 +37,16 @@ export default (
             let newState = Object.assign({}, state, {
                 isGrouping: action.isGrouping
             });
-            
+
             if (!action.isGrouping) {
                 // Search and include dataset name into action.dataset object
                 let datasetID = action.dataset.ID;
                 let datasetInfo = state.allDatasets
-                                       .filter(ds => (ds.ID === datasetID));
-                
+                    .filter(ds => (ds.ID === datasetID));
+
                 let datasetName = datasetInfo.length > 0 ? datasetInfo[0].name : '';
                 action.dataset.name = datasetName;
-                
+
                 newState = Object.assign(newState, {
                     dataset: action.dataset,
                     distance: action.distance,

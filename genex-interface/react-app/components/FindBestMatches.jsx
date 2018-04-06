@@ -1,26 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form , Input, Label } from 'semantic-ui-react'
+import { Form, Input, Label } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 export default function FindBestMatches(props) {
 
-	const handleChange = (e, {name, value}) => {
-		props.performUpdateOperator(name, {k: parseInt(value)});
+	const handleChange = (e, { name, value }) => {
+		props.performUpdateOperator(name, { k: parseInt(value) });
 	}
 
 	return (
-			<Form.Input 
-				inline label='K = ' 
-				type='number' 
-				size='small'
-				name='kbest'
-				disabled={props.dataset.ID === ''}
-				min={1}
-				max={props.dataset.subseq}
-				step={1}
-				defaultValue={props.params.k}
-				onChange={handleChange} />
+		<Form.Input
+			inline label='K = '
+			type='number'
+			size='small'
+			name='kbest'
+			disabled={props.dataset.ID === ''}
+			min={1}
+			max={props.dataset.subseq}
+			step={1}
+			defaultValue={props.params.k}
+			onChange={handleChange} />
 	);
 
 }

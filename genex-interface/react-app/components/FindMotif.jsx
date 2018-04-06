@@ -4,7 +4,7 @@ import { Form, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 export default function FindMotif(props) {
-	return(
+	return (
 		<Header icon='hourglass empty' />
 	);
 

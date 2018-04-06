@@ -9,8 +9,8 @@ class DatasetSelectAndGroup extends React.Component {
 
     state = { dataset: '', distance: '', st: 0.3, errorMessage: '' }
 
-    onParamChange = (e, {name, value}) => { this.setState({ [name]: value }); }
-    
+    onParamChange = (e, { name, value }) => { this.setState({ [name]: value }); }
+
     onGroupClick = () => {
         if (this.state.dataset == '') {
             this.setState({ errorMessage: 'Please select a Dataset' });
@@ -20,10 +20,10 @@ class DatasetSelectAndGroup extends React.Component {
             this.setState({ errorMessage: 'Please select a Distance' });
             return;
         }
-        this.setState( { errorMessage: '' });
+        this.setState({ errorMessage: '' });
         this.props.onGroupClick(this.state.dataset,
-                                this.state.distance,
-                                parseFloat(this.state.st));
+            this.state.distance,
+            parseFloat(this.state.st));
     }
 
     componentDidMount() {
@@ -33,10 +33,10 @@ class DatasetSelectAndGroup extends React.Component {
     }
 
     render() {
-        const allDatasets  = this.props
-                                 .allDatasets.map(ds => ({ key: ds.ID, text: ds.name, value: ds.ID }));
+        const allDatasets = this.props
+            .allDatasets.map(ds => ({ key: ds.ID, text: ds.name, value: ds.ID }));
         const allDistances = this.props
-                                 .allDistances.map(dist => ({ key: dist, text: dist, value: dist }));
+            .allDistances.map(dist => ({ key: dist, text: dist, value: dist }));
 
         const { dataset, distance, st, errorMessage } = this.state;
         const hasError = errorMessage != '';
@@ -61,13 +61,13 @@ class DatasetSelectAndGroup extends React.Component {
                     type='range'
                     min={0.1}
                     max={1}
-                    step={0.1}                    
+                    step={0.1}
                     name='st'
                     value={st}
                     onChange={this.onParamChange}
                 />
-                { hasError && <Message error content={errorMessage} /> }
-                <Form.Button size='small' content='Group' icon='compress' fluid onClick={this.onGroupClick}/>
+                {hasError && <Message error content={errorMessage} />}
+                <Form.Button size='small' content='Group' icon='compress' fluid onClick={this.onGroupClick} />
             </Form>
         );
     }

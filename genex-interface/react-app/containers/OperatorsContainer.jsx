@@ -23,24 +23,24 @@ class OperatorsContainer extends React.Component {
 		let params = this.props.operator['kbest'];
 		let panes = [
 			{
-				menuItem: 'Find Best Matches', render: () => 
-				<Tab.Pane>
-					<FindBestMatches
-						params={params}
-						performUpdateOperator={this.props.performUpdateOperator}
-						dataset={this.props.dataset}/>
-				</Tab.Pane>
+				menuItem: 'Find Best Matches', render: () =>
+					<Tab.Pane>
+						<FindBestMatches
+							params={params}
+							performUpdateOperator={this.props.performUpdateOperator}
+							dataset={this.props.dataset} />
+					</Tab.Pane>
 			},
 			{
-				menuItem: 'Find Motif', render: () => 
-				<Tab.Pane>
-					<FindMotif />
-				</Tab.Pane>
+				menuItem: 'Find Motif', render: () =>
+					<Tab.Pane>
+						<FindMotif />
+					</Tab.Pane>
 			}
 		]
 		return (
-			<Tab 
-				menu={{size: 'tiny', attached: true, tabular: true}}
+			<Tab
+				menu={{ size: 'tiny', attached: true, tabular: true }}
 				panes={panes}
 				onTabChange={this.onTabChange} />
 		);

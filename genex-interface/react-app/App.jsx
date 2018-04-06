@@ -15,20 +15,20 @@ import ResultVisualizationContainer from './containers/ResultVisualizationContai
 import OperatorsContainer from './containers/OperatorsContainer'
 
 const Banner = () => {
-	let style={ 
-				'padding': '10px',
-				'boxShadow': '0 4px 2px rgba(34,36,38,.15)',
-				'textAlign': 'center',
-				'fontSize': '1.5em',
-				'fontWeight': 'bold',
-				'backgroundColor': 'rgb(220, 20, 60)',
-				'color': 'rgb(240,255,255)'
-			};
+	let style = {
+		'padding': '10px',
+		'boxShadow': '0 4px 2px rgba(34,36,38,.15)',
+		'textAlign': 'center',
+		'fontSize': '1.5em',
+		'fontWeight': 'bold',
+		'backgroundColor': 'rgb(220, 20, 60)',
+		'color': 'rgb(240,255,255)'
+	};
 	return <div style={style}>GENEX</div>;
 };
 
 const App = () => {
-	let disableShadow   = { 'boxShadow': '0 0 2px rgba(34,36,38,.15)' };
+	let disableShadow = { 'boxShadow': '0 0 2px rgba(34,36,38,.15)' };
 	let controllerStyle = { 'padding': '10px' };
 	let resultAreaStyle = { 'padding': '15px' };
 	let sidebarFullHeight = { 'display': 'table-cell', 'height': 'inherit' };
@@ -63,5 +63,5 @@ render(
 	<Provider store={store}>
 		<App />
 	</Provider>
-    , document.getElementById('app')
+	, document.getElementById('app')
 );

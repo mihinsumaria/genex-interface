@@ -10,11 +10,11 @@ export default function GroupDensity(props) {
 		let base64Src = 'data:image/png;base64, ' + props.groups.density;
 		densityImg = <div><img src={base64Src} height={150} width={400} /></div>;
 		numberOfGroups = <Statistic horizontal size='mini'>
-							<Statistic.Value style={{'marginLeft': '10px'}}>
-								{props.groups.count}
-							</Statistic.Value>
-							<Statistic.Label>groups</Statistic.Label>
-						</Statistic>
+			<Statistic.Value style={{ 'marginLeft': '10px' }}>
+				{props.groups.count}
+			</Statistic.Value>
+			<Statistic.Label>groups</Statistic.Label>
+		</Statistic>
 	}
 	return (
 		<div>

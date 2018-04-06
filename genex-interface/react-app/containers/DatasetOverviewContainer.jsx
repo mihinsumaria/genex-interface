@@ -12,10 +12,10 @@ class DatasetOverviewContainer extends React.Component {
 		return (
 			<Grid.Row columns={2}>
 				<Grid.Column width={4}>
-					<DatasetStatistics 
+					<DatasetStatistics
 						dataset={this.props.dataset}
 						distance={this.props.distance}
-						st={this.props.st}/>
+						st={this.props.st} />
 				</Grid.Column>
 				<Grid.Column width={12}>
 					<GroupDensity groups={this.props.groups} />

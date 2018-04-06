@@ -10,7 +10,7 @@ class ResultVisualizationContainer extends React.Component {
 		return (
 			<Grid.Row columns={1}>
 				<Grid.Column width={16}>
-						<Header as={HEADER_SIZE} icon='bullseye' dividing content='Result Visualization' />
+					<Header as={HEADER_SIZE} icon='bullseye' dividing content='Result Visualization' />
 				</Grid.Column>
 			</Grid.Row>
 		)

@@ -5,10 +5,10 @@ const requestGetAllDatasets = () => {
     return (dispatch) => {
         // TODO: add report here if error occurs
         fetch('/datasets')
-        .then( response => (response.json()))
-        .then( result => {
-            dispatch(getAllDatasets(result));
-        })
+            .then(response => (response.json()))
+            .then(result => {
+                dispatch(getAllDatasets(result));
+            })
     }
 }
 
@@ -22,10 +22,10 @@ const requestGetAllDistances = () => {
     return (dispatch) => {
         // TODO: add report here if error occurs
         fetch('/distances')
-        .then( response => (response.json()))
-        .then( result => {
-            dispatch(getAllDistances(result));
-        })
+            .then(response => (response.json()))
+            .then(result => {
+                dispatch(getAllDistances(result));
+            })
     }
 }
 
@@ -55,29 +55,29 @@ const requestLoadAndGroupDataset = (datasetID, distance, st) => {
             method: 'post',
             body: formData
         })
-        .then(response => (response.json()))
-        .then(json => {
-            let dataset = {
-                ID: datasetID,
-                count: json.count,
-                length: json.length,
-                subseq: json.subseq
-            };;
-            let groups = {
-                count: json.groupCount,
-                density: json.groupDensity
-            };
-            dispatch(loadAndGroupDataset(
-                false, 
-                dataset,
-                distance,
-                st,
-                groups)
-            );
-        })
-        .catch(err => {
-            console.log('error: ', err)
-        })
+            .then(response => (response.json()))
+            .then(json => {
+                let dataset = {
+                    ID: datasetID,
+                    count: json.count,
+                    length: json.length,
+                    subseq: json.subseq
+                };;
+                let groups = {
+                    count: json.groupCount,
+                    density: json.groupDensity
+                };
+                dispatch(loadAndGroupDataset(
+                    false,
+                    dataset,
+                    distance,
+                    st,
+                    groups)
+                );
+            })
+            .catch(err => {
+                console.log('error: ', err)
+            })
     }
 }
 
@@ -91,18 +91,19 @@ const requestLoadAndGroupDataset = (datasetID, distance, st) => {
  * @param {object} [groups] object containing information about the groups.
  */
 
-const loadAndGroupDataset = (isGrouping
-                             , dataset
-                             , distance
-                             , st
-                             , groups) => ({
-    type: LOAD_AND_GROUP_DATASET,
-    isGrouping,
-    dataset,
-    distance,
-    st,
-    groups
-})
+const loadAndGroupDataset = (
+    isGrouping
+    , dataset
+    , distance
+    , st
+    , groups) => ({
+        type: LOAD_AND_GROUP_DATASET,
+        isGrouping,
+        dataset,
+        distance,
+        st,
+        groups
+    })
 
 /**
 * If currentOperator is 'FindMotif', params is optional. If it is 
@@ -110,12 +111,13 @@ const loadAndGroupDataset = (isGrouping
 * @param {string} [currentOperator] tab that needs to be open.
 * @param {object} [params] contains additional parameters like k.
 */
-const updateOperator = (currentOperator
-                        , params) => ({
+const updateOperator = (
+    currentOperator
+    , params) => ({
 
-    type: UPDATE_OPERATOR,
-    currentOperator,
-    params
-})
+        type: UPDATE_OPERATOR,
+        currentOperator,
+        params
+    })
 
 export { requestLoadAndGroupDataset, requestGetAllDatasets, requestGetAllDistances, updateOperator };
