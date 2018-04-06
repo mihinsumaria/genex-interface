@@ -57,9 +57,11 @@ export default (
             return newState;
         case UPDATE_OPERATOR:
             let operator = Object.assign({}, state.operator, {
-                current: action.currentOperator,
-                [action.currentOperator]: action.params
+                current: action.currentOperator
             });
+            if (action.params) {
+                operator[operator.current] = action.params;
+            }
             return Object.assign({}, state, {
                 operator: operator
             })

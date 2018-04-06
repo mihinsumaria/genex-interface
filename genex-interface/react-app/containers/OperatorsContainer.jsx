@@ -7,25 +7,28 @@ import FindBestMatches from '../components/FindBestMatches.jsx'
 import FindMotif from '../components/FindMotif.jsx'
 
 class OperatorsContainer extends React.Component {
+
 	onTabChange = (e, data) => {
 		switch (data.activeIndex) {
 			case 0:
-				this.props.performUpdateOperator('kbest', {k: this.props.operator['kbest'].k});
+				this.props.performUpdateOperator('kbest');
 				break;
 			case 1:
-				this.props.performUpdateOperator('motif', {});
-				break;
-			default:
+				this.props.performUpdateOperator('motif');
 				break;
 		}
 	}
+
 	render() {
 		let params = this.props.operator['kbest'];
 		let panes = [
 			{
 				menuItem: 'Find Best Matches', render: () => 
 				<Tab.Pane>
-					<FindBestMatches params={params} performUpdateOperator={this.props.performUpdateOperator} subseq={this.props.dataset.subseq}/>
+					<FindBestMatches
+						params={params}
+						performUpdateOperator={this.props.performUpdateOperator}
+						dataset={this.props.dataset}/>
 				</Tab.Pane>
 			},
 			{
@@ -37,7 +40,7 @@ class OperatorsContainer extends React.Component {
 		]
 		return (
 			<Tab panes={panes} onTabChange={this.onTabChange} />
-		)
+		);
 	}
 };
 
@@ -57,6 +60,7 @@ const mapDispatchToProps = dispatch => ({
 		dispatch(updateOperator(currentOperator, params));
 	}
 })
+
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps

@@ -30,10 +30,7 @@ const App = () => {
 	let disableShadow   = { 'boxShadow': '0 0 2px rgba(34,36,38,.15)' };
 	let controllerStyle = { 'padding': '10px' };
 	let resultAreaStyle = { 'padding': '15px' };
-	let sidebarFullHeight = { 
-								'display': 'table-cell',
-							  	'height': 'inherit'
-							};
+	let sidebarFullHeight = { 'display': 'table-cell', 'height': 'inherit' };
 	return (
 		<Sidebar.Pushable style={sidebarFullHeight}>
 			<Sidebar animation='slide along' width='wide' visible={true} style={disableShadow}>
@@ -41,7 +38,7 @@ const App = () => {
 				<div style={controllerStyle}>
 					<Header as='h4' icon='options' dividing content='Parameters' />
 					<DatasetSelectAndGroup />
-					<Header as='h4' dividing content='Operators' />
+					<Divider />
 					<OperatorsContainer />
 					<Divider />
 				</div>
