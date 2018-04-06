@@ -1,6 +1,7 @@
 import React from 'react'
 import { List, Header, Statistic } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
+import { HEADER_SIZE } from '../constants'
 
 export default function GroupDensity(props) {
 	var densityImg = '';
@@ -17,7 +18,7 @@ export default function GroupDensity(props) {
 	}
 	return (
 		<div>
-			<Header as='h4' icon='cubes' dividing content='Group Density' />
+			<Header as={HEADER_SIZE} icon='cubes' dividing content='Group Density' />
 			{densityImg}
 			{numberOfGroups}
 		</div>

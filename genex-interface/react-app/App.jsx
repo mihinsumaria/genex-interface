@@ -8,6 +8,7 @@ import thunk from 'redux-thunk'
 import { Sidebar, Segment, Divider, Header, Grid } from 'semantic-ui-react'
 
 import reducer from './reducers'
+import { HEADER_SIZE } from './constants'
 import DatasetSelectAndGroup from './containers/DatasetSelectAndGroup'
 import DatasetOverviewContainer from './containers/DatasetOverviewContainer'
 import ResultVisualizationContainer from './containers/ResultVisualizationContainer'
@@ -36,7 +37,7 @@ const App = () => {
 			<Sidebar animation='slide along' width='wide' visible={true} style={disableShadow}>
 				<Banner />
 				<div style={controllerStyle}>
-					<Header as='h4' icon='options' dividing content='Parameters' />
+					<Header as={HEADER_SIZE} icon='options' dividing content='Parameters' />
 					<DatasetSelectAndGroup />
 					<Divider />
 					<OperatorsContainer />

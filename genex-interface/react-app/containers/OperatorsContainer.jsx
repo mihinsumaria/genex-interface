@@ -39,7 +39,10 @@ class OperatorsContainer extends React.Component {
 			}
 		]
 		return (
-			<Tab panes={panes} onTabChange={this.onTabChange} />
+			<Tab 
+				menu={{size: 'tiny', attached: true, tabular: true}}
+				panes={panes}
+				onTabChange={this.onTabChange} />
 		);
 	}
 };

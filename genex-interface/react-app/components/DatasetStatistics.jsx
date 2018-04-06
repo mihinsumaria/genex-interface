@@ -13,8 +13,8 @@ export default function DatasetStatistics(props) {
 	let dataset = props.dataset;
 	return (
 		<div>
-			<Header as='h4' icon='dashboard' dividing content='Dataset Statistics' />
-			<List divided size='large'>
+			<Header as='h5' icon='dashboard' dividing content='Dataset Statistics' />
+			<List divided size='small'>
 				{statisticsItem('Dataset name', dataset.name)}
 				{statisticsItem('Distance', props.distance)}
 				{statisticsItem('Similarity Threshold', props.st)}

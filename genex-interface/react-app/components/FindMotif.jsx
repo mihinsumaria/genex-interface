@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 export default function FindMotif(props) {
 	return(
-		<Header as='h4' icon='hourglass empty' />
+		<Header icon='hourglass empty' />
 	);
 
 }
