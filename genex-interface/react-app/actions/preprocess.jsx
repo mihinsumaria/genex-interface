@@ -1,4 +1,9 @@
-import { LOAD_AND_GROUP_DATASET, GET_ALL_DATASETS, GET_ALL_DISTANCES, UPDATE_OPERATOR } from './actionTypes'
+import {
+    LOAD_AND_GROUP_DATASET,
+    GET_ALL_DATASETS,
+    GET_ALL_DISTANCES,
+    UPDATE_OPERATOR
+} from './actionTypes'
 
 /** Makes request for a list of all datasets */
 const requestGetAllDatasets = () => {
@@ -18,6 +23,7 @@ const getAllDatasets = (allDatasets) => ({
     allDatasets
 })
 
+/** Makes request for a list of all distances */
 const requestGetAllDistances = () => {
     return (dispatch) => {
         // TODO: add report here if error occurs
@@ -108,16 +114,20 @@ const loadAndGroupDataset = (
 /**
 * If currentOperator is 'FindMotif', params is optional. If it is 
 * 'FindBestMatches' then we take k as a params.
-* @param {string} [currentOperator] tab that needs to be open.
+* @param {string} currentOperator tab that needs to be open.
 * @param {object} [params] contains additional parameters like k.
 */
 const updateOperator = (
     currentOperator
     , params) => ({
-
         type: UPDATE_OPERATOR,
         currentOperator,
         params
     })
 
-export { requestLoadAndGroupDataset, requestGetAllDatasets, requestGetAllDistances, updateOperator };
+export {
+    requestLoadAndGroupDataset,
+    requestGetAllDatasets,
+    requestGetAllDistances,
+    updateOperator
+};
