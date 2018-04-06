@@ -1,6 +1,7 @@
 import React from 'react'
 import { List, Header } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
+import { HEADER_SIZE } from '../constants'
 
 let statisticsItem = (name, value) => (
 	<List.Item>
@@ -13,7 +14,7 @@ export default function DatasetStatistics(props) {
 	let dataset = props.dataset;
 	return (
 		<div>
-			<Header as='h5' icon='dashboard' dividing content='Dataset Statistics' />
+			<Header as={HEADER_SIZE} icon='dashboard' dividing content='Dataset Statistics' />
 			<List divided size='small'>
 				{statisticsItem('Dataset name', dataset.name)}
 				{statisticsItem('Distance', props.distance)}
