@@ -96,7 +96,6 @@ const requestLoadAndGroupDataset = (datasetID, distance, st) => {
  * @param {number} [st] similarity threshold used in grouping.
  * @param {object} [groups] object containing information about the groups.
  */
-
 const loadAndGroupDataset = (
     isGrouping
     , dataset

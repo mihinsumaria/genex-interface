@@ -24,7 +24,7 @@ export default function DatasetStatistics(props) {
 				{statisticsItem('Subsequences', dataset.subseq)}
 			</List>
 		</div>
-	)
+	);
 }
 
 DatasetStatistics.propTypes = {

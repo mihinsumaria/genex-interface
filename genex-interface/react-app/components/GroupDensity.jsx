@@ -9,13 +9,16 @@ export default function GroupDensity(props) {
 	if (props.groups.density) {
 		let base64Src = 'data:image/png;base64, ' + props.groups.density;
 		densityImg = <div><img src={base64Src} height={150} width={400} /></div>;
-		numberOfGroups = <Statistic horizontal size='mini'>
-			<Statistic.Value style={{ 'marginLeft': '10px' }}>
-				{props.groups.count}
-			</Statistic.Value>
-			<Statistic.Label>groups</Statistic.Label>
-		</Statistic>
+
+		numberOfGroups =
+			<Statistic horizontal size='mini'>
+				<Statistic.Value style={{ 'marginLeft': '10px' }}>
+					{props.groups.count}
+				</Statistic.Value>
+				<Statistic.Label>groups</Statistic.Label>
+			</Statistic>
 	}
+
 	return (
 		<div>
 			<Header as={HEADER_SIZE} icon='cubes' dividing content='Group Density' />

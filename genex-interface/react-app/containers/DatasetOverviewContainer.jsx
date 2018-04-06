@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import DatasetStatistics from '../components/DatasetStatistics.jsx'
 import GroupDensity from '../components/GroupDensity.jsx'
 
-
 class DatasetOverviewContainer extends React.Component {
 	render() {
 		return (
@@ -22,7 +21,7 @@ class DatasetOverviewContainer extends React.Component {
 				</Grid.Column>
 			</Grid.Row>
 		)
-	}
+	};
 };
 
 DatasetOverviewContainer.propTypes = {

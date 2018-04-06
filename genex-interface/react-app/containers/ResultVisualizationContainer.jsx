@@ -4,7 +4,6 @@ import { Grid, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { HEADER_SIZE } from '../constants'
 
-
 class ResultVisualizationContainer extends React.Component {
 	render() {
 		return (
@@ -13,7 +12,7 @@ class ResultVisualizationContainer extends React.Component {
 					<Header as={HEADER_SIZE} icon='bullseye' dividing content='Result Visualization' />
 				</Grid.Column>
 			</Grid.Row>
-		)
+		);
 	}
 }
 

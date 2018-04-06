@@ -3,7 +3,11 @@ import PropTypes from 'prop-types'
 import { Form, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-import { requestLoadAndGroupDataset, requestGetAllDatasets, requestGetAllDistances } from '../actions/preprocess'
+import {
+    requestLoadAndGroupDataset,
+    requestGetAllDatasets,
+    requestGetAllDistances
+} from '../actions/preprocess'
 
 class DatasetSelectAndGroup extends React.Component {
 

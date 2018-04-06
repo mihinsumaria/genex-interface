@@ -1,4 +1,9 @@
-import { LOAD_AND_GROUP_DATASET, GET_ALL_DATASETS, GET_ALL_DISTANCES, UPDATE_OPERATOR } from '../actions/actionTypes'
+import {
+    LOAD_AND_GROUP_DATASET,
+    GET_ALL_DATASETS,
+    GET_ALL_DISTANCES,
+    UPDATE_OPERATOR
+} from '../actions/actionTypes'
 
 export default (
     state = {
@@ -64,8 +69,7 @@ export default (
             }
             return Object.assign({}, state, {
                 operator: operator
-            })
-
+            });
         default:
             return state;
     }

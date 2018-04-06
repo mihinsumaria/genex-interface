@@ -29,4 +29,4 @@ FindBestMatches.propTypes = {
 	params: PropTypes.object,
 	performUpdateOperator: PropTypes.func,
 	subseq: PropTypes.number,
-}
+};

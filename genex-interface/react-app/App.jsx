@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import logger from 'redux-logger'
 import thunk from 'redux-thunk'
+
 import { Sidebar, Segment, Divider, Header, Grid } from 'semantic-ui-react'
 
 import reducer from './reducers'
