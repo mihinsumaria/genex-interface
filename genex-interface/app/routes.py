@@ -35,6 +35,15 @@ def get_distances():
 
 preprocessed = {}
 
+def get_names_and_base64(name, count):
+    allTimeSeries = []
+    for i in range(count):
+        allTimeSeries.append({'name': pygenex.getTimeSeriesName(name, i),
+                            'thumbnail': get_line_thumbnail_base64\
+                            (pygenex.getTimeSeries(name, i))
+                        })
+    return allTimeSeries
+
 def load_and_group_dataset(dataset, st, distance):
     key = (dataset, st, distance)
     if key in preprocessed:
@@ -49,6 +58,7 @@ def load_and_group_dataset(dataset, st, distance):
         # Load, normalize, and group the dataset
         load_details = pygenex.loadDataset(name, path)
         pygenex.normalize(name)
+        allTimeSeries = get_names_and_base64(name, load_details['count'])
         group_count = pygenex.group(name, st, distance)
         # Save group size
         if not os.path.exists(GROUPS_SIZE_FOLDER):
@@ -65,7 +75,8 @@ def load_and_group_dataset(dataset, st, distance):
             'length': load_details['length'],
             'subseq': subsequences,
             'groupCount': group_count,
-            'groupDensity': density
+            'groupDensity': density,
+            'timeSeries': allTimeSeries
         }
         return preprocessed[key]
 
