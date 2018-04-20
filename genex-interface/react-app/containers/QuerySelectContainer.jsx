@@ -34,7 +34,7 @@ class QuerySelectContainer extends React.Component {
           </Tab.Pane>
       },
       {
-        menuItem: 'From Upload', render: () =>
+        menuItem: 'Upload', render: () =>
           <Tab.Pane>
             <QueryFromUpload />
           </Tab.Pane>
