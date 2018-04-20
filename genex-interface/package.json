@@ -24,5 +24,9 @@
     "redux-thunk": "^2.2.0",
     "semantic-ui-react": "^0.78.2",
     "webpack": "^3.11.0"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-stage-3": "^6.24.1"
   }
 }
