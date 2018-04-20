@@ -14,6 +14,7 @@ import DatasetSelectAndGroup from './containers/DatasetSelectAndGroup'
 import DatasetOverviewContainer from './containers/DatasetOverviewContainer'
 import ResultVisualizationContainer from './containers/ResultVisualizationContainer'
 import OperatorsContainer from './containers/OperatorsContainer'
+import QuerySelectContainer from './containers/QuerySelectContainer'
 
 const Banner = () => {
 	let style = {
@@ -35,7 +36,7 @@ const App = () => {
 	let sidebarFullHeight = { 'display': 'table-cell', 'height': 'inherit' };
 	return (
 		<Sidebar.Pushable style={sidebarFullHeight}>
-			<Sidebar animation='slide along' width='wide' visible={true} style={disableShadow}>
+			<Sidebar animation='slide along' width='very wide' visible={true} style={disableShadow}>
 				<Banner />
 				<div style={controllerStyle}>
 					<Header as={HEADER_SIZE} icon='options' dividing content='Parameters' />
@@ -43,6 +44,7 @@ const App = () => {
 					<Divider />
 					<OperatorsContainer />
 					<Divider />
+					<QuerySelectContainer />
 				</div>
 			</Sidebar>
 			<Sidebar.Pusher style={resultAreaStyle}>

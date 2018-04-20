@@ -14,13 +14,18 @@ module.exports = {
 			use: {
 				loader: 'babel-loader',
 				options: {
-					presets: ['env', 'react'],
+					presets: ['env', 'react', 'stage-3'],
 					plugins: ['transform-class-properties']
 				}
 			}
+		},
+		{
+			test: /\.css$/,
+			use: [ 'style-loader', 'css-loader' ]
 		}]
 	},
 	resolve: {
 		extensions: ['.js', '.jsx']
-	}
+	},
+	devtool: 'source-map'
 }
