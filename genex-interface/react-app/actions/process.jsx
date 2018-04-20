@@ -1,5 +1,5 @@
 import {
-    SELECT_QUERY
+  SELECT_QUERY
 } from './actionTypes'
 
 /**
@@ -8,10 +8,10 @@ import {
 * in the application state. 
 */
 const updateSelected = (selected) => ({
-    type: SELECT_QUERY
-    , selected
+  type: SELECT_QUERY
+  , selected
 })
 
 export {
-    updateSelected
+  updateSelected
 };
