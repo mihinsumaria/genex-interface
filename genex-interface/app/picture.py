@@ -1,4 +1,5 @@
 from __future__ import division
+
 import base64
 import logging
 import os
@@ -49,14 +50,14 @@ def _read_groups_size(path):
 
 
 def _plot_groups_density(ax, groups_df, count_limit,
-                        width=5, height=10, padded=False):
+                         width=5, height=10, padded=False):
     if groups_df.empty:
         return None
     # these values define the coordinate system for the returned rectangles
     # the values will range from x to x + width and y to y + height
     x = 0.
     y = 0.
-    
+
     groups_df = groups_df.sort_values('size', ascending=False)
     values = groups_df['size'].values
     cumsum_val = np.cumsum(values)

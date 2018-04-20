@@ -35,14 +35,17 @@ def get_distances():
 
 preprocessed = {}
 
-def get_names_and_base64(name, count):
+
+def get_names_and_thumbnails(name, count):
     allTimeSeries = []
     for i in range(count):
-        allTimeSeries.append({'name': pygenex.getTimeSeriesName(name, i),
-                            'thumbnail': get_line_thumbnail_base64\
-                            (pygenex.getTimeSeries(name, i))
-                        })
+        ts = pygenex.getTimeSeries(name, i)
+        allTimeSeries.append({
+            'name': pygenex.getTimeSeriesName(name, i),
+            'thumbnail': get_line_thumbnail_base64(ts)
+        })
     return allTimeSeries
+
 
 def load_and_group_dataset(dataset, st, distance):
     key = (dataset, st, distance)
@@ -50,7 +53,7 @@ def load_and_group_dataset(dataset, st, distance):
         return preprocessed[key]
     else:
         # Read dataset list
-        with open('datasets.json','r') as datasets_json:
+        with open('datasets.json', 'r') as datasets_json:
             datasets = json.load(datasets_json)
         name = str(datasets[dataset]['name']) + str(st) + str(distance)
         path = str(datasets[dataset]['path'])
@@ -58,7 +61,7 @@ def load_and_group_dataset(dataset, st, distance):
         # Load, normalize, and group the dataset
         load_details = pygenex.loadDataset(name, path)
         pygenex.normalize(name)
-        allTimeSeries = get_names_and_base64(name, load_details['count'])
+        allTimeSeries = get_names_and_thumbnails(name, load_details['count'])
         group_count = pygenex.group(name, st, distance)
         # Save group size
         if not os.path.exists(GROUPS_SIZE_FOLDER):
@@ -68,10 +71,10 @@ def load_and_group_dataset(dataset, st, distance):
 
         # Cache the results and return
         subsequences = load_details['count'] * load_details['length']\
-                     * (load_details['length'] - 1) / 2
+            * (load_details['length'] - 1) / 2
         density = get_group_density_base64(group_size_path)
         preprocessed[key] = {
-            'count': load_details['count'], 
+            'count': load_details['count'],
             'length': load_details['length'],
             'subseq': subsequences,
             'groupCount': group_count,

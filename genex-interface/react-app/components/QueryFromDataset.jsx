@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Table, Column, Cell} from 'fixed-data-table-2';
+import { Table, Column, Cell } from 'fixed-data-table-2';
 import 'fixed-data-table-2/dist/fixed-data-table.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -13,7 +13,7 @@ export default function QueryFromDataset(props) {
     });
     props.performUpdateSelected(updatedSelected);
   }
-  return(
+  return (
     <Table
       rowHeight={50}
       rowsCount={props.dataset.length}
@@ -26,11 +26,12 @@ export default function QueryFromDataset(props) {
         columnKey="name"
         cell={({ rowIndex, columnKey, ...props }) => {
           return <Cell {...props}>
-          {dataset[rowIndex][columnKey]}
-          </Cell>}
+            {dataset[rowIndex][columnKey]}
+          </Cell>
+        }
         }
         fixed={true}
-        width={60}/>
+        width={60} />
       <Column
         columnKey="thumbnail"
         header={<Cell>Preview</Cell>}
@@ -42,9 +43,10 @@ export default function QueryFromDataset(props) {
               src={base64Src + dataset[rowIndex][columnKey]}
               height={50}
               width={300} />
-          )}
+          )
         }
-        width={300}/>
+        }
+        width={300} />
     </Table>
   );
 }

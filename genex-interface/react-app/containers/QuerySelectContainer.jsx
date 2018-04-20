@@ -14,7 +14,7 @@ class QuerySelectContainer extends React.Component {
   }
   onTabChange = (e, data) => {
     switch (data.activeIndex) {
-      case 0:       
+      case 0:
         this.props.performUpdateSelected(this.updatedSelected('dataset'));
         break;
       case 1:
@@ -26,23 +26,23 @@ class QuerySelectContainer extends React.Component {
     let panes = [
       {
         menuItem: 'From Dataset', render: () =>
-        <Tab.Pane>
-          <QueryFromDataset 
-            dataset={this.props.allQueries.dataset}
-            performUpdateSelected={this.props.performUpdateSelected}
-            selected={this.props.selected} />
-        </Tab.Pane>
+          <Tab.Pane>
+            <QueryFromDataset
+              dataset={this.props.allQueries.dataset}
+              performUpdateSelected={this.props.performUpdateSelected}
+              selected={this.props.selected} />
+          </Tab.Pane>
       },
       {
         menuItem: 'From Upload', render: () =>
-        <Tab.Pane>
-          <QueryFromUpload />
-        </Tab.Pane>
+          <Tab.Pane>
+            <QueryFromUpload />
+          </Tab.Pane>
       }
     ]
     return (
       <Tab
-        menu={{size: 'tiny', attached: true, tabular: true}}
+        menu={{ size: 'tiny', attached: true, tabular: true }}
         panes={panes}
         onTabChange={this.onTabChange} />
     );
