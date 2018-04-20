@@ -110,3 +110,4 @@ node_modules/
 
 # Bundle
 bundle.js
+bundle.js.map
