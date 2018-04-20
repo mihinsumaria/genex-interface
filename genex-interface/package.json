@@ -1,5 +1,5 @@
 {
-  "name": "webapp",
+  "name": "genex-interface",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,22 +11,24 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
+    "fixed-data-table-2": "^0.8.12",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
-    "semantic-ui-react": "^0.78.2",
-    "webpack": "^3.11.0"
+    "semantic-ui-react": "^0.78.2"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-stage-3": "^6.24.1"
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.11",
+    "style-loader": "^0.21.0",
+    "webpack": "^3.11.0"
   }
 }
