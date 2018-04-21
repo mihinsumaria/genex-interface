@@ -7,14 +7,10 @@ import 'fixed-data-table-2/dist/fixed-data-table.css';
 
 class QueryFromDataset extends React.Component {
   render() {
-    const dataset = this.props.dataset;
+    const { dataset, selectedIndex, rowClickHandler } = this.props;
     const onRowClick = (e, rowIndex) => {
-      let updatedSelected = Object.assign({}, this.props.selected, {
-        index: rowIndex
-      });
-      this.props.performUpdateSelected(updatedSelected);
+      rowClickHandler(rowIndex);
     }
-    const selectedIndex = this.props.selected.type === 'dataset' && this.props.selected.index
     return (
       <Table
         rowHeight={50}
@@ -46,8 +42,8 @@ class QueryFromDataset extends React.Component {
 
 QueryFromDataset.propTypes = {
   dataset: PropTypes.array,
-  performUpdateSelected: PropTypes.func,
-  selected: PropTypes.object,
+  rowClickHandler: PropTypes.func,
+  selectedIndex: PropTypes.number,
 };
 
 export default QueryFromDataset;

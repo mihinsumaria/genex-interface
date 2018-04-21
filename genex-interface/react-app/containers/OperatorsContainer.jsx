@@ -11,10 +11,10 @@ class OperatorsContainer extends React.Component {
 	onTabChange = (e, data) => {
 		switch (data.activeIndex) {
 			case 0:
-				this.props.performUpdateOperator('kbest');
+				this.props.onOperatorChange('kbest');
 				break;
 			case 1:
-				this.props.performUpdateOperator('motif');
+				this.props.onOperatorChange('motif');
 				break;
 		}
 	}
@@ -27,7 +27,7 @@ class OperatorsContainer extends React.Component {
 					<Tab.Pane>
 						<FindBestMatches
 							params={params}
-							performUpdateOperator={this.props.performUpdateOperator}
+							onTabChange={this.props.onOperatorChange}
 							dataset={this.props.dataset} />
 					</Tab.Pane>
 			},
@@ -50,7 +50,7 @@ class OperatorsContainer extends React.Component {
 OperatorsContainer.propTypes = {
 	dataset: PropTypes.object,
 	operator: PropTypes.object,
-	performUpdateOperator: PropTypes.func,
+	onOperatorChange: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -59,7 +59,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	performUpdateOperator(currentOperator, params) {
+	onOperatorChange(currentOperator, params) {
 		dispatch(updateOperator(currentOperator, params));
 	}
 })

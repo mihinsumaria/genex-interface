@@ -12,6 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "fixed-data-table-2": "^0.8.12",
+    "highcharts": "^6.1.0",
+    "query-string": "^6.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",

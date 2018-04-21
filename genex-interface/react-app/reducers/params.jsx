@@ -25,7 +25,7 @@ export default (
     },
     operator: {
       current: 'kbest',
-      'kbest': { k: 1 },
+      kbest: { k: 1 },
     }
   },
   action) => {

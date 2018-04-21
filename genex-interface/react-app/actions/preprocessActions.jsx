@@ -16,14 +16,14 @@ const requestGetAllDatasets = () => {
       .then(handleErrors)
       .then(response => (response.json()))
       .then(result => {
-        dispatch(getAllDatasets(result));
+        dispatch(updateAllDatasets(result));
       })
       .catch(logError);
   }
 }
 
 /** Updates the app state with the returned list of datasets */
-const getAllDatasets = (allDatasets) => ({
+const updateAllDatasets = (allDatasets) => ({
   type: GET_ALL_DATASETS,
   allDatasets
 })
@@ -36,21 +36,20 @@ const requestGetAllDistances = () => {
       .then(handleErrors)
       .then(response => (response.json()))
       .then(result => {
-        dispatch(getAllDistances(result));
+        dispatch(updateAllDistances(result));
       })
       .catch(logError);
   }
 }
 
 /** Updates the app state with the returned list of datasets */
-const getAllDistances = (allDistances) => ({
+const updateAllDistances = (allDistances) => ({
   type: GET_ALL_DISTANCES,
   allDistances
 })
 
 /**
- * Makes request for loading and grouping data. When the response returns,
- * {@link loadAndGroupDataset} is called.
+ * Makes request for loading and grouping data.
  * @param {string} datasetID id of a dataset to load and group.
  * @param {string} distance id of a distance used in grouping.
  * @param {number} st similarity threshold.

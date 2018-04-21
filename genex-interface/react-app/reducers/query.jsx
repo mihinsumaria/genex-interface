@@ -1,4 +1,7 @@
-import { GET_ALL_DATASET_QUERIES, SELECT_QUERY } from '../actions/actionTypes'
+import {
+  GET_ALL_DATASET_QUERIES,
+  UPDATE_SELECTED_QUERY
+} from '../actions/actionTypes'
 
 export default (
   state = {
@@ -10,24 +13,39 @@ export default (
     },
     selected: {
       type: 'dataset',
-      index: 0,
-      start: 0,
-      end: 100
+      dataset: {
+        index: 0,
+        start: 0,
+        end: 100
+      },
+      upload: {
+      },
     }
   },
   action) => {
   switch (action.type) {
     case GET_ALL_DATASET_QUERIES:
-      let allQueries = Object.assign({}, state.allQueries, {
-        dataset: action.dataset
-      });
-      return Object.assign({}, state, {
-        allQueries: allQueries
-      });
-    case SELECT_QUERY:
-      return Object.assign({}, state, {
-        selected: action.selected
-      });
+      return {
+        ...state,
+        allQueries: {
+          ...state.allQueries,
+          dataset: action.dataset
+        }
+      }
+    case UPDATE_SELECTED_QUERY:
+      // If action.params is null, only update the query type
+      const datasetParams = (action.params && action.queryType === 'dataset') ?
+        action.params : state.selected.dataset;
+      const uploadParams = (action.params && action.queryType === 'upload') ?
+        action.params : state.selected.upload;
+      return {
+        ...state,
+        selected: {
+          type: action.queryType,
+          dataset: datasetParams,
+          upload: uploadParams,
+        }
+      }
     default:
       return state;
   }

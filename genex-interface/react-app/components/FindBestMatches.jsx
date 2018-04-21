@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 export default function FindBestMatches(props) {
 
 	const handleChange = (e, { name, value }) => {
-		props.performUpdateOperator(name, { k: parseInt(value) });
+		props.onTabChange(name, { k: parseInt(value) });
 	}
 
 	return (
@@ -27,6 +27,6 @@ export default function FindBestMatches(props) {
 
 FindBestMatches.propTypes = {
 	params: PropTypes.object,
-	performUpdateOperator: PropTypes.func,
+	onTabChange: PropTypes.func,
 	subseq: PropTypes.number,
 };
