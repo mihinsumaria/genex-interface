@@ -12,10 +12,27 @@ from .exceptions import ServerException, ArgumentRequired
 GROUPS_SIZE_FOLDER = 'local/groupsize'
 
 
+def check_exists(arg, arg_name=''):
+    if arg is None:
+        raise ArgumentRequired(arg_name)
+    return arg
+
+
+def make_name(ID, st, distance):
+    return str(ID) + str(st) + str(distance)
+
+
 @app.errorhandler(ServerException)
 def handle_server_exception(error):
     response = jsonify(error.to_dict())
     response.status_code = error.status_code
+    return response
+
+
+@app.errorhandler(RuntimeError)
+def handle_runtime_error(error):
+    response = jsonify({'message': error.message})
+    response.status_code = 400
     return response
 
 
@@ -63,7 +80,7 @@ def load_and_group_dataset(datasetID, st, distance):
         # Read dataset list
         with open('datasets.json', 'r') as datasets_json:
             datasets = json.load(datasets_json)
-        name = str(datasets[datasetID]['name']) + str(st) + str(distance)
+        name = make_name(*key)
         path = str(datasets[datasetID]['path'])
 
         # Load, normalize, and group the dataset
@@ -94,18 +111,30 @@ def load_and_group_dataset(datasetID, st, distance):
 
 
 @app.route('/preprocess', methods=['POST'])
-def preprocess_data():
-    datasetID = request.form.get('datasetID')
-    st = request.form.get('st', type=float)
-    distance = request.form.get('distance', type=str)
-
-    if datasetID is None:
-        raise ArgumentRequired('distanceID')
-
-    if st is None:
-        raise ArgumentRequired('st')
-    
-    if distance is None:
-        raise ArgumentRequired('distance')
+def preprocess():
+    form = request.form
+    datasetID = check_exists(form.get('datasetID'), 'datasetID')
+    st = check_exists(form.get('st', type=float), 'st')
+    distance = check_exists(form.get('distance', type=str), 'distance')
 
     return jsonify(load_and_group_dataset(datasetID, st, distance))
+
+
+@app.route('/sequence')
+def get_sequence():
+    args = request.args
+    datasetID = check_exists(args.get('datasetID'), 'datasetID')
+    st = check_exists(args.get('st', type=float), 'st')
+    distance = check_exists(args.get('distance', type=str), 'distance')
+    sequenceIndex = check_exists(args.get('index', type=int), 'index')
+
+    key = (datasetID, st, distance)
+    if key in preprocessed:
+        name = make_name(*key)
+        series = pygenex.getTimeSeries(name, sequenceIndex)
+
+        return jsonify(series)
+
+    raise ServerException(
+        'Please call "/preprocess" first to ensure the dataset is processed.'
+    )
