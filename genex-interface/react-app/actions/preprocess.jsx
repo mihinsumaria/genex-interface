@@ -6,15 +6,19 @@ import {
   GET_ALL_DATASET_QUERIES
 } from './actionTypes'
 
+import handleErrors, { logError } from './handleErrors'
+
 /** Makes request for a list of all datasets */
 const requestGetAllDatasets = () => {
   return (dispatch) => {
     // TODO: add report here if error occurs
     fetch('/datasets')
+      .then(handleErrors)
       .then(response => (response.json()))
       .then(result => {
         dispatch(getAllDatasets(result));
       })
+      .catch(logError);
   }
 }
 
@@ -29,10 +33,12 @@ const requestGetAllDistances = () => {
   return (dispatch) => {
     // TODO: add report here if error occurs
     fetch('/distances')
+      .then(handleErrors)
       .then(response => (response.json()))
       .then(result => {
         dispatch(getAllDistances(result));
       })
+      .catch(logError);
   }
 }
 
@@ -54,7 +60,7 @@ const requestLoadAndGroupDataset = (datasetID, distance, st) => {
     dispatch(loadAndGroupDataset(true));
     var formData = new FormData();
 
-    formData.append('dataset', datasetID);
+    formData.append('datasetID', datasetID);
     formData.append('distance', distance);
     formData.append('st', st);
 
@@ -62,6 +68,7 @@ const requestLoadAndGroupDataset = (datasetID, distance, st) => {
       method: 'post',
       body: formData
     })
+      .then(handleErrors)
       .then(response => (response.json()))
       .then(json => {
         let dataset = {
@@ -85,9 +92,7 @@ const requestLoadAndGroupDataset = (datasetID, distance, st) => {
           json.timeSeries)
         );
       })
-      .catch(err => {
-        console.log('error: ', err)
-      })
+      .catch(logError);
   }
 }
 

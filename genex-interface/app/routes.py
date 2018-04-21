@@ -7,8 +7,16 @@ import pygenex
 from app import app
 
 from .picture import get_group_density_base64, get_line_thumbnail_base64
+from .exceptions import ServerException, ArgumentRequired
 
 GROUPS_SIZE_FOLDER = 'local/groupsize'
+
+
+@app.errorhandler(ServerException)
+def handle_server_exception(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.status_code
+    return response
 
 
 @app.route('/')
@@ -47,22 +55,23 @@ def get_names_and_thumbnails(name, count):
     return allTimeSeries
 
 
-def load_and_group_dataset(dataset, st, distance):
-    key = (dataset, st, distance)
+def load_and_group_dataset(datasetID, st, distance):
+    key = (datasetID, st, distance)
     if key in preprocessed:
         return preprocessed[key]
     else:
         # Read dataset list
         with open('datasets.json', 'r') as datasets_json:
             datasets = json.load(datasets_json)
-        name = str(datasets[dataset]['name']) + str(st) + str(distance)
-        path = str(datasets[dataset]['path'])
+        name = str(datasets[datasetID]['name']) + str(st) + str(distance)
+        path = str(datasets[datasetID]['path'])
 
         # Load, normalize, and group the dataset
         load_details = pygenex.loadDataset(name, path)
         pygenex.normalize(name)
         allTimeSeries = get_names_and_thumbnails(name, load_details['count'])
         group_count = pygenex.group(name, st, distance)
+
         # Save group size
         if not os.path.exists(GROUPS_SIZE_FOLDER):
             os.makedirs(GROUPS_SIZE_FOLDER)
@@ -86,8 +95,17 @@ def load_and_group_dataset(dataset, st, distance):
 
 @app.route('/preprocess', methods=['POST'])
 def preprocess_data():
-    dataset = request.form['dataset']
-    st = float(request.form['st'])
-    distance = str(request.form['distance'])
+    datasetID = request.form.get('datasetID')
+    st = request.form.get('st', type=float)
+    distance = request.form.get('distance', type=str)
 
-    return jsonify(load_and_group_dataset(dataset, st, distance))
+    if datasetID is None:
+        raise ArgumentRequired('distanceID')
+
+    if st is None:
+        raise ArgumentRequired('st')
+    
+    if distance is None:
+        raise ArgumentRequired('distance')
+
+    return jsonify(load_and_group_dataset(datasetID, st, distance))
