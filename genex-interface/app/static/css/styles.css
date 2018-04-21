@@ -21,6 +21,7 @@ body {
     font-weight: bold;
     background-color: rgb(220, 20, 60);
     color: rgb(240,255,255);
+    z-index: 9999;
 }
 
 /* Override some properties of semantic ui Sidebar */

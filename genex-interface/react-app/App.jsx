@@ -30,8 +30,9 @@ const App = () => {
 					<DatasetSelectAndGroup />
 					<Divider />
 					<OperatorsContainer />
-					<Divider />
+					<Header as={HEADER_SIZE} icon='hand pointer' dividing content='Query Selector' />
 					<QuerySelectContainer />
+					<Divider />					
 				</div>
 			</Sidebar>
 			<Sidebar.Pusher style={resultAreaStyle}>
