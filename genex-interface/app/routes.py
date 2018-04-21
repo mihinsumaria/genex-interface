@@ -22,6 +22,10 @@ def make_name(ID, st, distance):
     return str(ID) + str(st) + str(distance)
 
 
+def attach_index(data):
+    return [(i, v) for i, v in enumerate(data)]
+
+
 @app.errorhandler(ServerException)
 def handle_server_exception(error):
     response = jsonify(error.to_dict())
@@ -132,7 +136,7 @@ def get_sequence():
     if key in preprocessed:
         name = make_name(*key)
         series = pygenex.getTimeSeries(name, sequenceIndex)
-
+        series = attach_index(series)
         return jsonify(series)
 
     raise ServerException(

@@ -52,7 +52,7 @@ class QuerySubsequenceSelectContainer extends React.Component {
 		}
 
 		const subsequenceSelector = raw[queryType] && raw[queryType].length > 0 &&
-			<SubsequenceSelector 
+			<SubsequenceSelector
 				data={raw[queryType]}
 				onRangeSelect={this.onRangeSelect}
 				initStart={start}

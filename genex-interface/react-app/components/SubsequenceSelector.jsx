@@ -5,7 +5,7 @@ import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official'
 
 class SubsequenceSelector extends React.Component {
-	state = { modalOpen: false }
+  state = { modalOpen: false }
 
   range = {
     start: -1,
@@ -54,7 +54,7 @@ class SubsequenceSelector extends React.Component {
       navigator: {
         enabled: true,
         // The xAxis of this chart shows date/time by default
-        // so just diable it since we don't need it anyways.
+        // so just disable it since we don't need it anyways.
         xAxis: {
           visible: false
         }
@@ -73,7 +73,7 @@ class SubsequenceSelector extends React.Component {
       }
     }
     return (
-      <Modal 
+      <Modal
         trigger={<div onClick={this.openModal} className='overlay' />}
         open={this.state.modalOpen}
         onClose={this.closeModal}

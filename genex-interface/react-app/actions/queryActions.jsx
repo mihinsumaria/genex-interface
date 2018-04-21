@@ -26,9 +26,9 @@ const updateSelectedQuery = (queryType, params) => ({
 const requestGetSequence = (datasetID, distance, st, index) => {
   return (dispatch) => {
     const params = { datasetID, distance, st, index };
-    
+
     const stringified = queryString.stringify(params);
-    
+
     fetch("/sequence?" + stringified)
       .then(handleErrors)
       .then(response => (response.json()))
