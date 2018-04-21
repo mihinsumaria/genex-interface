@@ -1,6 +1,7 @@
 import queryString from 'query-string'
 import {
-  UPDATE_SELECTED_QUERY
+  UPDATE_SELECTED_QUERY,
+  UPDATE_QUERY_DATA,
 } from './actionTypes';
 
 import { handleErrors, logError } from './handleErrors';
@@ -31,12 +32,24 @@ const requestGetSequence = (datasetID, distance, st, index) => {
     fetch("/sequence?" + stringified)
       .then(handleErrors)
       .then(response => (response.json()))
-      .then(result => {
-        console.log(result);
+      .then(data => {
+        // TODO: change to accomodate 'upload' and 'draw'
+        dispatch(updateQueryData('dataset', data))
       })
       .catch(logError);
   }
 }
+
+/**
+ * Updates data of a query type.
+ * @param {string} queryType type of query.
+ * @param {array} data data to update.
+ */
+const updateQueryData = (queryType, data) => ({
+  type: UPDATE_QUERY_DATA
+  , queryType
+  , data
+})
 
 export {
   updateSelectedQuery

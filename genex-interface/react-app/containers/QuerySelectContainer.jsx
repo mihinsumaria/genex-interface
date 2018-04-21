@@ -37,6 +37,7 @@ class QuerySelectContainer extends React.Component {
         index: selectedIndex,
         start: 0,
         end: dataset.length,
+        data: [],
       });
       getSequence(selectedIndex);
     }

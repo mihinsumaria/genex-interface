@@ -1,6 +1,7 @@
 import {
   GET_ALL_DATASET_QUERIES,
-  UPDATE_SELECTED_QUERY
+  UPDATE_SELECTED_QUERY,
+  UPDATE_QUERY_DATA
 } from '../actions/actionTypes'
 
 export default (
@@ -14,12 +15,15 @@ export default (
     selected: {
       type: 'dataset',
       dataset: {
-        index: 0,
-        start: 0,
-        end: 100
+        index: -1,
+        start: -1,
+        end: -1,
       },
       upload: {
       },
+    },
+    data: {
+      dataset: [],
     }
   },
   action) => {
@@ -44,6 +48,14 @@ export default (
         ...state,
         selected: selected
       };
+    case UPDATE_QUERY_DATA:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          [action.queryType]: action.data
+        }
+      }
     default:
       return state;
   }

@@ -1,20 +1,21 @@
-import React from 'react'
-import { render } from 'react-dom'
+import React from 'react';
+import { render } from 'react-dom';
 
-import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import logger from 'redux-logger'
-import thunk from 'redux-thunk'
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import logger from 'redux-logger';
+import thunk from 'redux-thunk';
 
-import { Sidebar, Segment, Divider, Header, Grid, SidebarPushable } from 'semantic-ui-react'
+import { Sidebar, Segment, Divider, Header, Grid, SidebarPushable } from 'semantic-ui-react';
 
-import reducer from './reducers'
-import { HEADER_SIZE } from './constants'
-import DatasetSelectAndGroup from './containers/DatasetSelectAndGroup'
-import DatasetOverviewContainer from './containers/DatasetOverviewContainer'
-import ResultVisualizationContainer from './containers/ResultVisualizationContainer'
-import OperatorsContainer from './containers/OperatorsContainer'
-import QuerySelectContainer from './containers/QuerySelectContainer'
+import reducer from './reducers';
+import { HEADER_SIZE } from './constants';
+import DatasetSelectAndGroup from './containers/DatasetSelectAndGroup';
+import DatasetOverviewContainer from './containers/DatasetOverviewContainer';
+import ResultVisualizationContainer from './containers/ResultVisualizationContainer';
+import OperatorsContainer from './containers/OperatorsContainer';
+import QuerySelectContainer from './containers/QuerySelectContainer';
+import QuerySubsequenceSelectContainer from './containers/QuerySubsequenceSelectContainer';
 
 const Banner = () => (<div id='banner'>GENEX</div>);
 
@@ -32,7 +33,8 @@ const App = () => {
 					<OperatorsContainer />
 					<Header as={HEADER_SIZE} icon='hand pointer' dividing content='Query Selector' />
 					<QuerySelectContainer />
-					<Divider />					
+					<Divider />
+					<QuerySubsequenceSelectContainer />
 				</div>
 			</Sidebar>
 			<Sidebar.Pusher style={resultAreaStyle}>
