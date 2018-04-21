@@ -16,18 +16,7 @@ import ResultVisualizationContainer from './containers/ResultVisualizationContai
 import OperatorsContainer from './containers/OperatorsContainer'
 import QuerySelectContainer from './containers/QuerySelectContainer'
 
-const Banner = () => {
-	let style = {
-		'padding': '10px',
-		'boxShadow': '0 4px 2px rgba(34,36,38,.15)',
-		'textAlign': 'center',
-		'fontSize': '1.5em',
-		'fontWeight': 'bold',
-		'backgroundColor': 'rgb(220, 20, 60)',
-		'color': 'rgb(240,255,255)'
-	};
-	return <div style={style}>GENEX</div>;
-};
+const Banner = () => (<div id='banner'>GENEX</div>);
 
 const App = () => {
 	let disableShadow = { 'boxShadow': '0 0 2px rgba(34,36,38,.15)' };

@@ -1,53 +1,47 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Table, Column, Cell } from 'fixed-data-table-2';
-import 'fixed-data-table-2/dist/fixed-data-table.css';
+import { SelectableImageCell, SelectableTextCell } from './cells'
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
-export default function QueryFromDataset(props) {
-  let dataset = props.dataset;
-  let onRowClick = (e, rowIndex) => {
-    let updatedSelected = Object.assign({}, props.selected, {
-      index: rowIndex
-    });
-    props.performUpdateSelected(updatedSelected);
-  }
-  return (
-    <Table
-      rowHeight={50}
-      rowsCount={props.dataset.length}
-      width={420}
-      height={300}
-      headerHeight={50}
-      onRowClick={onRowClick} >
-      <Column
-        header={<Cell>Name</Cell>}
-        columnKey="name"
-        cell={({ rowIndex, columnKey, ...props }) => {
-          return <Cell {...props}>
-            {dataset[rowIndex][columnKey]}
-          </Cell>
-        }
-        }
-        fixed={true}
-        width={60} />
-      <Column
-        columnKey="thumbnail"
-        header={<Cell>Preview</Cell>}
-        cell={({ rowIndex, columnKey, ...props }) => {
-          return (
-            <img
+import 'fixed-data-table-2/dist/fixed-data-table.css';
+
+class QueryFromDataset extends React.Component {
+  render() {
+    const dataset = this.props.dataset;
+    const onRowClick = (e, rowIndex) => {
+      let updatedSelected = Object.assign({}, this.props.selected, {
+        index: rowIndex
+      });
+      this.props.performUpdateSelected(updatedSelected);
+    }
+    const selectedIndex = this.props.selected.type === 'dataset' && this.props.selected.index
+    return (
+      <Table
+        rowHeight={50}
+        rowsCount={this.props.dataset.length}
+        width={420}
+        height={300}
+        headerHeight={50}
+        onRowClick={onRowClick} >
+        <Column
+          header={<Cell>Name</Cell>}
+          columnKey="name"
+          cell={<SelectableTextCell data={dataset} selectedIndex={selectedIndex} />}
+          fixed={true}
+          width={60} />
+        <Column
+          columnKey="thumbnail"
+          header={<Cell>Preview</Cell>}
+          cell={
+            <SelectableImageCell data={dataset} selectedIndex={selectedIndex}
               style={{ borderBottom: "1px solid rgba(34,36,38,.15)" }}
-              src={dataset[rowIndex][columnKey]}
               height={50}
               width={300} />
-          )
-        }
-        }
-        width={300} />
-    </Table>
-  );
+          }
+          width={300} />
+      </Table>
+    );
+  }
 }
 
 QueryFromDataset.propTypes = {
@@ -55,3 +49,5 @@ QueryFromDataset.propTypes = {
   performUpdateSelected: PropTypes.func,
   selected: PropTypes.object,
 };
+
+export default QueryFromDataset;

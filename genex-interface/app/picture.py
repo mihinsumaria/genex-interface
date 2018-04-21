@@ -78,10 +78,10 @@ def _plot_groups_density(ax, groups_df, count_limit,
 
     ax.set_xlim(0, width)
     ax.set_ylim(0, height)
-    
+
     def to_patch(rect):
         return Rectangle((rect['x'], rect['y']), rect['dx'], rect['dy'])
-    
+
     patches = map(to_patch, rects)
     collection = PatchCollection(patches, cmap=matplotlib.cm.plasma, alpha=0.9)
     collection.set_array(colors)
@@ -99,12 +99,12 @@ def get_group_density_base64(group_file_path):
     col = _plot_groups_density(ax, groups_df, COUNT_PCT*subseq,
                                width=HEATMAP_WIDTH,
                                height=HEATMAP_HEIGHT)
-    
+
     # Plot the colorbar
     if col is not None:
         fig.colorbar(col, ax=ax)
 
-    plt.tight_layout()    
+    plt.tight_layout()
     base64encoded = _get_base64_encoding(fig)
     plt.close('all')
     return base64encoded
