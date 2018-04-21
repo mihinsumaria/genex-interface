@@ -1,18 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import Highcharts from 'highcharts';
 import NoDataToDisplay from 'highcharts/modules/no-data-to-display';
 import HighchartsReact from 'highcharts-react-official'
 
+import { MAIN_COLOR } from '../constants';
+import { updateSelectedQuery } from '../actions/queryActions'
+
+import SubsequenceSelector from '../components/SubsequenceSelector';
+
 NoDataToDisplay(Highcharts);
 
 class QuerySubsequenceSelectContainer extends React.Component {
+
+	onRangeSelect = (start, end) => {
+		const { selected, onQueryChange } = this.props;
+		start = Math.ceil(start);
+		end = Math.floor(end);
+		onQueryChange(selected.type, {
+			...selected[selected.type],
+			start, end
+		})
+	}
+
 	render() {
 		const { selected, data } = this.props;
 		const queryType = selected.type;
-
+		const start = selected[queryType].start;
+		const end = selected[queryType].end;
 		// Disable these things
 		const [credits, tooltip, legend] = Array(3).fill({ enabled: false });
 		const options = {
@@ -20,25 +36,26 @@ class QuerySubsequenceSelectContainer extends React.Component {
 				height: 150
 			},
 			series: [{
-				data: data[queryType],
-				color: '#DC143C',
+				data: data[queryType].slice(start, end),
+				color: MAIN_COLOR,
 				states: {
 					hover: {
-						enabled: false
+						enabled: false	// Disable hovering on data pont
 					}
 				}
 			}],
 			title: { text: '' },
 			yAxis: {
-				title: { enabled: false },
+				title: { enabled: false }, // Turn off title
 			},
 			credits, tooltip, legend
 		}
 
-		const modal = data[queryType] && data[queryType].length > 0 &&
-			<Modal trigger={<div className='overlay' />}>
-				Test
-			</Modal>;
+		const subsequenceSelector = data[queryType] && data[queryType].length > 0 &&
+			<SubsequenceSelector 
+				data={data[queryType]}
+				onRangeSelect={this.onRangeSelect}
+			/>
 
 		return (
 			<div style={{ position: 'relative' }}>
@@ -47,7 +64,7 @@ class QuerySubsequenceSelectContainer extends React.Component {
 					constructorType={'chart'}
 					options={options}
 				/>
-				{modal}
+				{subsequenceSelector}
 			</div>
 		);
 	};
@@ -56,6 +73,7 @@ class QuerySubsequenceSelectContainer extends React.Component {
 QuerySubsequenceSelectContainer.propTypes = {
 	selected: PropTypes.object,
 	data: PropTypes.object,
+	onQueryChange: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -63,4 +81,13 @@ const mapStateToProps = state => ({
 	data: state.query.data,
 });
 
-export default connect(mapStateToProps)(QuerySubsequenceSelectContainer);
+const mapDispatchToProps = dispatch => ({
+	onQueryChange(queryType, params) {
+		dispatch(updateSelectedQuery(queryType, params));
+	},
+})
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(QuerySubsequenceSelectContainer);
