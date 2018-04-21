@@ -32,8 +32,9 @@ class QueryFromDataset extends React.Component {
             <SelectableImageCell data={dataset} selectedIndex={selectedIndex}
               style={{ borderBottom: "1px solid rgba(34,36,38,.15)" }}
               height={50}
-              width={300} />
+              width={500} />
           }
+          flexGrow={1}
           width={300} />
       </Table>
     );

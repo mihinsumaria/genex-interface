@@ -21,6 +21,7 @@ class QuerySubsequenceSelectContainer extends React.Component {
 			},
 			series: [{
 				data: data[queryType],
+				color: '#DC143C',
 				states: {
 					hover: {
 						enabled: false
@@ -33,12 +34,21 @@ class QuerySubsequenceSelectContainer extends React.Component {
 			},
 			credits, tooltip, legend
 		}
+
+		const modal = data[queryType] && data[queryType].length > 0 &&
+			<Modal trigger={<div className='overlay' />}>
+				Test
+			</Modal>;
+
 		return (
-			<HighchartsReact
-				highcharts={Highcharts}
-				constructorType={'chart'}
-				options={options}
-			/>
+			<div style={{ position: 'relative' }}>
+				<HighchartsReact
+					highcharts={Highcharts}
+					constructorType={'chart'}
+					options={options}
+				/>
+				{modal}
+			</div>
 		);
 	};
 };
