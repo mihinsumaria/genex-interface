@@ -9,6 +9,7 @@ import matplotlib.cm
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import pygal
 import squarify
 from matplotlib.collections import PatchCollection
 from matplotlib.patches import Rectangle
@@ -29,7 +30,7 @@ DPI = 100
 def _get_base64_encoding(fig):
     io = BytesIO()
     fig.savefig(io, format='png', dpi=DPI, bbox_inches='tight')
-    return base64.b64encode(io.getvalue())
+    return 'data:image/png;base64, ' + base64.b64encode(io.getvalue())
 
 
 def _read_groups_size(path):
@@ -110,13 +111,14 @@ def get_group_density_base64(group_file_path):
 
 
 def get_line_thumbnail_base64(data):
-    fig = plt.figure(figsize=(LINEPLOT_WIDTH, LINEPLOT_HEIGHT),
-                     dpi=DPI)
-    ax = fig.add_subplot(1, 1, 1)
-    ax.plot(data)
-    ax.set_xlim(0, len(data))
-    ax.set_axis_off()
-    plt.tight_layout()
-    base64encoded = _get_base64_encoding(fig)
-    plt.close('all')    
-    return base64encoded
+    config = pygal.Config()
+    config.height = 170
+    config.width = 1020
+    config.show_legend = False
+    config.include_x_axis = False
+    config.show_y_labels = False
+    config.show_y_guides = False
+    chart = pygal.Line(config)
+    chart.add('', data, dots_size=4,
+              stroke_style={'width': 4})
+    return chart.render_data_uri()

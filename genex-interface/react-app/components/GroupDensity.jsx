@@ -7,8 +7,10 @@ export default function GroupDensity(props) {
 	var densityImg = '';
 	var numberOfGroups = '';
 	if (props.groups.density) {
-		let base64Src = 'data:image/png;base64, ' + props.groups.density;
-		densityImg = <div><img src={base64Src} height={150} width={400} /></div>;
+		densityImg = (
+			<div>
+				<img src={props.groups.density} height={150} width={400} />
+			</div>);
 
 		numberOfGroups =
 			<Statistic horizontal size='mini'>

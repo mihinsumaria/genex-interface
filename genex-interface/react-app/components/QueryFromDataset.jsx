@@ -36,11 +36,10 @@ export default function QueryFromDataset(props) {
         columnKey="thumbnail"
         header={<Cell>Preview</Cell>}
         cell={({ rowIndex, columnKey, ...props }) => {
-          let base64Src = 'data:image/png;base64, ';
           return (
             <img
               style={{ borderBottom: "1px solid rgba(34,36,38,.15)" }}
-              src={base64Src + dataset[rowIndex][columnKey]}
+              src={dataset[rowIndex][columnKey]}
               height={50}
               width={300} />
           )
