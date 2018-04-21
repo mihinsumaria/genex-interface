@@ -7,7 +7,7 @@ import {
   requestLoadAndGroupDataset,
   requestGetAllDatasets,
   requestGetAllDistances
-} from '../actions/preprocess'
+} from '../actions/preprocessActions'
 
 class DatasetSelectAndGroup extends React.Component {
 

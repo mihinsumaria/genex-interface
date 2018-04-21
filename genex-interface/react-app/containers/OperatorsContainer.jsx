@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { Header, Tab } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { updateOperator } from '../actions/preprocess'
+import { updateOperator } from '../actions/preprocessActions'
 import FindBestMatches from '../components/FindBestMatches.jsx'
 import FindMotif from '../components/FindMotif.jsx'
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { Tab } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { updateSelected } from '../actions/process'
+import { updateSelected } from '../actions/queryActions'
 import QueryFromDataset from '../components/QueryFromDataset.jsx'
 import QueryFromUpload from '../components/QueryFromUpload.jsx'
 
