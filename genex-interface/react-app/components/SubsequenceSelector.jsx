@@ -5,11 +5,22 @@ import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official'
 
 class SubsequenceSelector extends React.Component {
+	state = { modalOpen: false }
 
   range = {
     start: -1,
     end: -1
   }
+
+  openModal = () => {
+    this.range = {
+      start: this.props.initStart,
+      end: this.props.initEnd
+    }
+    this.setState({ modalOpen: true });
+  }
+
+  closeModal = () => this.setState({ modalOpen: false })
 
   updateRange = (e) => {
     this.range = {
@@ -26,6 +37,9 @@ class SubsequenceSelector extends React.Component {
         data: data,
         events: {
           legendItemClick: () => (false)
+        },
+        animation: {
+          duration: 500,
         }
       }],
       credits: {
@@ -48,6 +62,8 @@ class SubsequenceSelector extends React.Component {
         events: {
           afterSetExtremes: this.updateRange
         },
+        min: initStart,
+        max: initEnd,
       },
       yAxis: {
         title: {
@@ -56,7 +72,11 @@ class SubsequenceSelector extends React.Component {
       }
     }
     return (
-      <Modal trigger={<div className='overlay' />}>
+      <Modal 
+        trigger={<div onClick={this.openModal} className='overlay' />}
+        open={this.state.modalOpen}
+        onClose={this.closeModal}
+      >
         <Modal.Header>Subsequence Selector</Modal.Header>
         <Modal.Content>
           <HighchartsReact
@@ -66,8 +86,9 @@ class SubsequenceSelector extends React.Component {
           />
         </Modal.Content>
         <Modal.Actions>
-          <Button color='green' onClick={() => { 
-            onRangeSelect(this.range.start, this.range.end); 
+          <Button color='green' onClick={() => {
+            this.closeModal();
+            onRangeSelect(this.range.start, this.range.end);
           }}>
             <Icon name='checkmark' /> Select
           </Button>
@@ -80,6 +101,8 @@ class SubsequenceSelector extends React.Component {
 SubsequenceSelector.propTypes = {
   data: PropTypes.array.isRequired,
   onRangeSelect: PropTypes.func,
+  initStart: PropTypes.number,
+  initEnd: PropTypes.number,
 };
 
 export default SubsequenceSelector;
