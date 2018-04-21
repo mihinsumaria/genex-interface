@@ -32,9 +32,9 @@ const requestGetSequence = (datasetID, distance, st, index) => {
     fetch("/sequence?" + stringified)
       .then(handleErrors)
       .then(response => (response.json()))
-      .then(data => {
+      .then(raw => {
         // TODO: change to accomodate 'upload' and 'draw'
-        dispatch(updateQueryData('dataset', data))
+        dispatch(updateQueryData('dataset', raw))
       })
       .catch(logError);
   }
@@ -43,12 +43,12 @@ const requestGetSequence = (datasetID, distance, st, index) => {
 /**
  * Updates data of a query type.
  * @param {string} queryType type of query.
- * @param {array} data data to update.
+ * @param {array} raw raw data to update.
  */
-const updateQueryData = (queryType, data) => ({
+const updateQueryData = (queryType, raw) => ({
   type: UPDATE_QUERY_DATA
   , queryType
-  , data
+  , raw
 })
 
 export {

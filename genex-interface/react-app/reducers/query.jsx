@@ -22,7 +22,7 @@ export default (
       upload: {
       },
     },
-    data: {
+    raw: {
       dataset: [],
     }
   },
@@ -51,9 +51,9 @@ export default (
     case UPDATE_QUERY_DATA:
       return {
         ...state,
-        data: {
-          ...state.data,
-          [action.queryType]: action.data
+        raw: {
+          ...state.raw,
+          [action.queryType]: action.raw
         }
       }
     default:

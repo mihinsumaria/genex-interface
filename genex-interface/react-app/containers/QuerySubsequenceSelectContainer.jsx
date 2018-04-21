@@ -25,7 +25,7 @@ class QuerySubsequenceSelectContainer extends React.Component {
 	}
 
 	render() {
-		const { selected, data } = this.props;
+		const { selected, raw } = this.props;
 		const queryType = selected.type;
 		const start = selected[queryType].start;
 		const end = selected[queryType].end;
@@ -36,7 +36,7 @@ class QuerySubsequenceSelectContainer extends React.Component {
 				height: 150
 			},
 			series: [{
-				data: data[queryType].slice(start, end),
+				data: raw[queryType].slice(start, end),
 				color: MAIN_COLOR,
 				states: {
 					hover: {
@@ -51,12 +51,12 @@ class QuerySubsequenceSelectContainer extends React.Component {
 			credits, tooltip, legend
 		}
 
-		const subsequenceSelector = data[queryType] && data[queryType].length > 0 &&
+		const subsequenceSelector = raw[queryType] && raw[queryType].length > 0 &&
 			<SubsequenceSelector 
-				data={data[queryType]}
+				data={raw[queryType]}
 				onRangeSelect={this.onRangeSelect}
 				initStart={start}
-				initEnd={end}
+				initEnd={end - 1}
 			/>
 
 		return (
@@ -74,13 +74,13 @@ class QuerySubsequenceSelectContainer extends React.Component {
 
 QuerySubsequenceSelectContainer.propTypes = {
 	selected: PropTypes.object,
-	data: PropTypes.object,
+	raw: PropTypes.object,
 	onQueryChange: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
 	selected: state.query.selected,
-	data: state.query.data,
+	raw: state.query.raw,
 });
 
 const mapDispatchToProps = dispatch => ({

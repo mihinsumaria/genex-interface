@@ -34,6 +34,7 @@ class SubsequenceSelector extends React.Component {
     const options = {
       title: { text: '' },
       series: [{
+        name: "Test",
         data: data,
         events: {
           legendItemClick: () => (false)
