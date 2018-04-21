@@ -11,10 +11,10 @@ class QuerySelectContainer extends React.Component {
   onTabChange = (e, data) => {
     switch (data.activeIndex) {
       case 0:
-        this.onQueryChange('dataset');
+        this.props.onQueryChange('dataset');
         break;
       case 1:
-        this.onQueryChange('upload');
+        this.props.onQueryChange('upload');
         break;
     }
   }

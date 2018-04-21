@@ -3,7 +3,7 @@ import {
   GET_ALL_DATASETS,
   GET_ALL_DISTANCES,
   UPDATE_OPERATOR
-} from '../actions/actionTypes'
+} from '../actions/actionTypes';
 
 export default (
   state = {
@@ -31,45 +31,51 @@ export default (
   action) => {
   switch (action.type) {
     case GET_ALL_DATASETS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         allDatasets: action.allDatasets
-      });
+      };
     case GET_ALL_DISTANCES:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         allDistances: action.allDistances
-      });
+      };
     case LOAD_AND_GROUP_DATASET:
-      let newState = Object.assign({}, state, {
+      let newState = {
+        ...state,
         isGrouping: action.isGrouping
-      });
+      }
 
       if (!action.isGrouping) {
         // Search and include dataset name into action.dataset object
-        let datasetID = action.dataset.ID;
-        let datasetInfo = state.allDatasets
+        const datasetID = action.dataset.ID;
+        const datasetInfo = state.allDatasets
           .filter(ds => (ds.ID === datasetID));
 
-        let datasetName = datasetInfo.length > 0 ? datasetInfo[0].name : '';
+        const datasetName = datasetInfo.length > 0 ? datasetInfo[0].name : '';
         action.dataset.name = datasetName;
 
-        newState = Object.assign(newState, {
+        newState = {
+          ...newState,
           dataset: action.dataset,
           distance: action.distance,
           st: action.st,
           groups: action.groups
-        });
+        };
       }
       return newState;
     case UPDATE_OPERATOR:
-      let operator = Object.assign({}, state.operator, {
+      let operator = {
+        ...state.operator,
         current: action.currentOperator
-      });
+      };
       if (action.params) {
         operator[operator.current] = action.params;
       }
-      return Object.assign({}, state, {
+      return {
+        ...state,
         operator: operator
-      });
+      };
     default:
       return state;
   }
