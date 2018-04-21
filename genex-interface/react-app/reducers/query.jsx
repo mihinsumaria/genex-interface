@@ -24,6 +24,7 @@ export default (
     },
     raw: {
       dataset: [],
+      upload: [],
     }
   },
   action) => {
