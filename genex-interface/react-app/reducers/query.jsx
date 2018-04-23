@@ -8,9 +8,7 @@ export default (
   state = {
     allQueries: {
       dataset: [],
-      upload: {
-
-      }
+      upload: [],
     },
     selected: {
       type: 'dataset',

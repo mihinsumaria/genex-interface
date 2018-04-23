@@ -25,10 +25,10 @@ class QuerySubsequenceSelectContainer extends React.Component {
 	}
 
 	render() {
-		const { selected, raw, dataset } = this.props;
-		const queryType = selected.type;
-		const start = selected[queryType].start;
-		const end = selected[queryType].end;
+		const { selected, series, seriesName } = this.props;
+		const type = selected.type;
+		const start = selected[type].start;
+		const end = selected[type].end;
 		// Disable these things
 		const [credits, tooltip, legend] = Array(3).fill({ enabled: false });
 		const options = {
@@ -36,7 +36,7 @@ class QuerySubsequenceSelectContainer extends React.Component {
 				height: 150
 			},
 			series: [{
-				data: raw[queryType].slice(start, end),
+				data: series.slice(start, end),
 				color: MAIN_COLOR,
 				states: {
 					hover: {
@@ -51,12 +51,9 @@ class QuerySubsequenceSelectContainer extends React.Component {
 			credits, tooltip, legend
 		}
 
-		let seriesIndex = (queryType === 'dataset') ? selected.dataset.index : selected.upload.index;
-		const seriesName = 'Series ' + dataset[seriesIndex]['name'];
-
-		const subsequenceSelector = raw[queryType] && raw[queryType].length > 0 &&
+		const subsequenceSelector = series && series.length > 0 &&
 			<SubsequenceSelector
-				data={raw[queryType]}
+				data={series}
 				onRangeSelect={this.onRangeSelect}
 				initStart={start}
 				initEnd={end - 1}
@@ -78,16 +75,22 @@ class QuerySubsequenceSelectContainer extends React.Component {
 
 QuerySubsequenceSelectContainer.propTypes = {
 	selected: PropTypes.object,
-	raw: PropTypes.object,
-	dataset: PropTypes.array,
+	series: PropTypes.array,
+	seriesName: PropTypes.string,
 	onQueryChange: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-	selected: state.query.selected,
-	raw: state.query.raw,
-	dataset: state.query.allQueries.dataset,
-});
+const mapStateToProps = state => {
+	const { selected, raw, allQueries } = state.query;
+	const type = selected.type;
+	const query = allQueries[type][selected[type].index];
+	let seriesName = query && query.name;
+	return {
+		selected,
+		series: raw[type],
+		seriesName
+	}
+};
 
 const mapDispatchToProps = dispatch => ({
 	onQueryChange(queryType, params) {
