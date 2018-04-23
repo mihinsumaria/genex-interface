@@ -51,12 +51,16 @@ class QuerySubsequenceSelectContainer extends React.Component {
 			credits, tooltip, legend
 		}
 
+		let seriesIndex = (queryType === 'dataset') ? selected.dataset.index : selected.upload.index;
+		const seriesName = 'Series ' + seriesIndex.toString()
+
 		const subsequenceSelector = raw[queryType] && raw[queryType].length > 0 &&
 			<SubsequenceSelector
 				data={raw[queryType]}
 				onRangeSelect={this.onRangeSelect}
 				initStart={start}
 				initEnd={end - 1}
+				seriesName={seriesName}
 			/>
 
 		return (

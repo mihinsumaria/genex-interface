@@ -30,11 +30,11 @@ class SubsequenceSelector extends React.Component {
   }
 
   render() {
-    const { data, onRangeSelect, initStart, initEnd } = this.props;
+    const { data, onRangeSelect, initStart, initEnd, seriesName } = this.props;
     const options = {
       title: { text: '' },
       series: [{
-        name: "Test",
+        name: seriesName,
         data: data,
         events: {
           legendItemClick: () => (false)
@@ -104,6 +104,7 @@ SubsequenceSelector.propTypes = {
   onRangeSelect: PropTypes.func,
   initStart: PropTypes.number,
   initEnd: PropTypes.number,
+  seriesName: PropTypes.string,
 };
 
 export default SubsequenceSelector;
