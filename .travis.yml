@@ -13,10 +13,10 @@ before_install:
 
 install: 
   - sudo wget https://dl.bintray.com/boostorg/release/1.66.0/source/boost_1_66_0.tar.gz
-  - sudo tar xvzf boost_1_66_0.tar.gz
+  - sudo tar xzf boost_1_66_0.tar.gz
   - cd boost_1_66_0/
   - sudo ./bootstrap.sh --with-libraries=serialization,iostreams,python,test
-  - sudo ./b2 install
+  - sudo ./b2 install >/dev/null 2>&1
   - pip install -r genex-interface/requirements.txt
   - cd genex-interface
   - npm install
