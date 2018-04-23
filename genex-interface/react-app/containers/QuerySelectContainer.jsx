@@ -4,7 +4,7 @@ import { Tab } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { requestGetSequence, updateSelectedQuery } from '../actions/queryActions'
 import QueryTable from '../components/QueryTable.jsx'
-import QueryFromUpload from '../components/QueryFromUpload.jsx'
+import QueryUploader from '../components/QueryUploader.jsx'
 
 class QuerySelectContainer extends React.Component {
 
@@ -55,7 +55,12 @@ class QuerySelectContainer extends React.Component {
       {
         menuItem: 'Upload', render: () =>
           <Tab.Pane>
-            <QueryFromUpload />
+            <QueryUploader />
+            <QueryTable
+              queries={allQueries.upload}
+              //rowClickHandler={fromDatasetRowClickHandler}
+              selectedIndex={selected.upload.index} />
+            
           </Tab.Pane>
       }
     ]

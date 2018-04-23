@@ -16,7 +16,7 @@ class QueryTable extends React.Component {
         rowHeight={50}
         rowsCount={queries.length}
         width={420}
-        height={300}
+        height={250}
         headerHeight={50}
         onRowClick={onRowClick} >
         <Column
