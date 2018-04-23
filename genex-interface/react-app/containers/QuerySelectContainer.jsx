@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Tab } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { requestGetSequence, updateSelectedQuery } from '../actions/queryActions'
-import QueryFromDataset from '../components/QueryFromDataset.jsx'
+import QueryTable from '../components/QueryTable.jsx'
 import QueryFromUpload from '../components/QueryFromUpload.jsx'
 
 class QuerySelectContainer extends React.Component {
@@ -46,8 +46,8 @@ class QuerySelectContainer extends React.Component {
       {
         menuItem: 'From Dataset', render: () =>
           <Tab.Pane>
-            <QueryFromDataset
-              dataset={allQueries.dataset}
+            <QueryTable
+              queries={allQueries.dataset}
               rowClickHandler={fromDatasetRowClickHandler}
               selectedIndex={selected.dataset.index} />
           </Tab.Pane>

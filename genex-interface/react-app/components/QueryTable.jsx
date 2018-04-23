@@ -5,16 +5,16 @@ import PropTypes from 'prop-types';
 
 import 'fixed-data-table-2/dist/fixed-data-table.css';
 
-class QueryFromDataset extends React.Component {
+class QueryTable extends React.Component {
   render() {
-    const { dataset, selectedIndex, rowClickHandler } = this.props;
+    const { queries, selectedIndex, rowClickHandler } = this.props;
     const onRowClick = (e, rowIndex) => {
       rowClickHandler(rowIndex);
     }
     return (
       <Table
         rowHeight={50}
-        rowsCount={this.props.dataset.length}
+        rowsCount={queries.length}
         width={420}
         height={300}
         headerHeight={50}
@@ -22,14 +22,14 @@ class QueryFromDataset extends React.Component {
         <Column
           header={<Cell>Name</Cell>}
           columnKey="name"
-          cell={<SelectableTextCell data={dataset} selectedIndex={selectedIndex} />}
+          cell={<SelectableTextCell data={queries} selectedIndex={selectedIndex} />}
           fixed={true}
           width={60} />
         <Column
           columnKey="thumbnail"
           header={<Cell>Preview</Cell>}
           cell={
-            <SelectableImageCell data={dataset} selectedIndex={selectedIndex}
+            <SelectableImageCell data={queries} selectedIndex={selectedIndex}
               style={{ borderBottom: "1px solid rgba(34,36,38,.15)" }}
               height={50}
               width={500} />
@@ -41,10 +41,10 @@ class QueryFromDataset extends React.Component {
   }
 }
 
-QueryFromDataset.propTypes = {
-  dataset: PropTypes.array,
+QueryTable.propTypes = {
+  queries: PropTypes.array,
   rowClickHandler: PropTypes.func,
   selectedIndex: PropTypes.number,
 };
 
-export default QueryFromDataset;
+export default QueryTable;

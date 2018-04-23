@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import { HEADER_SIZE } from '../constants'
 
 export default function GroupDensity(props) {
-	var densityImg = '';
-	var numberOfGroups = '';
+	let densityImg = '';
+	let numberOfGroups = '';
 	if (props.groups.density) {
 		densityImg = (
 			<div>
