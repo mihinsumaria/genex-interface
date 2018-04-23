@@ -1,0 +1,22 @@
+language: python
+python:
+  - 2.7
+
+before_install:
+  - sudo apt-get install -qq libreadline6 libreadline6-dev python-dev
+
+install: 
+  - sudo wget https://dl.bintray.com/boostorg/release/1.66.0/source/boost_1_66_0.tar.gz
+  - sudo tar xvzf boost_1_66_0.tar.gz
+  - cd boost_1_66_0/
+  - sudo ./bootstrap.sh --with-libraries=serialization,iostreams,python,test
+  - sudo ./b2 install
+  - pip install -r genex-interface/requirements.txt
+  - cd genex-interface
+  - npm install
+
+script:
+  - ./install_pygenex.sh
+  - cd genex-interface
+  - npm run build
+  - ./test.sh
