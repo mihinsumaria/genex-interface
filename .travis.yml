@@ -2,7 +2,13 @@ language: python
 python:
   - 2.7
 
+git:
+  submodules:
+    false
+
 before_install:
+  - echo -e "machine github.com\n  login ctring\n  password $CI_USER_PASSWORD" >>~/.netrc
+  - git submodule update --init --recursive
   - sudo apt-get install -qq libreadline6 libreadline6-dev python-dev
 
 install: 
