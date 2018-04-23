@@ -164,9 +164,9 @@ def get_ksim():
         ksim = pygenex.ksim(k, ke, target_name, query_name, index, start, end)
         for result in ksim:
             raw = pygenex.getTimeSeries(name, 
-                                        result.get('data').get('index'),
-                                        result.get('data').get('start'),
-                                        result.get('data').get('end'))
+                                        result['data']['index'],
+                                        result['data']['start'],
+                                        result['data']['end'])
 
             result['raw'] = raw
         return jsonify(ksim)
