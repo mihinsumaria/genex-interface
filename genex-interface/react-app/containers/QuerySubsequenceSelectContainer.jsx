@@ -84,11 +84,10 @@ const mapStateToProps = state => {
 	const { selected, raw, allQueries } = state.query;
 	const type = selected.type;
 	const query = allQueries[type][selected[type].index];
-	let seriesName = query && query.name;
 	return {
 		selected,
 		series: raw[type],
-		seriesName
+		seriesName: query && query.name
 	}
 };
 

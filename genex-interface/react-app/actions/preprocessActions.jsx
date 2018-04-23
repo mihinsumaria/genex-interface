@@ -119,11 +119,11 @@ const loadAndGroupDataset = (
   })
 
 /**
-* If currentOperator is 'FindMotif', params is optional. If it is 
-* 'FindBestMatches' then we take k as a params.
-* @param {string} currentOperator tab that needs to be open.
-* @param {object} [params] contains additional parameters like k.
-*/
+ * If currentOperator is 'FindMotif', params is optional. If it is 
+ * 'FindBestMatches' then we take k as a params.
+ * @param {string} currentOperator tab that needs to be open.
+ * @param {object} [params] contains additional parameters like k.
+ */
 const updateOperator = (
   currentOperator
   , params) => ({
@@ -133,10 +133,10 @@ const updateOperator = (
   })
 
 /**
-* Updates QuerySelectContainer with dataset queries
-* @param {list} dataset contains names and base64 thumbnails 
-* for each timeseries in the dataset. 
-*/
+ * Updates QuerySelectContainer with dataset queries
+ * @param {list} dataset contains names and base64 thumbnails 
+ * for each timeseries in the dataset. 
+ */
 const updateAllQueries = (
   dataset) => ({
     type: GET_ALL_DATASET_QUERIES
