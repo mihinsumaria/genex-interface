@@ -142,3 +142,37 @@ def get_sequence():
     raise ServerException(
         'Please call "/preprocess" first to ensure the dataset is processed.'
     )
+
+@app.route('/ksim')
+def get_ksim():
+    args = request.args
+    k = check_exists(args.get('k', type=int), 'k')
+    ke = check_exists(args.get('ke', type=int), 'ke')
+    datasetID = check_exists(args.get('datasetID'), 'datasetID')
+    st = check_exists(args.get('st', type=float), 'st')
+    distance = check_exists(args.get('distance', type=str), 'distance')
+    queryType = check_exists(args.get('queryType', type=str), 'queryType')
+    index = check_exists(args.get('index', type=int), 'index')
+    start = check_exists(args.get('start', -1, type=int), 'start')
+    end = check_exists(args.get('end', -1, type=int), 'end')
+
+    key = (datasetID, st, distance)
+    if key in preprocessed:
+        name = make_name(*key)
+        query_name = name
+        target_name = name
+        ksim = pygenex.ksim(k, ke, target_name, query_name, index, start, end)
+        for result in ksim:
+            raw = pygenex.getTimeSeries(name, 
+                                        result.get('data').get('index'),
+                                        result.get('data').get('start'),
+                                        result.get('data').get('end'))
+
+            result['raw'] = raw
+        return jsonify(ksim)
+
+         
+
+    raise ServerException(
+        'Please call "/preprocess" first to ensure the dataset is processed.'
+    )
