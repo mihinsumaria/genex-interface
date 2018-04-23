@@ -1,29 +1,20 @@
 import json
+import logging
 import os
 
+import pygenex
 from flask import jsonify, render_template, request
 
-import pygenex
 from app import app
 
+from .cache import GenexCache
+from .utils import *
+from .exceptions import ServerException
 from .picture import get_group_density_base64, get_line_thumbnail_base64
-from .exceptions import ServerException, ArgumentRequired
 
 GROUPS_SIZE_FOLDER = 'local/groupsize'
 
-
-def check_exists(arg, arg_name=''):
-    if arg is None:
-        raise ArgumentRequired(arg_name)
-    return arg
-
-
-def make_name(ID, st, distance):
-    return str(ID) + str(st) + str(distance)
-
-
-def attach_index(data):
-    return [(i, v) for i, v in enumerate(data)]
+cache = GenexCache(default_timeout=0, threshold=1)
 
 
 @app.errorhandler(ServerException)
@@ -62,9 +53,6 @@ def get_distances():
     return jsonify(all_distances)
 
 
-preprocessed = {}
-
-
 def get_names_and_thumbnails(name, count):
     allTimeSeries = []
     for i in range(count):
@@ -78,8 +66,9 @@ def get_names_and_thumbnails(name, count):
 
 def load_and_group_dataset(datasetID, st, distance):
     key = (datasetID, st, distance)
-    if key in preprocessed:
-        return preprocessed[key]
+    if cache.has(key):
+        app.logger.debug('Found cache for %s', key)
+        return cache.get(key)
     else:
         # Read dataset list
         with open('datasets.json', 'r') as datasets_json:
@@ -103,7 +92,7 @@ def load_and_group_dataset(datasetID, st, distance):
         subsequences = load_details['count'] * load_details['length']\
             * (load_details['length'] - 1) / 2
         density = get_group_density_base64(group_size_path)
-        preprocessed[key] = {
+        info = {
             'count': load_details['count'],
             'length': load_details['length'],
             'subseq': subsequences,
@@ -111,7 +100,8 @@ def load_and_group_dataset(datasetID, st, distance):
             'groupDensity': density,
             'timeSeries': allTimeSeries
         }
-        return preprocessed[key]
+        cache.set(key, info)
+        return info
 
 
 @app.route('/preprocess', methods=['POST'])
@@ -132,16 +122,17 @@ def get_sequence():
     distance = check_exists(args.get('distance', type=str), 'distance')
     sequenceIndex = check_exists(args.get('index', type=int), 'index')
 
-    key = (datasetID, st, distance)
-    if key in preprocessed:
-        name = make_name(*key)
-        series = pygenex.getTimeSeries(name, sequenceIndex)
-        series = attach_index(series)
-        return jsonify(series)
+    load_and_group_dataset(datasetID, st, distance)
+
+    name = make_name(datasetID, st, distance)
+    series = pygenex.getTimeSeries(name, sequenceIndex)
+    series = attach_index(series)
+    return jsonify(series)
 
     raise ServerException(
         'Please call "/preprocess" first to ensure the dataset is processed.'
     )
+
 
 @app.route('/ksim')
 def get_ksim():
@@ -156,23 +147,17 @@ def get_ksim():
     start = check_exists(args.get('start', -1, type=int), 'start')
     end = check_exists(args.get('end', -1, type=int), 'end')
 
-    key = (datasetID, st, distance)
-    if key in preprocessed:
-        name = make_name(*key)
-        query_name = name
-        target_name = name
-        ksim = pygenex.ksim(k, ke, target_name, query_name, index, start, end)
-        for result in ksim:
-            raw = pygenex.getTimeSeries(name, 
-                                        result['data']['index'],
-                                        result['data']['start'],
-                                        result['data']['end'])
+    load_and_group_dataset(datasetID, st, distance)
 
-            result['raw'] = raw
-        return jsonify(ksim)
+    name = make_name(datasetID, st, distance)
+    query_name = name
+    target_name = name
+    ksim = pygenex.ksim(k, ke, target_name, query_name, index, start, end)
+    for result in ksim:
+        raw = pygenex.getTimeSeries(name,
+                                    result['data']['index'],
+                                    result['data']['start'],
+                                    result['data']['end'])
 
-         
-
-    raise ServerException(
-        'Please call "/preprocess" first to ensure the dataset is processed.'
-    )
+        result['raw'] = raw
+    return jsonify(ksim)

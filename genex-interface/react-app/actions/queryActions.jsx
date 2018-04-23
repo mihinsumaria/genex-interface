@@ -1,7 +1,7 @@
 import queryString from 'query-string'
 import {
   UPDATE_SELECTED_QUERY,
-  UPDATE_QUERY_DATA,
+  UPDATE_QUERY_RAW_DATA,
 } from './actionTypes';
 
 import { handleErrors, logError } from './handleErrors';
@@ -29,12 +29,14 @@ const requestGetSequence = (datasetID, distance, st, index) => {
 
     const stringified = queryString.stringify(params);
 
+    // Call this action with nothing to trigger the spinner
+    dispatch(updateQueryData());
     fetch("/sequence?" + stringified)
       .then(handleErrors)
       .then(response => (response.json()))
       .then(raw => {
         // TODO: change to accomodate 'upload' and 'draw'
-        dispatch(updateQueryData('dataset', raw))
+        dispatch(updateQueryData('dataset', raw));
       })
       .catch(logError);
   }
@@ -46,7 +48,7 @@ const requestGetSequence = (datasetID, distance, st, index) => {
  * @param {array} raw raw data to update.
  */
 const updateQueryData = (queryType, raw) => ({
-  type: UPDATE_QUERY_DATA
+  type: UPDATE_QUERY_RAW_DATA
   , queryType
   , raw
 })

@@ -25,7 +25,7 @@ class QuerySubsequenceSelectContainer extends React.Component {
 	}
 
 	render() {
-		const { selected, series, seriesName } = this.props;
+		const { selected, series, seriesName, isLoading } = this.props;
 		const type = selected.type;
 		const start = selected[type].start;
 		const end = selected[type].end;
@@ -58,6 +58,7 @@ class QuerySubsequenceSelectContainer extends React.Component {
 				initStart={start}
 				initEnd={end - 1}
 				seriesName={seriesName}
+				isLoading={isLoading}
 			/>
 
 		return (
@@ -77,7 +78,8 @@ QuerySubsequenceSelectContainer.propTypes = {
 	selected: PropTypes.object,
 	series: PropTypes.array,
 	seriesName: PropTypes.string,
-	onQueryChange: PropTypes.func.isRequired,
+	onQueryChange: PropTypes.func,
+	isLoading: PropTypes.bool,
 };
 
 const mapStateToProps = state => {
@@ -87,7 +89,8 @@ const mapStateToProps = state => {
 	return {
 		selected,
 		series: raw[type],
-		seriesName: query && query.name
+		seriesName: query && query.name,
+		isLoading: raw.isLoading
 	}
 };
 

@@ -1,7 +1,7 @@
 import {
   GET_ALL_DATASET_QUERIES,
   UPDATE_SELECTED_QUERY,
-  UPDATE_QUERY_DATA
+  UPDATE_QUERY_RAW_DATA
 } from '../actions/actionTypes'
 
 export default (
@@ -21,6 +21,7 @@ export default (
       },
     },
     raw: {
+      isLoading: false,
       dataset: [],
       upload: [],
     }
@@ -47,11 +48,21 @@ export default (
         ...state,
         selected: selected
       };
-    case UPDATE_QUERY_DATA:
+    case UPDATE_QUERY_RAW_DATA:
+      if (!action.queryType) {
+        return {
+          ...state,
+          raw: {
+            ...state.raw,
+            isLoading: true
+          }
+        }
+      }
       return {
         ...state,
         raw: {
           ...state.raw,
+          isLoading: false,
           [action.queryType]: action.raw
         }
       }

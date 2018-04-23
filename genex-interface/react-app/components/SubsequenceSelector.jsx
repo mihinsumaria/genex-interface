@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Button, Icon } from 'semantic-ui-react'
+import { Modal, Button, Icon, Dimmer, Loader } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official'
@@ -30,7 +30,15 @@ class SubsequenceSelector extends React.Component {
   }
 
   render() {
-    const { data, onRangeSelect, initStart, initEnd, seriesName } = this.props;
+    const { 
+      data,
+      onRangeSelect,
+      initStart,
+      initEnd,
+      seriesName,
+      isLoading,
+    } = this.props;
+
     const options = {
       title: { text: '' },
       series: [{
@@ -72,9 +80,18 @@ class SubsequenceSelector extends React.Component {
         }
       }
     }
+
+    const Overlay = (props) => (
+      props.loading ?
+        <Dimmer active inverted>
+          <Loader />
+        </Dimmer> 
+        : <div onClick={this.openModal} className='overlay'/>
+    );
+
     return (
       <Modal
-        trigger={<div onClick={this.openModal} className='overlay' />}
+        trigger={<Overlay loading={isLoading} />}
         open={this.state.modalOpen}
         onClose={this.closeModal}
       >
@@ -105,6 +122,7 @@ SubsequenceSelector.propTypes = {
   initStart: PropTypes.number,
   initEnd: PropTypes.number,
   seriesName: PropTypes.string,
+  isLoading: PropTypes.bool,
 };
 
 export default SubsequenceSelector;
