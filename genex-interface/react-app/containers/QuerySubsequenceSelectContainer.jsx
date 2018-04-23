@@ -25,7 +25,7 @@ class QuerySubsequenceSelectContainer extends React.Component {
 	}
 
 	render() {
-		const { selected, raw } = this.props;
+		const { selected, raw, dataset } = this.props;
 		const queryType = selected.type;
 		const start = selected[queryType].start;
 		const end = selected[queryType].end;
@@ -52,7 +52,7 @@ class QuerySubsequenceSelectContainer extends React.Component {
 		}
 
 		let seriesIndex = (queryType === 'dataset') ? selected.dataset.index : selected.upload.index;
-		const seriesName = 'Series ' + seriesIndex.toString()
+		const seriesName = 'Series ' + dataset[seriesIndex]['name'];
 
 		const subsequenceSelector = raw[queryType] && raw[queryType].length > 0 &&
 			<SubsequenceSelector
@@ -79,12 +79,14 @@ class QuerySubsequenceSelectContainer extends React.Component {
 QuerySubsequenceSelectContainer.propTypes = {
 	selected: PropTypes.object,
 	raw: PropTypes.object,
+	dataset: PropTypes.array,
 	onQueryChange: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
 	selected: state.query.selected,
 	raw: state.query.raw,
+	dataset: state.query.allQueries.dataset,
 });
 
 const mapDispatchToProps = dispatch => ({
