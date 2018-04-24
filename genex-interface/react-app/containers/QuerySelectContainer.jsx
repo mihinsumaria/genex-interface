@@ -27,21 +27,11 @@ class QuerySelectContainer extends React.Component {
   render() {
     const {
       allQueries,
-      dataset,
       selected,
-      getSequenceFromDataset,
-      onQueryChange,
+      onFromDatasetRowClick,
+      onUploadRowClick,
       uploadQuery
     } = this.props;
-
-    const fromDatasetRowClickHandler = (selectedIndex) => {
-      onQueryChange('dataset', {
-        index: selectedIndex,
-        start: 0,
-        end: dataset.length,
-      });
-      getSequenceFromDataset(selectedIndex);
-    }
 
     let panes = [
       {
@@ -49,7 +39,7 @@ class QuerySelectContainer extends React.Component {
           <Tab.Pane>
             <QueryTable
               queries={allQueries.dataset}
-              rowClickHandler={fromDatasetRowClickHandler}
+              rowClickHandler={onFromDatasetRowClick}
               selectedIndex={selected.dataset.index} />
           </Tab.Pane>
       },
@@ -59,7 +49,7 @@ class QuerySelectContainer extends React.Component {
             <QueryUploader onSubmit={uploadQuery} />
             <QueryTable
               queries={allQueries.upload}
-              //rowClickHandler={fromDatasetRowClickHandler}
+              rowClickHandler={onUploadRowClick}
               selectedIndex={selected.upload.index} />
 
           </Tab.Pane>
@@ -75,11 +65,11 @@ class QuerySelectContainer extends React.Component {
 };
 
 QuerySelectContainer.propTypes = {
-  dataset: PropTypes.object,
   allQueries: PropTypes.object,
   selected: PropTypes.object,
-  onQueryChange: PropTypes.func.isRequired,
-  getSequenceFromDataset: PropTypes.func.isRequired,
+  onQueryChange: PropTypes.func,
+  onFromDatasetRowClick: PropTypes.func,
+  onUploadRowClick: PropTypes.func,
   uploadQuery: PropTypes.func.isRequired
 };
 
@@ -93,23 +83,28 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
-    onQueryChange: updateSelectedQuery,
-    getSequenceFromDataset: requestGetSequence,
+    updateSelectedQuery,
+    requestGetSequence,
     uploadQuery
   }, dispatch)
 );
 
 const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
   const { dataset, distance, st, selected, allQueries } = propsFromState;
+  const { updateSelectedQuery, requestGetSequence, uploadQuery } = propsFromDispatch;
   return {
-    dataset, selected, allQueries,
-    ...propsFromDispatch,
-    getSequenceFromDataset: (index) => {
-      propsFromDispatch.getSequenceFromDataset(
-        dataset.ID,
-        distance,
-        st,
-        index)
+    selected, allQueries, uploadQuery,
+    onQueryChange: updateSelectedQuery,
+    onFromDatasetRowClick: (index) => {
+      updateSelectedQuery('dataset', {
+        index: index,
+        start: 0,
+        end: dataset.length,
+      });
+      requestGetSequence(dataset.ID, distance, st, index);
+    },
+    onUploadRowClick: (index) => {
+
     }
   }
 };
