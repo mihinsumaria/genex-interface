@@ -1,14 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types'
-import { Tab } from 'semantic-ui-react'
-import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
+import { Tab } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   requestGetSequence,
   updateSelectedQuery,
   uploadQuery
-} from '../actions/queryActions'
-import QueryTable from '../components/QueryTable.jsx'
-import QueryUploader from '../components/QueryUploader.jsx'
+} from '../actions/queryActions';
+import QueryTable from '../components/QueryTable.jsx';
+import QueryUploader from '../components/QueryUploader.jsx';
 
 class QuerySelectContainer extends React.Component {
 
@@ -27,16 +28,11 @@ class QuerySelectContainer extends React.Component {
     const {
       allQueries,
       dataset,
-      distance,
-      st,
       selected,
-      getSequenceCreator,
+      getSequence,
       onQueryChange,
       uploadQuery
     } = this.props;
-
-    // TODO: use mergeProps to simplify this 
-    const getSequence = getSequenceCreator(dataset.ID, distance, st);
 
     const fromDatasetRowClickHandler = (selectedIndex) => {
       onQueryChange('dataset', {
@@ -83,7 +79,7 @@ QuerySelectContainer.propTypes = {
   allQueries: PropTypes.object,
   selected: PropTypes.object,
   onQueryChange: PropTypes.func.isRequired,
-  getSequenceCreator: PropTypes.func.isRequired,
+  getSequence: PropTypes.func.isRequired,
   uploadQuery: PropTypes.func.isRequired
 };
 
@@ -95,24 +91,25 @@ const mapStateToProps = state => ({
   selected: state.query.selected,
 });
 
-const mapDispatchToProps = dispatch => ({
-  onQueryChange(queryType, params) {
-    dispatch(updateSelectedQuery(queryType, params));
-  },
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    onQueryChange: updateSelectedQuery,
+    getSequence: requestGetSequence,
+    uploadQuery
+  }, dispatch)
+);
 
-  getSequenceCreator(datasetID, distance, st) {
-    return (selected) => {
-      dispatch(requestGetSequence(datasetID, distance, st, selected));
+const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
+  const { dataset, distance, st } = propsFromState;
+  return {
+    getSequence: (selected) => {
+      propsFromDispatch.getSequence(dataset.datasetID, distance, st, selected)
     }
-  },
-
-  uploadQuery(ev) {
-    let formData = new FormData(ev.target);
-    dispatch(uploadQuery(formData));
   }
-})
+};
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  mergeProps
 )(QuerySelectContainer);

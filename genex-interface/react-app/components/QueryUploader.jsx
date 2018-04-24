@@ -6,6 +6,12 @@ export default function QueryUploader(props) {
   const fileInputStyle = {
     width: '300px'
   }
+
+  handleOnSubmit = (ev) => {
+    const formData = new FormData(ev.target);
+    this.props.onSubmit(formData);
+  }
+
   return (
     <Form onSubmit={props.onSubmit}>
       <Form.Group inline widths='equal'>

@@ -15,7 +15,7 @@ from .utils import *
 GROUPS_SIZE_FOLDER = 'local/groupsize'
 UPLOAD_PATH = 'datasets/uploaded_query.txt'
 ALLOWED_EXTENSIONS = set(['txt', 'csv'])
-cache = GenexCache(default_timeout=0, threshold=1)
+cache = GenexCache(default_timeout=0, threshold=10)
 
 
 @app.errorhandler(ServerException)
