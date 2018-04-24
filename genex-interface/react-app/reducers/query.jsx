@@ -18,6 +18,9 @@ export default (
         end: -1,
       },
       upload: {
+        index: -1,
+        start: -1,
+        end: -1,
       },
     },
     selectedRaw: {

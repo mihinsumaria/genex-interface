@@ -89,6 +89,7 @@ const uploadQuery = (formData) => {
 export {
   updateAllQueries
   , updateSelectedQuery
+  , updateSelectedQueryRawData
   , requestGetSequence
   , uploadQuery
 };

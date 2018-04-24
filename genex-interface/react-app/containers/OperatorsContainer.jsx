@@ -61,7 +61,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({
-			onOperatorChange: updateOperator
+		onOperatorChange: updateOperator
 	}, dispatch)
 );
 
