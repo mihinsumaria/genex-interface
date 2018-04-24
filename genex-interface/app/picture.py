@@ -15,8 +15,6 @@ import squarify
 from matplotlib.collections import PatchCollection
 from matplotlib.patches import Rectangle
 
-matplotlib.use('Agg')
-
 logger = logging.getLogger(__name__)
 
 MAX_RECT = 500

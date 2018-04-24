@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators }from 'redux';
 import Highcharts from 'highcharts';
 import NoDataToDisplay from 'highcharts/modules/no-data-to-display';
 import HighchartsReact from 'highcharts-react-official'
@@ -94,11 +95,11 @@ const mapStateToProps = state => {
 	}
 };
 
-const mapDispatchToProps = dispatch => ({
-	onQueryChange(queryType, params) {
-		dispatch(updateSelectedQuery(queryType, params));
-	},
-})
+const mapDispatchToProps = dispatch => (
+	bindActionCreators({
+		onQueryChange: updateSelectedQuery
+	}, dispatch)
+);
 
 export default connect(
 	mapStateToProps,

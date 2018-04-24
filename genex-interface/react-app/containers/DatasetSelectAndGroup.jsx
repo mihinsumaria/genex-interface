@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import {
   requestLoadAndGroupDataset,
@@ -92,17 +93,13 @@ const mapStateToProps = state => ({
   allDistances: state.params.allDistances,
 });
 
-const mapDispatchToProps = dispatch => ({
-  onGroupClick(dataset, distance, st) {
-    dispatch(requestLoadAndGroupDataset(dataset, distance, st));
-  },
-  getAllDatasets() {
-    dispatch(requestGetAllDatasets());
-  },
-  getAllDistances() {
-    dispatch(requestGetAllDistances());
-  }
-});
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    onGroupClick: requestLoadAndGroupDataset,
+    getAllDatasets: requestGetAllDatasets,
+    getAllDistances: requestGetAllDistances
+  }, dispatch)
+);
 
 export default connect(
   mapStateToProps,

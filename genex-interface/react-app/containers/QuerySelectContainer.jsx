@@ -35,6 +35,7 @@ class QuerySelectContainer extends React.Component {
       uploadQuery
     } = this.props;
 
+    // TODO: use mergeProps to simplify this 
     const getSequence = getSequenceCreator(dataset.ID, distance, st);
 
     const fromDatasetRowClickHandler = (selectedIndex) => {

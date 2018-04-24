@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { Header, Tab } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 import { updateOperator } from '../actions/preprocessActions'
 import FindBestMatches from '../components/FindBestMatches.jsx'
 import FindMotif from '../components/FindMotif.jsx'
@@ -58,11 +59,11 @@ const mapStateToProps = state => ({
 	operator: state.params.operator,
 });
 
-const mapDispatchToProps = dispatch => ({
-	onOperatorChange(currentOperator, params) {
-		dispatch(updateOperator(currentOperator, params));
-	}
-})
+const mapDispatchToProps = dispatch => (
+	bindActionCreators({
+			onOperatorChange: updateOperator
+	}, dispatch)
+);
 
 export default connect(
 	mapStateToProps,
