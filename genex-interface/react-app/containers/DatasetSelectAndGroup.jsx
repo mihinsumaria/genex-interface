@@ -48,21 +48,21 @@ class DatasetSelectAndGroup extends React.Component {
     return (
       <Form loading={this.props.isGrouping} size='small' error={hasError}>
         <Form.Select
-          label='Choose a dataset:'
+          label='Choose a dataset'
           name='dataset'
           options={allDatasets}
           onChange={this.onParamChange}
           value={dataset}
         />
         <Form.Select
-          label='Choose a distance:'
+          label='Choose a distance'
           name='distance'
           options={allDistances}
           onChange={this.onParamChange}
           value={distance}
         />
         <Form.Input
-          label={`Select a similarity threshold: ${st}`}
+          label={`Select a similarity threshold (${st})`}
           type='range'
           min={0.1}
           max={1}

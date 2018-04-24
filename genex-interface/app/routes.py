@@ -122,13 +122,16 @@ def upload_sequences():
                 filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
     query_file = check_exists(request.files.get('queryFile'), 'queryFile')
+    has_name_col = request.form.get('hasNameCol', False, type=bool)
     if query_file.filename == '':
         raise FileError('No file selected')
 
     if query_file and allowed_file(query_file.filename):
         query_file.save(UPLOAD_PATH)
         # TODO: limit the size of the uploaded set
-        load_details = pygenex.loadDataset('upload', UPLOAD_PATH)
+        load_details = pygenex.loadDataset('upload',
+                                           UPLOAD_PATH,
+                                           hasNameCol=has_name_col)
         pygenex.normalize('upload')
         allTimeSeries = get_names_and_thumbnails('upload',
                                                  load_details['count'])

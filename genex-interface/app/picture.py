@@ -18,7 +18,7 @@ from matplotlib.patches import Rectangle
 logger = logging.getLogger(__name__)
 
 MAX_RECT = 500
-COUNT_PCT = 0.5
+COUNT_PCT = 0.25
 
 HEATMAP_WIDTH = 5
 HEATMAP_HEIGHT = 2

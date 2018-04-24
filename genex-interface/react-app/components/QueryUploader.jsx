@@ -13,13 +13,14 @@ export default function QueryUploader(props) {
   }
 
   return (
-    <Form onSubmit={handleOnsubmit}>
+    <Form onSubmit={handleOnsubmit} size='tiny'>
+      <Form.Input
+        name='queryFile'
+        label='Select a query file'
+        type='file' />
       <Form.Group inline widths='equal'>
-        <Form.Input
-          name='queryFile'
-          type='file'
-          style={fileInputStyle} />
-        <Form.Button type='submit' fluid>Upload</Form.Button>
+        <Form.Checkbox name='hasNameCol' label='Has name column' />
+        <Form.Button floated='right' type='submit' >Upload</Form.Button>
       </Form.Group>
     </Form>
   );
