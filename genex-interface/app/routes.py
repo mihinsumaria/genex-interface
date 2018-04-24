@@ -132,6 +132,10 @@ def upload_sequences():
         pygenex.normalize('upload')
         allTimeSeries = get_names_and_thumbnails('upload',
                                                  load_details['count'])
+        for i in range(load_details['count']):
+            series = pygenex.getTimeSeries('upload', i)
+            allTimeSeries[i]['raw'] = attach_index(series)
+
         pygenex.unloadDataset('upload')
         os.remove(UPLOAD_PATH)
         return jsonify(allTimeSeries)
@@ -184,5 +188,5 @@ def get_ksim():
                                     result['data']['start'],
                                     result['data']['end'])
 
-        result['raw'] = raw
+        result['raw'] = attach_index(raw)
     return jsonify(ksim)
