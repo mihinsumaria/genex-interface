@@ -6,7 +6,7 @@ git:
   submodules:
     false
 
-before_install:
+script:
   - echo -e "machine github.com\n  login ctring\n  password $CI_USER_PASSWORD" >>~/.netrc
   - git submodule update --init --recursive
   - sudo apt-get install -qq libreadline6 libreadline6-dev python-dev
@@ -15,12 +15,10 @@ before_install:
   - cd boost_1_66_0/
   - sudo ./bootstrap.sh --with-libraries=serialization,iostreams,python,test
   - sudo ./b2 install >/dev/null 2>&1
-  - cd ../genex-interface
-  - npm install
-
-script:
+  - cd ..
   - ./install_pygenex.sh
   - cd genex-interface
   - ./test.sh
+  - npm install
   - npm run build
   
