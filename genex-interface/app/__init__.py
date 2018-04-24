@@ -13,6 +13,6 @@ streamHandler.setFormatter(formatter)
 
 logger = app.logger
 logger.setLevel(logging.DEBUG)
-logger.addHandler(streamHandler)
+# logger.addHandler(streamHandler)
 
 from app import routes
