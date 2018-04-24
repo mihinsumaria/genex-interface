@@ -2,10 +2,10 @@ import queryString from 'query-string'
 import {
   UPDATE_ALL_QUERIES,
   UPDATE_SELECTED_QUERY,
-  UPDATE_QUERY_RAW_DATA,
+  UPDATE_SELECTED_QUERY_RAW_DATA,
 } from './actionTypes';
 
-import { handleErrors, logError } from './handleErrors';
+import handleErrors, { logError } from './handleErrors';
 
 /**
  * Updates QuerySelectContainer with new queries
@@ -44,17 +44,28 @@ const requestGetSequence = (datasetID, distance, st, index) => {
     const stringified = queryString.stringify(params);
 
     // Call this action with nothing to trigger the spinner
-    dispatch(updateQueryData());
+    dispatch(updateSelectedQueryRawData());
     fetch("/sequence?" + stringified)
       .then(handleErrors)
       .then(response => (response.json()))
       .then(raw => {
         // TODO: change to accomodate 'upload' and 'draw'
-        dispatch(updateQueryData('dataset', raw));
+        dispatch(updateSelectedQueryRawData('dataset', raw));
       })
       .catch(logError);
   }
 }
+
+/**
+ * Updates data of a query type.
+ * @param {string} queryType type of query.
+ * @param {array} raw raw data to update.
+ */
+const updateSelectedQueryRawData = (queryType, raw) => ({
+  type: UPDATE_SELECTED_QUERY_RAW_DATA
+  , queryType
+  , raw
+})
 
 /**
  * Upload a query file.
@@ -74,17 +85,6 @@ const uploadQuery = (formData) => {
       .catch(logError);
   };
 }
-
-/**
- * Updates data of a query type.
- * @param {string} queryType type of query.
- * @param {array} raw raw data to update.
- */
-const updateQueryData = (queryType, raw) => ({
-  type: UPDATE_QUERY_RAW_DATA
-  , queryType
-  , raw
-})
 
 export {
   updateAllQueries

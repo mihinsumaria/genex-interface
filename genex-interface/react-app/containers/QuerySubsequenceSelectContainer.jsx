@@ -84,14 +84,14 @@ QuerySubsequenceSelectContainer.propTypes = {
 };
 
 const mapStateToProps = state => {
-	const { selected, raw, allQueries } = state.query;
+	const { selected, selectedRaw, allQueries } = state.query;
 	const type = selected.type;
 	const query = allQueries[type][selected[type].index];
 	return {
 		selected,
-		series: raw[type],
+		series: selectedRaw[type],
 		seriesName: query && query.name,
-		isLoading: raw.isLoading
+		isLoading: selectedRaw.isLoading
 	}
 };
 

@@ -29,7 +29,7 @@ class QuerySelectContainer extends React.Component {
       allQueries,
       dataset,
       selected,
-      getSequence,
+      getSequenceFromDataset,
       onQueryChange,
       uploadQuery
     } = this.props;
@@ -40,7 +40,7 @@ class QuerySelectContainer extends React.Component {
         start: 0,
         end: dataset.length,
       });
-      getSequence(selectedIndex);
+      getSequenceFromDataset(selectedIndex);
     }
 
     let panes = [
@@ -79,7 +79,7 @@ QuerySelectContainer.propTypes = {
   allQueries: PropTypes.object,
   selected: PropTypes.object,
   onQueryChange: PropTypes.func.isRequired,
-  getSequence: PropTypes.func.isRequired,
+  getSequenceFromDataset: PropTypes.func.isRequired,
   uploadQuery: PropTypes.func.isRequired
 };
 
@@ -94,16 +94,22 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
     onQueryChange: updateSelectedQuery,
-    getSequence: requestGetSequence,
+    getSequenceFromDataset: requestGetSequence,
     uploadQuery
   }, dispatch)
 );
 
 const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
-  const { dataset, distance, st } = propsFromState;
+  const { dataset, distance, st, selected, allQueries } = propsFromState;
   return {
-    getSequence: (selected) => {
-      propsFromDispatch.getSequence(dataset.datasetID, distance, st, selected)
+    dataset, selected, allQueries,
+    ...propsFromDispatch,
+    getSequenceFromDataset: (index) => {
+      propsFromDispatch.getSequenceFromDataset(
+        dataset.ID,
+        distance,
+        st,
+        index)
     }
   }
 };
