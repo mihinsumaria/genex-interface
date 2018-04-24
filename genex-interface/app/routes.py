@@ -8,12 +8,13 @@ from flask import jsonify, render_template, request
 from app import app
 
 from .cache import GenexCache
-from .utils import *
-from .exceptions import ServerException
+from .exceptions import ServerException, FileError
 from .picture import get_group_density_base64, get_line_thumbnail_base64
+from .utils import *
 
 GROUPS_SIZE_FOLDER = 'local/groupsize'
-
+UPLOAD_PATH = 'datasets/uploaded_query.txt'
+ALLOWED_EXTENSIONS = set(['txt', 'csv'])
 cache = GenexCache(default_timeout=0, threshold=1)
 
 
@@ -33,7 +34,7 @@ def handle_runtime_error(error):
 
 @app.route('/')
 @app.route('/index')
-def index():
+def index_page():
     return render_template('index.html')
 
 
@@ -112,6 +113,30 @@ def preprocess():
     distance = check_exists(form.get('distance', type=str), 'distance')
 
     return jsonify(load_and_group_dataset(datasetID, st, distance))
+
+
+@app.route('/upload', methods=['PUT'])
+def upload_sequences():
+    def allowed_file(filename):
+        return '.' in filename and \
+                filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+    query_file = check_exists(request.files.get('queryFile'), 'queryFile')
+    if query_file.filename == '':
+        raise FileError('No file selected')
+
+    if query_file and allowed_file(query_file.filename):
+        query_file.save(UPLOAD_PATH)
+        # TODO: limit the size of the uploaded set
+        load_details = pygenex.loadDataset('upload', UPLOAD_PATH)
+        pygenex.normalize('upload')
+        allTimeSeries = get_names_and_thumbnails('upload',
+                                                 load_details['count'])
+        pygenex.unloadDataset('upload')
+        os.remove(UPLOAD_PATH)
+        return jsonify(allTimeSeries)
+
+    raise FileError('Invalid file type')
 
 
 @app.route('/sequence')

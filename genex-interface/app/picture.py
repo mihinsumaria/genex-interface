@@ -10,11 +10,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import pygal
+import pygenex
 import squarify
 from matplotlib.collections import PatchCollection
 from matplotlib.patches import Rectangle
 
-import pygenex
+matplotlib.use('Agg')
 
 logger = logging.getLogger(__name__)
 
@@ -26,6 +27,7 @@ HEATMAP_HEIGHT = 2
 LINEPLOT_WIDTH = 5
 LINEPLOT_HEIGHT = 1
 DPI = 100
+
 
 def _get_base64_encoding(fig):
     io = BytesIO()

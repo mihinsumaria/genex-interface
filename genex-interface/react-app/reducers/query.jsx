@@ -1,5 +1,5 @@
 import {
-  GET_ALL_DATASET_QUERIES,
+  UPDATE_ALL_QUERIES,
   UPDATE_SELECTED_QUERY,
   UPDATE_QUERY_RAW_DATA
 } from '../actions/actionTypes'
@@ -28,12 +28,12 @@ export default (
   },
   action) => {
   switch (action.type) {
-    case GET_ALL_DATASET_QUERIES:
+    case UPDATE_ALL_QUERIES:
       return {
         ...state,
         allQueries: {
           ...state.allQueries,
-          dataset: action.dataset
+          [action.queryType]: action.queries
         }
       };
     case UPDATE_SELECTED_QUERY:

@@ -3,9 +3,10 @@ import {
   GET_ALL_DATASETS,
   GET_ALL_DISTANCES,
   UPDATE_OPERATOR,
-  GET_ALL_DATASET_QUERIES
+  UPDATE_ALL_QUERIES
 } from './actionTypes'
 
+import { updateAllQueries } from './queryActions'
 import handleErrors, { logError } from './handleErrors'
 
 /** Makes request for a list of all datasets */
@@ -88,6 +89,7 @@ const requestLoadAndGroupDataset = (datasetID, distance, st) => {
           groups)
         );
         dispatch(updateAllQueries(
+          'dataset',
           json.timeSeries)
         );
       })
@@ -132,21 +134,9 @@ const updateOperator = (
     params
   })
 
-/**
- * Updates QuerySelectContainer with dataset queries
- * @param {list} dataset contains names and base64 thumbnails 
- * for each timeseries in the dataset. 
- */
-const updateAllQueries = (
-  dataset) => ({
-    type: GET_ALL_DATASET_QUERIES
-    , dataset
-  })
-
 export {
   requestLoadAndGroupDataset,
   requestGetAllDatasets,
   requestGetAllDistances,
-  updateOperator,
-  updateAllQueries
+  updateOperator
 };

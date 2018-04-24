@@ -9,7 +9,7 @@ class QueryTable extends React.Component {
   render() {
     const { queries, selectedIndex, rowClickHandler } = this.props;
     const onRowClick = (e, rowIndex) => {
-      rowClickHandler(rowIndex);
+      rowClickHandler && rowClickHandler(rowIndex);
     }
     return (
       <Table

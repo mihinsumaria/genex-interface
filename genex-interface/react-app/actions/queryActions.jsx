@@ -1,10 +1,24 @@
 import queryString from 'query-string'
 import {
+  UPDATE_ALL_QUERIES,
   UPDATE_SELECTED_QUERY,
   UPDATE_QUERY_RAW_DATA,
 } from './actionTypes';
 
 import { handleErrors, logError } from './handleErrors';
+
+/**
+ * Updates QuerySelectContainer with new queries
+ * @param {string} queryType can either be 'dataset', 'upload', or 'draw'
+ * @param {array} queries array of new queries. 
+ *                        Each element is a tuple of (name, thumbnail) 
+ * for each timeseries in the dataset. 
+ */
+const updateAllQueries = (queryType, queries) => ({
+    type: UPDATE_ALL_QUERIES
+    , queryType
+    , queries
+})
 
 /**
  * Updates the current selected query
@@ -43,6 +57,25 @@ const requestGetSequence = (datasetID, distance, st, index) => {
 }
 
 /**
+ * Upload a query file.
+ * @param {object} formData form data of the uploader
+ */
+const uploadQuery = (formData) => {
+  return (dispatch) => {
+    fetch('/upload', {
+      method: 'PUT',
+      body: formData
+    })
+      .then(handleErrors)
+      .then(response => (response.json()))
+      .then(series => {
+        dispatch(updateAllQueries('upload', series));
+      })
+      .catch(logError);
+  };
+}
+
+/**
  * Updates data of a query type.
  * @param {string} queryType type of query.
  * @param {array} raw raw data to update.
@@ -54,6 +87,8 @@ const updateQueryData = (queryType, raw) => ({
 })
 
 export {
-  updateSelectedQuery
+  updateAllQueries
+  , updateSelectedQuery
   , requestGetSequence
+  , uploadQuery
 };

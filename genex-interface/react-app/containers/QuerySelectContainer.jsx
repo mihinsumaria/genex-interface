@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { Tab } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { requestGetSequence, updateSelectedQuery } from '../actions/queryActions'
+import {
+  requestGetSequence,
+  updateSelectedQuery,
+  uploadQuery
+} from '../actions/queryActions'
 import QueryTable from '../components/QueryTable.jsx'
 import QueryUploader from '../components/QueryUploader.jsx'
 
@@ -28,6 +32,7 @@ class QuerySelectContainer extends React.Component {
       selected,
       getSequenceCreator,
       onQueryChange,
+      uploadQuery
     } = this.props;
 
     const getSequence = getSequenceCreator(dataset.ID, distance, st);
@@ -37,7 +42,6 @@ class QuerySelectContainer extends React.Component {
         index: selectedIndex,
         start: 0,
         end: dataset.length,
-        data: [],
       });
       getSequence(selectedIndex);
     }
@@ -55,12 +59,12 @@ class QuerySelectContainer extends React.Component {
       {
         menuItem: 'Upload', render: () =>
           <Tab.Pane>
-            <QueryUploader />
+            <QueryUploader onSubmit={uploadQuery} />
             <QueryTable
               queries={allQueries.upload}
               //rowClickHandler={fromDatasetRowClickHandler}
               selectedIndex={selected.upload.index} />
-            
+
           </Tab.Pane>
       }
     ]
@@ -79,6 +83,7 @@ QuerySelectContainer.propTypes = {
   selected: PropTypes.object,
   onQueryChange: PropTypes.func.isRequired,
   getSequenceCreator: PropTypes.func.isRequired,
+  uploadQuery: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -99,6 +104,11 @@ const mapDispatchToProps = dispatch => ({
       dispatch(requestGetSequence(datasetID, distance, st, selected));
     }
   },
+
+  uploadQuery(ev) {
+    let formData = new FormData(ev.target);
+    dispatch(uploadQuery(formData));
+  }
 })
 
 export default connect(

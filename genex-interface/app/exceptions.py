@@ -23,3 +23,9 @@ class ArgumentRequired(ServerException):
         message = 'Argument {} is required'.format(arg_name)
         ServerException.__init__(self, message, status_code, payload)
 
+
+class FileError(ServerException):
+
+    def __init__(self, msg, status_code=None, payload=None):
+        message = 'File error: {}'.format(msg)
+        ServerException.__init__(self, message, status_code, payload)
