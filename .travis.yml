@@ -10,19 +10,17 @@ before_install:
   - echo -e "machine github.com\n  login ctring\n  password $CI_USER_PASSWORD" >>~/.netrc
   - git submodule update --init --recursive
   - sudo apt-get install -qq libreadline6 libreadline6-dev python-dev
-
-install: 
   - sudo wget https://dl.bintray.com/boostorg/release/1.66.0/source/boost_1_66_0.tar.gz
   - sudo tar xzf boost_1_66_0.tar.gz
   - cd boost_1_66_0/
   - sudo ./bootstrap.sh --with-libraries=serialization,iostreams,python,test
   - sudo ./b2 install >/dev/null 2>&1
-  - pip install -r genex-interface/requirements.txt
-  - cd genex-interface
+  - cd ../genex-interface
   - npm install
 
 script:
   - ./install_pygenex.sh
   - cd genex-interface
-  - npm run build
   - ./test.sh
+  - npm run build
+  
