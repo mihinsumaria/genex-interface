@@ -16,6 +16,7 @@ import ResultVisualizationContainer from './containers/ResultVisualizationContai
 import OperatorsContainer from './containers/OperatorsContainer';
 import QuerySelectContainer from './containers/QuerySelectContainer';
 import QuerySubsequenceSelectContainer from './containers/QuerySubsequenceSelectContainer';
+import Start from './components/Start';
 
 const Banner = () => (<div id='banner'>GENEX</div>);
 
@@ -35,6 +36,8 @@ const App = () => {
 					<QuerySelectContainer />
 					<Divider horizontal>Click to open subsequence selector</Divider>
 					<QuerySubsequenceSelectContainer />
+					<Divider />
+					<Start />
 					<Divider />
 				</div>
 			</Sidebar>
