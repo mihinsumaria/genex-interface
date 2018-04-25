@@ -8,8 +8,7 @@ import { requestLoadResults } from '../actions/resultActions'
 class Start extends React.Component {
 	
 	render() {
-		const {isWorking, onStartClick, datasetID, queryIndex} = this.props;
-		const disabled = (datasetID === '') || (queryIndex === -1); 
+		const {isWorking, onStartClick, disabled} = this.props;
 		return (
 			<Button
 			fluid
@@ -28,8 +27,7 @@ class Start extends React.Component {
 Start.propTypes = {
 	isWorking: PropTypes.bool,
 	onStartClick: PropTypes.func,
-	datasetID: PropTypes.string,
-	queryIndex: PropTypes.number,
+	disabled: PropTypes.bool,
 };
 
 const mapStateToProps = state => {
@@ -60,9 +58,10 @@ const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
 	const { requestLoadResults } = propsFromDispatch;
 	const datasetID = dataset.ID;
 	const queryIndex = selected[selected.type].index;
+	const disabled = (datasetID === '') || (queryIndex === -1); 
 	return {
-		isWorking, datasetID, queryIndex,
-		onStartClick: (...props) => requestLoadResults(
+		isWorking, disabled,
+		onStartClick: () => requestLoadResults(
 			dataset
 			, distance
 			, st
