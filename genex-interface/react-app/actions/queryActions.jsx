@@ -15,9 +15,9 @@ import handleErrors, { logError } from './handleErrors';
  * for each timeseries in the dataset. 
  */
 const updateAllQueries = (queryType, queries) => ({
-    type: UPDATE_ALL_QUERIES
-    , queryType
-    , queries
+  type: UPDATE_ALL_QUERIES
+  , queryType
+  , queries
 })
 
 /**
@@ -49,7 +49,6 @@ const requestGetSequence = (datasetID, distance, st, index) => {
       .then(handleErrors)
       .then(response => (response.json()))
       .then(raw => {
-        // TODO: change to accomodate 'upload' and 'draw'
         dispatch(updateSelectedQueryRawData('dataset', raw));
       })
       .catch(logError);
