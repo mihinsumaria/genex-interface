@@ -4,22 +4,25 @@ import {
 
 export default (
 	state = {
-			isWorking: false,
-			ksim: [],
+    isWorking: false,
+    type: 'ksim',
+    ksim: [],
+    motif: [],
 	}, 
 	action) => {
 	switch(action.type) {
-	case LOAD_RESULTS:
+	  case LOAD_RESULTS:
       let newState = {
         ...state,
         isWorking: action.isWorking
       }
 
       if(!action.isWorking) {
-          newState = {
-              ...newState,
-              ksim: action.ksim
-          };
+        newState = {
+          ...newState,
+          type: action.resultType,   
+          [action.resultType]: action.result
+        };
       }
       return newState;
     default:

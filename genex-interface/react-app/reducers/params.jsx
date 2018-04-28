@@ -24,8 +24,8 @@ export default (
       density: '',
     },
     operator: {
-      current: 'kbest',
-      kbest: { k: 1 },
+      current: 'ksim',
+      ksim: { k: 1 },
     }
   },
   action) => {

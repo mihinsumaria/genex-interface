@@ -3,21 +3,21 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Button } from 'semantic-ui-react'
-import { requestLoadResults } from '../actions/resultActions'
+import { requestResult } from '../actions/resultActions'
 
 class Start extends React.Component {
-	
+
 	render() {
-		const {isWorking, onStartClick, disabled} = this.props;
+		const { isWorking, onStartClick, disabled } = this.props;
 		return (
 			<Button
-			fluid
-			size='large'
-			loading={isWorking}
-			onClick={onStartClick}
-			color='green'
-			disabled={disabled}>
-			START
+				fluid
+				size='large'
+				loading={isWorking}
+				onClick={onStartClick}
+				color='green'
+				disabled={disabled}>
+				START
 			</Button>
 		)
 
@@ -49,19 +49,19 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({
-		requestLoadResults
+		requestResult
 	}, dispatch)
 );
 
 const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
 	const { dataset, distance, st, selected, operator, isWorking } = propsFromState;
-	const { requestLoadResults } = propsFromDispatch;
+	const { requestResult } = propsFromDispatch;
 	const datasetID = dataset.ID;
 	const queryIndex = selected[selected.type].index;
-	const disabled = (datasetID === '') || (queryIndex === -1); 
+	const disabled = (datasetID === '') || (queryIndex === -1);
 	return {
 		isWorking, disabled,
-		onStartClick: () => requestLoadResults(
+		onStartClick: () => requestResult(
 			dataset
 			, distance
 			, st

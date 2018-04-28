@@ -17,7 +17,6 @@
     "query-string": "^6.0.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.1",
-    "react-highcharts": "^16.0.2",
     "react-redux": "^5.0.7",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",

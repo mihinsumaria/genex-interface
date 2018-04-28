@@ -14,7 +14,7 @@ export default function FindBestMatches(props) {
 			inline label='K = '
 			type='number'
 			size='small'
-			name='kbest'
+			name='ksim'
 			disabled={props.dataset.ID === ''}
 			min={1}
 			max={props.dataset.subseq}

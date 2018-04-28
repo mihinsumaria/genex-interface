@@ -12,7 +12,7 @@ class OperatorsContainer extends React.Component {
 	onTabChange = (e, data) => {
 		switch (data.activeIndex) {
 			case 0:
-				this.props.onOperatorChange('kbest');
+				this.props.onOperatorChange('ksim');
 				break;
 			case 1:
 				this.props.onOperatorChange('motif');
@@ -21,15 +21,15 @@ class OperatorsContainer extends React.Component {
 	}
 
 	render() {
-		let params = this.props.operator['kbest'];
+		const { dataset, operator, onOperatorChange } = this.props;
 		let panes = [
 			{
 				menuItem: 'Find Best Matches', render: () =>
 					<Tab.Pane>
 						<FindBestMatches
-							params={params}
-							onTabChange={this.props.onOperatorChange}
-							dataset={this.props.dataset} />
+							params={operator['ksim']}
+							onTabChange={onOperatorChange}
+							dataset={dataset} />
 					</Tab.Pane>
 			},
 			{
@@ -39,6 +39,7 @@ class OperatorsContainer extends React.Component {
 					</Tab.Pane>
 			}
 		]
+
 		return (
 			<Tab
 				menu={{ size: 'tiny', attached: true, tabular: true }}
