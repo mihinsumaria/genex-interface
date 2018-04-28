@@ -65,7 +65,7 @@ class ResultVisualizationContainer extends React.Component {
       },
       ...result.map((r, i) => ({
         name: r.name + ' (' + toOrdinal(i + 1) + ')',
-        data: resetX(r.raw.slice(r.data.start, r.data.end))
+        data: r.raw
       }))
     ];
 

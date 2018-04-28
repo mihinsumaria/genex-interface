@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators }from 'redux';
+import { bindActionCreators } from 'redux';
 import Highcharts from 'highcharts';
 import NoDataToDisplay from 'highcharts/modules/no-data-to-display';
 import HighchartsReact from 'highcharts-react-official'
@@ -21,7 +21,7 @@ class QuerySubsequenceSelectContainer extends React.Component {
 		end = Math.floor(end);
 		onQueryChange(selected.type, {
 			...selected[selected.type],
-			start, end
+			start, end: end + 1
 		})
 	}
 
