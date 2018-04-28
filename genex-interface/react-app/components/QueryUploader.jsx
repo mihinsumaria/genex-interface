@@ -18,8 +18,9 @@ export default function QueryUploader(props) {
         name='queryFile'
         label='Select a query file'
         type='file' />
+      <Form.Checkbox name='hasNameCol' value={1} label='Has name column' />
+
       <Form.Group inline widths='equal'>
-        <Form.Checkbox name='hasNameCol' label='Has name column' />
         <Form.Button floated='right' type='submit' >Upload</Form.Button>
       </Form.Group>
     </Form>

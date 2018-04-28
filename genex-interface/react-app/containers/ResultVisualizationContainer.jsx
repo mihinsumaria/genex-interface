@@ -16,11 +16,16 @@ function resetX(xy) {
   return xy.map((v, i) => ([i, v[1]]));
 }
 
+// Generate 1st, 2nd, 3rd, etc. (https://stackoverflow.com/a/39466341/9394418)
+function nth(n) { return ["st", "nd", "rd"][((n + 90) % 100 - 10) % 10 - 1] || "th"; }
+
+function toOrdinal(n) { return n + '<sup>' + nth(n) + '</sup>'; }
+ 
 class ResultVisualizationContainer extends React.Component {
   state = {
     numberOfSeries: 0,
     chartKey: 0,
-    chartWidth: 2000,
+    chartWidth: 1000,
   };
 
   chartContainer = React.createRef()
@@ -58,8 +63,8 @@ class ResultVisualizationContainer extends React.Component {
           legendItemClick: () => (false) // Prevent hiding the query
         }
       },
-      ...result.map((r) => ({
-        name: r.name,
+      ...result.map((r, i) => ({
+        name: r.name + ' (' + toOrdinal(i + 1) + ')',
         data: resetX(r.raw.slice(r.data.start, r.data.end))
       }))
     ];
