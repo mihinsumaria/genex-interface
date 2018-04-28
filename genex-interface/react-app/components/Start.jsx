@@ -31,19 +31,10 @@ Start.propTypes = {
 };
 
 const mapStateToProps = state => {
-	const dataset = state.params.dataset;
-	const distance = state.params.distance;
-	const st = state.params.st;
-	const selected = state.query.selected;
-	const operator = state.params.operator;
-	const isWorking = state.result.isWorking;
 	return {
-		dataset
-		, distance
-		, st
-		, selected
-		, operator
-		, isWorking
+		params: state.params,
+		query: state.query,
+		isWorking: state.result.isWorking
 	}
 };
 
@@ -54,11 +45,14 @@ const mapDispatchToProps = dispatch => (
 );
 
 const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
-	const { dataset, distance, st, selected, operator, isWorking } = propsFromState;
+	const { params, query, isWorking } = propsFromState;
+	const { dataset, distance, st, operator } = params;
 	const { requestResult } = propsFromDispatch;
-	const datasetID = dataset.ID;
-	const queryIndex = selected[selected.type].index;
-	const disabled = (datasetID === '') || (queryIndex === -1);
+
+	const queryIndex = query.selected[query.selected.type].index;
+	// Disable if either the dataset is not loaded or no query is selected
+	const disabled = (dataset.ID === '') || (queryIndex === -1);
+
 	return {
 		isWorking, disabled,
 		onStartClick: () => requestResult(
@@ -66,7 +60,7 @@ const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
 			, distance
 			, st
 			, operator
-			, selected)
+			, query)
 	}
 }
 

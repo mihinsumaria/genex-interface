@@ -26,11 +26,11 @@ class ResultVisualizationContainer extends React.Component {
   chartContainer = React.createRef()
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const result = nextProps.result;
-    const resultSeries = result[result.type];
-    if (resultSeries.length !== prevState.numberOfSeries) {
+    const { resultInfo } = nextProps;
+    const result = resultInfo[resultInfo.type].result;
+    if (result.length !== prevState.numberOfSeries) {
       return {
-        numberOfSeries: resultSeries.length,
+        numberOfSeries: result.length,
         chartKey: prevState.chartKey + 1
       };
     }
@@ -45,10 +45,11 @@ class ResultVisualizationContainer extends React.Component {
   }
 
   render() {
-    const { result, resultNames, query } = this.props;
+    const { resultInfo } = this.props;
+    const query = resultInfo[resultInfo.type].query;
+    const result = resultInfo[resultInfo.type].result;
 
-    const getY = (xy) => (xy[1]);
-    const series = result[result.type].length > 0 && [
+    const series = result.length > 0 && [
       // Always put the query as the first series
       {
         name: query.name + ' (Query)',
@@ -57,8 +58,8 @@ class ResultVisualizationContainer extends React.Component {
           legendItemClick: () => (false) // Prevent hiding the query
         }
       },
-      ...result[result.type].map((r) => ({
-        name: resultNames[r.data.index],
+      ...result.map((r) => ({
+        name: r.name,
         data: resetX(r.raw.slice(r.data.start, r.data.end))
       }))
     ];
@@ -111,25 +112,11 @@ class ResultVisualizationContainer extends React.Component {
 };
 
 ResultVisualizationContainer.propTypes = {
-  result: PropTypes.object,
-  query: PropTypes.object
+  resultInfo: PropTypes.object,
 };
 
-const mapStateToProps = state => {
-  const { allQueries, selected, selectedRaw } = state.query;
-
-  const type = selected.type;
-  const { index, start, end } = selected[type];
-  const name = allQueries[type][index] && allQueries[type][index].name;
-  const raw = selectedRaw[type];
-
-  const resultNames = allQueries.dataset.map((s) => (s.name));
-
-  return {
-    query: { name, raw, index, start, end },
-    result: state.result,
-    resultNames,
-  }
-};
+const mapStateToProps = state => ({
+  resultInfo: state.result,
+});
 
 export default connect(mapStateToProps)(ResultVisualizationContainer);

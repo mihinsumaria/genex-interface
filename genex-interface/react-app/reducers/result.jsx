@@ -6,7 +6,17 @@ export default (
 	state = {
     isWorking: false,
     type: 'ksim',
-    ksim: [],
+    ksim: {
+      query: {
+        type: 'dataset',
+        name: '',
+        index: 0,
+        start: 0,
+        end: 0,
+        raw: []
+      },
+      result: [],
+    },
     motif: [],
 	}, 
 	action) => {
@@ -21,7 +31,10 @@ export default (
         newState = {
           ...newState,
           type: action.resultType,   
-          [action.resultType]: action.result
+          [action.resultType]: {
+            query: action.frozenQuery,
+            result: action.result
+          }
         };
       }
       return newState;

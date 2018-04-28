@@ -190,6 +190,8 @@ def get_ksim():
                                     result['data']['index'],
                                     result['data']['start'],
                                     result['data']['end'])
-
+        resultName = pygenex.getTimeSeriesName(name, result['data']['index'])
         result['raw'] = attach_index(raw)
+        result['name'] = resultName
+
     return jsonify(ksim)

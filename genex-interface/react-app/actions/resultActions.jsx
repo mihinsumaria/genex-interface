@@ -10,24 +10,30 @@ const requestResult = (
   , distance
   , st
   , operator
-  , selected) => (
+  , query) => (
   (dispatch) => {
     dispatch(loadResults(true));
 
     const datasetID = dataset.ID;
-    const queryType = selected.type;
-    const { index, start, end } = selected.dataset;
+    const queryType = query.selected.type;
+    const { index, start, end } = query.selected.dataset;
 
     if (operator.current == 'ksim') {
       const k = operator.ksim.k;
-      const ke = operator.ksim.k;
+      const ke = k;
       const params = { k, ke, datasetID, st, distance, queryType, index, start, end };
       const stringified = queryString.stringify(params);
       fetch("/ksim?" + stringified)
         .then(handleErrors)
         .then(response => (response.json()))
         .then(result => {
-          dispatch(loadResults(false, 'ksim', result))
+          const frozenQuery = {
+            index, start, end,
+            type: queryType,
+            name: query.allQueries[queryType][index].name,
+            raw: query.selectedRaw[queryType]
+          };
+          dispatch(loadResults(false, 'ksim', frozenQuery, result))
         })
         .catch(logError)
     }
@@ -36,10 +42,11 @@ const requestResult = (
     }
 })
 
-const loadResults = (isWorking, resultType, result) => ({
+const loadResults = (isWorking, resultType, frozenQuery, result) => ({
   type: LOAD_RESULTS,
   isWorking,
   resultType,
+  frozenQuery,
   result
 });
 
