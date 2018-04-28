@@ -20,7 +20,7 @@ function resetX(xy) {
 function nth(n) { return ["st", "nd", "rd"][((n + 90) % 100 - 10) % 10 - 1] || "th"; }
 
 function toOrdinal(n) { return n + '<sup>' + nth(n) + '</sup>'; }
- 
+
 class ResultVisualizationContainer extends React.Component {
   state = {
     numberOfSeries: 0,
@@ -110,7 +110,10 @@ class ResultVisualizationContainer extends React.Component {
             />
           </div>
         </Grid.Column>
-        <ReactResizeDetector handleWidth onResize={this.onResize} />
+        <ReactResizeDetector handleWidth
+          onResize={this.onResize}
+          refreshMode='debounce'
+          refreshRate={100} />
       </Grid.Row>
     );
   };

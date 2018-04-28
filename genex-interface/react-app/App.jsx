@@ -46,6 +46,8 @@ class App extends React.Component {
 		const resultAreaStyle = {
 			// Change the px in `calc(...)` when according to the width of Sidebar
 			width: sidebarVisible ? 'calc(100% - 475px)' : '100%',
+			// Overriding semantic-ui .pushable > .pusher
+			transition: 'transform .5s ease,-webkit-transform .5s ease, width .5s ease'
 		};
 		return (
 			<Sidebar.Pushable style={sidebarPushableStyle}>
