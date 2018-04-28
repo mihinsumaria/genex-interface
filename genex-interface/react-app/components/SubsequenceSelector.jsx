@@ -104,7 +104,7 @@ class SubsequenceSelector extends React.Component {
           />
         </Modal.Content>
         <Modal.Actions>
-          <Button color='green' onClick={() => {
+          <Button positive onClick={() => {
             this.closeModal();
             onRangeSelect(this.range.start, this.range.end);
           }}>

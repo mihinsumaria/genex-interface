@@ -11,11 +11,10 @@ class Start extends React.Component {
 		const { isWorking, onStartClick, disabled } = this.props;
 		return (
 			<Button
-				fluid
+				fluid positive
 				size='large'
 				loading={isWorking}
 				onClick={onStartClick}
-				color='green'
 				disabled={disabled}>
 				START
 			</Button>

@@ -26,10 +26,13 @@ import QuerySelectContainer from './containers/QuerySelectContainer';
 import QuerySubsequenceSelectContainer from './containers/QuerySubsequenceSelectContainer';
 import Start from './components/Start';
 
-const Banner = () => (<div id='banner'>GENEX</div>);
+const Banner = (props) => (
+	<div id='banner'>
+		{props.children}
+	</div>
+);
 
 class App extends React.Component {
-
 	state = {
 		sidebarVisible: true
 	}
@@ -42,50 +45,56 @@ class App extends React.Component {
 
 	render() {
 		const { sidebarVisible } = this.state;
-		const sidebarPushableStyle = { height: '100%', width: '100%' };
 		const resultAreaStyle = {
-			// Change the px in `calc(...)` when according to the width of Sidebar
+			// Change the px in `calc(...)` according to the width of Sidebar
 			width: sidebarVisible ? 'calc(100% - 475px)' : '100%',
 			// Overriding semantic-ui .pushable > .pusher
 			transition: 'transform .5s ease,-webkit-transform .5s ease, width .5s ease'
 		};
 		return (
-			<Sidebar.Pushable style={sidebarPushableStyle}>
-				<Sidebar
-					animation='push'
-					width='very wide'
-					visible={sidebarVisible}
-					id='sidebar'>
-					<Banner />
-					<div id='controller'>
-						<Header as={HEADER_SIZE} icon='options' dividing content='Parameters' />
-						<DatasetSelectAndGroup />
-						<Divider />
-						<OperatorsContainer />
-						<Header as={HEADER_SIZE} icon='hand pointer' dividing content='Query Selector' />
-						<QuerySelectContainer />
-						<Divider horizontal>Click to open subsequence selector</Divider>
-						<QuerySubsequenceSelectContainer />
-						<Divider />
-						<Start />
-						<Divider />
-					</div>
-				</Sidebar>
-				<Sidebar.Pusher style={resultAreaStyle}>
-					<Grid style={{ padding: '15px' }}>
-						<DatasetOverviewContainer />
-						<ResultVisualizationContainer />
-					</Grid>
+			<div className='full-view'>
+				<Banner>
 					<Button
-						style={{ position: 'absolute', bottom: '15px' }}
-						attached='right'
-						onClick={this.onSidebarToggleClick}
-						icon labelPosition='left'>
-						{sidebarVisible ? "Hide" : "Show"}
-						<Icon name='list' />
+						icon='sidebar'
+					  floated='left'
+						compact circular inverted
+						onClick={this.onSidebarToggleClick}>
 					</Button>
-				</Sidebar.Pusher>
-			</Sidebar.Pushable>
+					<a href='https://www.wpi.edu/' target='_blank' 
+						style={{ float: 'right', marginRight: '10px' }}>
+						<img 	src='/static/wpilogo.png' width={90} />
+					</a>
+					<div id='title'>GENEX</div>
+				</Banner>
+				<Sidebar.Pushable
+					className='full-view'
+					style={{ height: 'calc(100% - 56px)' }}>
+					<Sidebar
+						animation='push'
+						width='very wide'	// Remember to change resultAreaStyle.width accordingly
+						visible={sidebarVisible}>
+						<div id='controller'>
+							<Header as={HEADER_SIZE} icon='options' dividing content='Parameters' />
+							<DatasetSelectAndGroup />
+							<Divider />
+							<OperatorsContainer />
+							<Header as={HEADER_SIZE} icon='hand pointer' dividing content='Query Selector' />
+							<QuerySelectContainer />
+							<Divider horizontal>Click to open subsequence selector</Divider>
+							<QuerySubsequenceSelectContainer />
+							<Divider />
+							<Start />
+							<Divider />
+						</div>
+					</Sidebar>
+					<Sidebar.Pusher style={resultAreaStyle}>
+						<Grid style={{ padding: '15px' }}>
+							<DatasetOverviewContainer />
+							<ResultVisualizationContainer />
+						</Grid>
+					</Sidebar.Pusher>
+				</Sidebar.Pushable>
+			</div>
 		);
 	}
 };
