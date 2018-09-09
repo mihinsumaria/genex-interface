@@ -111,3 +111,7 @@ node_modules/
 # Bundle
 bundle.js
 bundle.js.map
+
+# Boost
+boost_1_66_0/
+boost_1_66_0.tar.gz

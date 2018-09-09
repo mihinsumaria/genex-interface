@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Grid, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
+import ResultTable from '../components/ResultTable.jsx'
+
 import ReactResizeDetector from 'react-resize-detector';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
@@ -71,7 +73,7 @@ class ResultVisualizationContainer extends React.Component {
 
     let options = {
       chart: {
-        height: 400,
+        height: 300,
         width: this.state.chartWidth
       },
       series,
@@ -98,23 +100,34 @@ class ResultVisualizationContainer extends React.Component {
     };
 
     return (
-      <Grid.Row columns={1}>
-        <Grid.Column width='sixteen'>
-          <Header as={HEADER_SIZE} icon='bullseye' dividing content='Result Visualization' />
-          <div ref={this.chartContainer}>
-            <HighchartsReact
-              key={this.state.chartKey}
-              highcharts={Highcharts}
-              constructorType={'chart'}
-              options={options}
-            />
-          </div>
-        </Grid.Column>
-        <ReactResizeDetector handleWidth
-          onResize={this.onResize}
-          refreshMode='debounce'
-          refreshRate={100} />
-      </Grid.Row>
+      <Grid>
+        <Grid.Row columns={1}>
+          <Grid.Column width='sixteen'>
+            <Header as={HEADER_SIZE} icon='bullseye' dividing content='Result Visualization' />
+            <div ref={this.chartContainer}>
+              <HighchartsReact
+                key={this.state.chartKey}
+                highcharts={Highcharts}
+                constructorType={'chart'}
+                options={options}
+              />
+            </div>
+          </Grid.Column>
+          <ReactResizeDetector handleWidth
+            onResize={this.onResize}
+            refreshMode='debounce'
+            refreshRate={100} />
+        </Grid.Row>
+        <Grid.Row columns={1}>
+          <Grid.Column width='sixteen'>
+            <Header as={HEADER_SIZE} icon='table' dividing content='Result Table' />
+            <div>
+              <ResultTable
+                result={result} />
+            </div>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     );
   };
 };
