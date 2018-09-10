@@ -19,7 +19,7 @@ export default function DatasetStatistics(props) {
 				{statisticsItem('Dataset name', dataset.name)}
 				{statisticsItem('Distance', props.distance)}
 				{statisticsItem('Similarity Threshold', props.st)}
-				{statisticsItem('Count', dataset.count)}
+				{statisticsItem('Sequence Count', dataset.count)}
 				{statisticsItem('Length', dataset.length)}
 				{statisticsItem('Subsequences', dataset.subseq)}
 			</List>

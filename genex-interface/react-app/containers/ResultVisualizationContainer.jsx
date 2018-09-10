@@ -103,7 +103,7 @@ class ResultVisualizationContainer extends React.Component {
       <Grid>
         <Grid.Row columns={1}>
           <Grid.Column width='sixteen'>
-            <Header as={HEADER_SIZE} icon='bullseye' dividing content='Result Visualization' />
+            <Header as={HEADER_SIZE} icon='bullseye' dividing content='Result Visualization - Similar Subsequences' />
             <div ref={this.chartContainer}>
               <HighchartsReact
                 key={this.state.chartKey}
