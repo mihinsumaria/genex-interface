@@ -18,7 +18,7 @@ class ResultTable extends React.Component {
             }
         ));
         let rowHeight = 50;
-        let height = results.length ? rowHeight * (results.length + 1) : Math.max(300, rowHeight * (results.length + 1));
+        let height = results.length ? rowHeight * (results.length + 1.1) : Math.max(300, rowHeight * (results.length + 1));
         return (
             <Table
                 rowHeight={rowHeight}
