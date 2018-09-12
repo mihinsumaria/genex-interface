@@ -7,7 +7,7 @@ import 'fixed-data-table-2/dist/fixed-data-table.css';
 
 class ResultTable extends React.Component {
     render() {
-        const { result } = this.props;
+        const { width, result } = this.props;
         let results = result.map((values) => (
             {
                 name: values.name,
@@ -18,11 +18,13 @@ class ResultTable extends React.Component {
             }
         ));
         let rowHeight = 50;
-        let height = results.length ? rowHeight * (results.length + 1.1) : Math.max(300, rowHeight * (results.length + 1));
+        let height = results.length ? 
+            rowHeight * (results.length + 1.1) : 
+            Math.max(300, rowHeight * (results.length + 1));
         return (
             <Table
                 rowHeight={rowHeight}
-                width={700}
+                width={width}
                 headerHeight={50}
                 height={height}
                 rowsCount={result.length} >
@@ -62,6 +64,7 @@ class ResultTable extends React.Component {
 }
 
 ResultTable.propTypes = {
+    width: PropTypes.number,
     result: PropTypes.array,
 };
 

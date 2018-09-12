@@ -11,9 +11,7 @@ import {
 	Divider,
 	Header,
 	Grid,
-	SidebarPushable,
 	Button,
-	Icon
 } from 'semantic-ui-react';
 
 import reducer from './reducers';
@@ -48,27 +46,30 @@ class App extends React.Component {
 		const resultAreaStyle = {
 			// Change the px in `calc(...)` according to the width of Sidebar
 			width: sidebarVisible ? 'calc(100% - 475px)' : '100%',
+			height: '100%',
 			// Overriding semantic-ui .pushable > .pusher
-			transition: 'transform .5s ease,-webkit-transform .5s ease, width .5s ease'
+			transition: 'transform .5s ease,-webkit-transform .5s ease, width .5s ease',
+			paddingTop: '66px',
+			overflowY: 'scroll'
 		};
 		return (
 			<div className='full-view'>
 				<Banner>
 					<Button
 						icon='sidebar'
-					  floated='left'
+						floated='left'
 						compact circular inverted
 						onClick={this.onSidebarToggleClick}>
 					</Button>
-					<a href='https://www.wpi.edu/' target='_blank' 
+					<a href='https://www.wpi.edu/' target='_blank'
 						style={{ float: 'right', marginRight: '10px' }}>
-						<img 	src='/static/wpilogo.png' width={90} />
+						<img src='/static/wpilogo.png' width={90} />
 					</a>
 					<div id='title'>GENEX</div>
 				</Banner>
 				<Sidebar.Pushable
 					className='full-view'
-					style={{ height: 'calc(100% - 56px)' }}>
+					style={{ height: '100vh' }}>
 					<Sidebar
 						animation='push'
 						width='very wide'	// Remember to change resultAreaStyle.width accordingly
