@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, Column, Cell } from 'fixed-data-table-2';
-import { TextCell } from './cells'
+import { TextCell, ColorizedTextCell } from './cells'
 import PropTypes from 'prop-types';
 
 import 'fixed-data-table-2/dist/fixed-data-table.css';
@@ -14,7 +14,8 @@ class ResultTable extends React.Component {
             start: query.start,
             end: query.end,
             length: query.end - query.start + 1,
-            distance: ''
+            distance: '',
+            colorize: true
         };
         let results = result.map((values, i) => (
             {
@@ -23,7 +24,8 @@ class ResultTable extends React.Component {
                 start: values.data.start,
                 end: values.data.end,
                 length: values.data.end - values.data.start + 1,
-                distance: values.dist
+                distance: values.dist.toFixed(3),
+                colorize: values.name === query.name
             }
         ));
         results.unshift(queryResult);
@@ -39,37 +41,37 @@ class ResultTable extends React.Component {
                 <Column
                     header={<Cell>Rank</Cell>}
                     columnKey="rank"
-                    cell={<TextCell data={results} />}
+                    cell={<ColorizedTextCell data={results} colorKey="colorize" />}
                     fixed={true}
                     width={120} />
                 <Column
                     header={<Cell>Timeseries</Cell>}
                     columnKey="name"
-                    cell={<TextCell data={results} />}
+                    cell={<ColorizedTextCell data={results} colorKey="colorize" />}
                     fixed={true}
                     width={120} />
                 <Column
                     columnKey="length"
                     header={<Cell>Length</Cell>}
-                    cell={<TextCell data={results} />}
+                    cell={<ColorizedTextCell data={results} colorKey="colorize" />}
                     fixed={true}
                     width={120} />
                 <Column
                     columnKey="start"
                     header={<Cell>Start</Cell>}
-                    cell={<TextCell data={results} />}
+                    cell={<ColorizedTextCell data={results} colorKey="colorize" />}
                     fixed={true}
                     width={120} />
                 <Column
                     columnKey="end"
                     header={<Cell>End</Cell>}
-                    cell={<TextCell data={results} />}
+                    cell={<ColorizedTextCell data={results} colorKey="colorize" />}
                     fixed={true}
                     width={120} />
                 <Column
                     columnKey="distance"
                     header={<Cell>Distance</Cell>}
-                    cell={<TextCell data={results} />}
+                    cell={<ColorizedTextCell data={results} colorKey="colorize"/>}
                     fixed={true}
                     width={200} />
             </Table>
