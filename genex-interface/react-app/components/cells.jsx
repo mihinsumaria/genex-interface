@@ -1,6 +1,27 @@
 import React from 'react';
 import { Cell } from 'fixed-data-table-2';
 
+function ColorizedTextCell({
+  data,
+  rowIndex,
+  columnKey,
+  colorKey,
+  backgroundColor,
+  ...props }) {
+    function colorizeText(index, value, colorize) {
+      let textStyle = {
+        color: colorize ? '#df000e' : '#000000',
+        fontWeight : index ? 400 : 1000
+      }
+      return <span style={ textStyle }>{value}</span>
+    }
+    return (
+      <Cell style={{ backgroundColor }} {...props}>
+        {colorizeText(rowIndex, data[rowIndex][columnKey], data[rowIndex][colorKey])}
+      </Cell>
+    );
+}
+
 function TextCell({
   data,
   rowIndex,
@@ -48,6 +69,7 @@ const SelectableImageCell = selectableCell(ImageCell);
 
 export {
   TextCell,
+  ColorizedTextCell,
   ImageCell,
   SelectableImageCell,
   SelectableTextCell,
