@@ -103,7 +103,7 @@ class ResultVisualizationContainer extends React.Component {
       <Grid>
         <Grid.Row columns={1}>
           <Grid.Column width='sixteen'>
-            <Header as={HEADER_SIZE} icon='bullseye' dividing content='Result Visualization - Similar Subsequences' />
+            <Header as={HEADER_SIZE} icon='bullseye' dividing content='Ranked Similar Sequences' />
             <div ref={this.chartContainer}>
               <HighchartsReact
                 key={this.state.chartKey}
@@ -120,10 +120,11 @@ class ResultVisualizationContainer extends React.Component {
         </Grid.Row>
         <Grid.Row columns={1}>
           <Grid.Column width='sixteen'>
-            <Header as={HEADER_SIZE} icon='table' dividing content='Result Table' />
+            <Header as={HEADER_SIZE} icon='table' dividing content='Tabular Representation - Ranked Similar Sequences' />
             <div>
               <ResultTable
-                result={result} />
+                result={result}
+                query={query} />
             </div>
           </Grid.Column>
         </Grid.Row>
