@@ -103,21 +103,25 @@ class ResultVisualizationContainer extends React.Component {
       <Grid>
         <Grid.Row columns={1}>
           <Grid.Column width='sixteen'>
-            <Header as={HEADER_SIZE} icon='bullseye' dividing content='Result Visualization - Similar Subsequences' />
-            <HighchartsReact
-              key={this.state.chartKey}
-              highcharts={Highcharts}
-              constructorType={'chart'}
-              options={options}
-            />
+            <Header as={HEADER_SIZE} icon='bullseye' dividing content='Ranked Similar Sequences' />
+            <div ref={this.chartContainer}>
+              <HighchartsReact
+                key={this.state.chartKey}
+                highcharts={Highcharts}
+                constructorType={'chart'}
+                options={options}
+              />
+            </div>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row columns={1}>
           <Grid.Column width='sixteen'>
-            <Header as={HEADER_SIZE} icon='table' dividing content='Result Table' />
-            <ResultTable
-              width={this.state.contentWidth}
-              result={result} />
+            <Header as={HEADER_SIZE} icon='table' dividing content='Tabular Representation - Ranked Similar Sequences' />
+            <div>
+              <ResultTable
+                result={result}
+                query={query} />
+            </div>
           </Grid.Column>
         </Grid.Row>
         <div style={{width:"100%"}} ref={this.chartContainer}>
