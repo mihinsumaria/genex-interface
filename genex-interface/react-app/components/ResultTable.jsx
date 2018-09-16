@@ -80,6 +80,7 @@ class ResultTable extends React.Component {
 }
 
 ResultTable.propTypes = {
+    width: PropTypes.number,
     result: PropTypes.array,
     query: PropTypes.object,
 };

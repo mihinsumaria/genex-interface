@@ -27,7 +27,7 @@ class ResultVisualizationContainer extends React.Component {
   state = {
     numberOfSeries: 0,
     chartKey: 0,
-    chartWidth: 1000,
+    contentWidth: 1000,
   };
 
   chartContainer = React.createRef()
@@ -45,9 +45,9 @@ class ResultVisualizationContainer extends React.Component {
   };
 
   onResize = () => {
-    const newWidth = this.chartContainer.current.offsetWidth;
+    const newWidth = this.chartContainer.current.clientWidth;
     this.setState({
-      chartWidth: newWidth,
+      contentWidth: newWidth,
     })
   }
 
@@ -74,7 +74,7 @@ class ResultVisualizationContainer extends React.Component {
     let options = {
       chart: {
         height: 300,
-        width: this.state.chartWidth
+        width: this.state.contentWidth
       },
       series,
       title: { text: '' },
@@ -113,10 +113,6 @@ class ResultVisualizationContainer extends React.Component {
               />
             </div>
           </Grid.Column>
-          <ReactResizeDetector handleWidth
-            onResize={this.onResize}
-            refreshMode='debounce'
-            refreshRate={100} />
         </Grid.Row>
         <Grid.Row columns={1}>
           <Grid.Column width='sixteen'>
@@ -128,6 +124,10 @@ class ResultVisualizationContainer extends React.Component {
             </div>
           </Grid.Column>
         </Grid.Row>
+        <div style={{width:"100%"}} ref={this.chartContainer}>
+          <ReactResizeDetector handleWidth
+            onResize={this.onResize}/>
+        </div>
       </Grid>
     );
   };
