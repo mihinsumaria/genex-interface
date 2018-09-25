@@ -8,14 +8,15 @@ import 'fixed-data-table-2/dist/fixed-data-table.css';
 class ResultTable extends React.Component {
     render() {
         const { width, result, query } = this.props;
+        let COLOR_KEY = 'colorize';
         let queryResult = {
             name: query.name,
             rank: 'Query',
             start: query.start,
             end: query.end,
-            length: query.end - query.start + 1,
+            length: query.end - query.start,
             distance: '',
-            colorize: true
+            [COLOR_KEY]: true
         };
         let results = result.map((values, i) => (
             {
@@ -23,9 +24,9 @@ class ResultTable extends React.Component {
                 rank: i + 1,
                 start: values.data.start,
                 end: values.data.end,
-                length: values.data.end - values.data.start + 1,
+                length: values.data.end - values.data.start,
                 distance: values.dist.toFixed(3),
-                colorize: values.name === query.name
+                [COLOR_KEY]: values.name === query.name
             }
         ));
         results.unshift(queryResult);
