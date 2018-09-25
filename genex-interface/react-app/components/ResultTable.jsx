@@ -7,7 +7,7 @@ import 'fixed-data-table-2/dist/fixed-data-table.css';
 
 class ResultTable extends React.Component {
     render() {
-        const { result, query } = this.props;
+        const { width, result, query } = this.props;
         let queryResult = {
             name: query.name,
             rank: 'Query',
@@ -34,7 +34,7 @@ class ResultTable extends React.Component {
         return (
             <Table
                 rowHeight={rowHeight}
-                width={800}
+                width={width}
                 headerHeight={50}
                 height={height}
                 rowsCount={result.length} >
@@ -43,36 +43,42 @@ class ResultTable extends React.Component {
                     columnKey="rank"
                     cell={<ColorizedTextCell data={results} colorKey="colorize" />}
                     fixed={true}
+                    flexGrow={1}
                     width={120} />
                 <Column
                     header={<Cell>Timeseries</Cell>}
                     columnKey="name"
                     cell={<ColorizedTextCell data={results} colorKey="colorize" />}
                     fixed={true}
+                    flexGrow={1}
                     width={120} />
                 <Column
                     columnKey="length"
                     header={<Cell>Length</Cell>}
                     cell={<ColorizedTextCell data={results} colorKey="colorize" />}
                     fixed={true}
+                    flexGrow={1}
                     width={120} />
                 <Column
                     columnKey="start"
                     header={<Cell>Start</Cell>}
                     cell={<ColorizedTextCell data={results} colorKey="colorize" />}
                     fixed={true}
+                    flexGrow={1}
                     width={120} />
                 <Column
                     columnKey="end"
                     header={<Cell>End</Cell>}
                     cell={<ColorizedTextCell data={results} colorKey="colorize" />}
                     fixed={true}
+                    flexGrow={1}
                     width={120} />
                 <Column
                     columnKey="distance"
                     header={<Cell>Distance</Cell>}
                     cell={<ColorizedTextCell data={results} colorKey="colorize"/>}
                     fixed={true}
+                    flexGrow={1}
                     width={200} />
             </Table>
         );
