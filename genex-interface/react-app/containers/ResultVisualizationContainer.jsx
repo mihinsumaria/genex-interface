@@ -4,24 +4,11 @@ import { Popup, Icon, Sidebar, Menu, Grid, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import ResultTable from '../components/ResultTable.jsx'
+import LineChartViz from '../components/LineChartViz.jsx'
 
 import ReactResizeDetector from 'react-resize-detector';
-import Highcharts from 'highcharts/highstock';
-import HighchartsReact from 'highcharts-react-official';
-import NoDataToDisplay from 'highcharts/modules/no-data-to-display';
 
 import { HEADER_SIZE, MAIN_COLOR } from '../constants'
-
-NoDataToDisplay(Highcharts);
-
-function resetX(xy) {
-  return xy.map((v, i) => ([i, v[1]]));
-}
-
-// Generate 1st, 2nd, 3rd, etc. (https://stackoverflow.com/a/39466341/9394418)
-function nth(n) { return ["st", "nd", "rd"][((n + 90) % 100 - 10) % 10 - 1] || "th"; }
-
-function toOrdinal(n) { return n + '<sup>' + nth(n) + '</sup>'; }
 
 class ResultVisualizationContainer extends React.Component {
   state = {
@@ -59,48 +46,6 @@ class ResultVisualizationContainer extends React.Component {
       paddingTop: '2em',
       paddingBottom: '2em'
     }
-    const series = result.length > 0 && [
-      // Always put the query as the first series
-      {
-        name: query.name + ' (Query)',
-        data: resetX(query.raw.slice(query.start, query.end)),
-        events: {
-          legendItemClick: () => (false) // Prevent hiding the query
-        }
-      },
-      ...result.map((r, i) => ({
-        name: r.name + ' (' + toOrdinal(i + 1) + ')',
-        data: r.raw
-      }))
-    ];
-
-    let options = {
-      chart: {
-        height: 300,
-        width: this.state.contentWidth
-      },
-      series,
-      title: { text: '' },
-      yAxis: {
-        title: { enabled: false }, // Turn off title
-      },
-      // Smooth scrolling
-      scrollbar: {
-        enabled: true
-      },
-      // Show the mini chart
-      navigator: {
-        enabled: true,
-        // The xAxis of this chart shows date/time by default
-        // so just disable it since we don't need it anyways.
-        xAxis: {
-          visible: false
-        }
-      },
-      credits: {
-        enabled: false
-      },
-    };
 
     return (
       <Grid>
@@ -137,12 +82,11 @@ class ResultVisualizationContainer extends React.Component {
             </Sidebar>
             <Sidebar.Pusher>
               <Grid.Column width='sixteen' style={{margin:'1em'}}>
-                <HighchartsReact
-                  key={this.state.chartKey}
-                  highcharts={Highcharts}
-                  constructorType={'chart'}
-                  options={options}
-                />           
+                <LineChartViz
+                   width={this.state.contentWidth}
+                   result={result}
+                   query={query}
+                   chartKey={this.state.chartKey} />          
               </Grid.Column>
             </Sidebar.Pusher>
           </Sidebar.Pushable>
