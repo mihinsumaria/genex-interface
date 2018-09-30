@@ -30,6 +30,7 @@ class ResultTable extends React.Component {
             }
         ));
         results.unshift(queryResult);
+        let rowsCount = result.length ?  result.length + 1 : 0;
         let rowHeight = 50;
         let height = result.length ? Math.min(250, rowHeight * (results.length + 1)) : 250;
         return (
@@ -38,7 +39,7 @@ class ResultTable extends React.Component {
                 width={width}
                 headerHeight={50}
                 height={height}
-                rowsCount={result.length} >
+                rowsCount={rowsCount} >
                 <Column
                     header={<Cell>Rank</Cell>}
                     columnKey="rank"

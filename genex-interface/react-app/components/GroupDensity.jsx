@@ -41,7 +41,7 @@ class GroupDensity extends React.Component {
 								icon='info circle' 
 								circular={true} />}
 					content={info}
-					position='center right'
+					position='right center'
 					size='tiny'/>
 				</div>);
 
