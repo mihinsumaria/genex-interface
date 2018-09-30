@@ -35,14 +35,13 @@ class GroupDensity extends React.Component {
 				<div>
 					<img src={this.props.groups.density} height={150} width={400} />
 					<Popup
-					trigger={<Button 
-								onClick={this.onInfoClick} 
-								size='mini' 
-								icon='info circle' 
-								circular={true} />}
-					content={info}
-					position='right center'
-					size='tiny'/>
+						trigger={<Button 
+									onClick={this.onInfoClick} 
+									size='mini' 
+									icon='info circle' 
+									circular={true} />}
+						content={info}
+						position='right center' />
 				</div>);
 
 			numberOfGroups =
