@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Header } from 'semantic-ui-react'
+import { Popup, Icon, Sidebar, Menu, Grid, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import ResultTable from '../components/ResultTable.jsx'
@@ -55,7 +55,10 @@ class ResultVisualizationContainer extends React.Component {
     const { resultInfo } = this.props;
     const query = resultInfo[resultInfo.type].query;
     const result = resultInfo[resultInfo.type].result;
-
+    const menuItemStyle = {
+      paddingTop: '2em',
+      paddingBottom: '2em'
+    }
     const series = result.length > 0 && [
       // Always put the query as the first series
       {
@@ -102,15 +105,47 @@ class ResultVisualizationContainer extends React.Component {
     return (
       <Grid>
         <Grid.Row columns={1}>
-          <Grid.Column width='sixteen'>
+          <Grid.Column width='sixteen' style={{marginTop: '0.5em'}}>
             <Header as={HEADER_SIZE} icon='bullseye' dividing content='Ranked Similar Sequences' />
-            <HighchartsReact
-              key={this.state.chartKey}
-              highcharts={Highcharts}
-              constructorType={'chart'}
-              options={options}
-            />           
           </Grid.Column>
+          <Sidebar.Pushable>
+            <Sidebar
+              as={Menu}
+              direction='right'
+              animation='slide out'
+              visible
+              vertical
+              width='very thin'>
+              <Popup
+                trigger={<Menu.Item active as='a' style={menuItemStyle}>
+                    <Icon name='chart line' size='large' />
+                  </Menu.Item>}
+                content='Line Chart'
+                position='left center' />              
+              <Popup
+                trigger={<Menu.Item as='a' style={menuItemStyle}>
+                    <Icon name='chart bar' size='large' />
+                  </Menu.Item>}
+                content='Difference Chart'
+                position='left center' /> 
+              <Popup
+                trigger={<Menu.Item as='a' style={menuItemStyle}>
+                    <Icon name='sun' size='large' />
+                  </Menu.Item>}
+                content='Radial Chart'
+                position='left center' /> 
+            </Sidebar>
+            <Sidebar.Pusher>
+              <Grid.Column width='sixteen' style={{margin:'1em'}}>
+                <HighchartsReact
+                  key={this.state.chartKey}
+                  highcharts={Highcharts}
+                  constructorType={'chart'}
+                  options={options}
+                />           
+              </Grid.Column>
+            </Sidebar.Pusher>
+          </Sidebar.Pushable>
         </Grid.Row>
         <Grid.Row columns={1}>
           <Grid.Column width='sixteen'>
