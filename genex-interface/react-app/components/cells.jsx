@@ -8,7 +8,7 @@ function ColorizedTextCell({
   colorKey,
   backgroundColor,
   ...props }) {
-    backgroundColor = backgroundColor ? '#fff' : backgroundColor;
+    backgroundColor = '#fff';
     function colorizeText(index, value, colorize) {
       let textStyle = {
         color: colorize ? '#df000e' : '#000000',
