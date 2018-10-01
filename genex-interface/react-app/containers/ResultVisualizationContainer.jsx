@@ -8,7 +8,7 @@ import { updateVizType } from '../actions/resultActions'
 
 import ResultTable from '../components/ResultTable.jsx';
 import LineChartViz from '../components/LineChartViz.jsx';
-
+import DiffChartViz from '../components/DiffChartViz.jsx';
 import ReactResizeDetector from 'react-resize-detector';
 
 import { HEADER_SIZE, MAIN_COLOR } from '../constants';
@@ -54,7 +54,27 @@ class ResultVisualizationContainer extends React.Component {
       paddingTop: '2em',
       paddingBottom: '2em'
     }
-
+    let viz = '';
+    if (resultInfo.vizType === 'line') {
+      viz = (
+        <LineChartViz
+          width={this.state.contentWidth}
+          result={result}
+          query={query}
+          chartKey={this.state.chartKey}
+          /> 
+      );
+    }
+    else if (resultInfo.vizType === 'bar') {
+      viz = (
+        <DiffChartViz
+          width={this.state.contentWidth}
+          result={result}
+          query={query}
+          chartKey={this.state.chartKey}
+          /> 
+      )
+    }
     return (
       <Grid>
         <Grid.Row columns={1}>
@@ -86,7 +106,7 @@ class ResultVisualizationContainer extends React.Component {
                   <Menu.Item
                     as='a'
                     name='bar'
-                    active={resultInfo.vizType === 'chart'} 
+                    active={resultInfo.vizType === 'bar'} 
                     style={menuItemStyle}
                     onClick={this.onItemClick}>
                       <Icon name='chart bar' size='large' />
@@ -99,6 +119,7 @@ class ResultVisualizationContainer extends React.Component {
                     as='a'
                     name='radial' 
                     active={resultInfo.vizType === 'radial'}
+                    disabled
                     style={menuItemStyle}
                     onClick={this.onItemClick}>
                     <Icon name='sun' size='large' />
@@ -108,11 +129,7 @@ class ResultVisualizationContainer extends React.Component {
             </Sidebar>
             <Sidebar.Pusher>
               <Grid.Column width='sixteen' style={{margin:'1em'}}>
-                <LineChartViz
-                   width={this.state.contentWidth}
-                   result={result}
-                   query={query}
-                   chartKey={this.state.chartKey} />          
+                {viz}     
               </Grid.Column>
             </Sidebar.Pusher>
           </Sidebar.Pushable>
