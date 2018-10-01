@@ -1,6 +1,7 @@
 import queryString from 'query-string'
 import {
   LOAD_RESULTS,
+  UPDATE_VIZ_TYPE
 } from './actionTypes'
 
 import handleErrors, { logError } from './handleErrors';
@@ -50,6 +51,12 @@ const loadResults = (isWorking, resultType, frozenQuery, result) => ({
   result
 });
 
+const updateVizType = (vizType) => ({
+  type: UPDATE_VIZ_TYPE,
+  vizType
+});
+
 export {
-  requestResult
+  requestResult,
+  updateVizType,
 };

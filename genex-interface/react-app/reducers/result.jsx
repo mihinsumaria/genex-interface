@@ -1,11 +1,13 @@
 import {
-	LOAD_RESULTS,
+  LOAD_RESULTS,
+  UPDATE_VIZ_TYPE
 } from '../actions/actionTypes'
 
 export default (
 	state = {
     isWorking: false,
     type: 'ksim',
+    vizType: 'line',
     ksim: {
       query: {
         type: 'dataset',
@@ -38,6 +40,11 @@ export default (
         };
       }
       return newState;
+    case UPDATE_VIZ_TYPE:
+      return {
+        ...state,
+        vizType: action.vizType
+      };
     default:
       return state;	
 	}
