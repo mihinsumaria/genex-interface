@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Popup, Icon, Sidebar, Menu, Grid, Header } from 'semantic-ui-react'
-import { connect } from 'react-redux'
+import { Popup, Icon, Sidebar, Menu, Grid, Header } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import ResultTable from '../components/ResultTable.jsx'
-import LineChartViz from '../components/LineChartViz.jsx'
+import { updateVizType } from '../actions/resultActions'
+
+import ResultTable from '../components/ResultTable.jsx';
+import LineChartViz from '../components/LineChartViz.jsx';
 
 import ReactResizeDetector from 'react-resize-detector';
 
-import { HEADER_SIZE, MAIN_COLOR } from '../constants'
+import { HEADER_SIZE, MAIN_COLOR } from '../constants';
+
 
 class ResultVisualizationContainer extends React.Component {
   state = {
@@ -38,6 +42,10 @@ class ResultVisualizationContainer extends React.Component {
     })
   }
 
+  onItemClick = (e, data) => {
+    this.props.onVizTypeChange(data.name);
+  }
+
   render() {
     const { resultInfo } = this.props;
     const query = resultInfo[resultInfo.type].query;
@@ -60,21 +68,39 @@ class ResultVisualizationContainer extends React.Component {
               animation='slide out'
               visible
               vertical
-              width='very thin'>
+              width='very thin' >
               <Popup
-                trigger={<Menu.Item active as='a' style={menuItemStyle}>
-                    <Icon name='chart line' size='large' />
+                trigger={
+                  <Menu.Item 
+                    as='a'
+                    name='line'
+                    active={resultInfo.vizType === 'line'} 
+                    style={menuItemStyle}
+                    onClick={this.onItemClick}>
+                      <Icon name='chart line' size='large' />
                   </Menu.Item>}
-                content='Line Chart'
-                position='left center' />              
+                  content='Line Chart'
+                  position='left center' />              
               <Popup
-                trigger={<Menu.Item as='a' style={menuItemStyle}>
-                    <Icon name='chart bar' size='large' />
+                trigger={
+                  <Menu.Item
+                    as='a'
+                    name='bar'
+                    active={resultInfo.vizType === 'chart'} 
+                    style={menuItemStyle}
+                    onClick={this.onItemClick}>
+                      <Icon name='chart bar' size='large' />
                   </Menu.Item>}
                 content='Difference Chart'
                 position='left center' /> 
               <Popup
-                trigger={<Menu.Item as='a' style={menuItemStyle}>
+                trigger={
+                  <Menu.Item 
+                    as='a'
+                    name='radial' 
+                    active={resultInfo.vizType === 'radial'}
+                    style={menuItemStyle}
+                    onClick={this.onItemClick}>
                     <Icon name='sun' size='large' />
                   </Menu.Item>}
                 content='Radial Chart'
@@ -111,10 +137,20 @@ class ResultVisualizationContainer extends React.Component {
 
 ResultVisualizationContainer.propTypes = {
   resultInfo: PropTypes.object,
+  onVizTypeChange: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   resultInfo: state.result,
 });
 
-export default connect(mapStateToProps)(ResultVisualizationContainer);
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    onVizTypeChange: updateVizType
+  }, dispatch)
+);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ResultVisualizationContainer);
