@@ -15,29 +15,40 @@ function nth(n) { return ["st", "nd", "rd"][((n + 90) % 100 - 10) % 10 - 1] || "
 
 function toOrdinal(n) { return n + '<sup>' + nth(n) + '</sup>'; }
 
-class LineChartViz extends React.Component {
+function getDiff(x, y) {
+    let diff = [];
+    if (x.length > y.length)
+        diff = y.map((value, i) => [i, (x[i][1] - value[1])]);
+    else
+        diff = x.map((value, i) => [i, (value[1] - y[i][1])]);
+    return diff;
+}
+class DiffChartViz extends React.Component {
+    state = {
+        columnSeries: 0
+    };
     render() {
         const {width, result, query, chartKey} = this.props;
-       
         const series = result.length > 0 && [
-            // Always put the query as the first series
-            {
-            name: query.name + ' (Query)',
-            data: resetX(query.raw.slice(query.start, query.end)),
-            events: {
-                legendItemClick: () => (false) // Prevent hiding the query
-            }
-            },
             ...result.map((r, i) => ({
-            name: r.name + ' (' + toOrdinal(i + 1) + ')',
-            data: r.raw
+                name: r.name + ' (' + toOrdinal(i + 1) + ')',
+                data: getDiff(query.raw, r.raw),
+                visible: this.state.columnSeries == i,
+                events: {
+                    legendItemClick: (data) => (
+                        this.setState(
+                            {
+                                columnSeries: data.target.columnIndex
+                            }))
+                }
             }))
         ];
-        
+
         let options = {
             chart: {
                 height: 300,
-                width: width
+                width: width,
+                type: 'column'
             },
             series,
             title: { text: '' },
@@ -60,6 +71,11 @@ class LineChartViz extends React.Component {
             credits: {
                 enabled: false
             },
+            // plotOptions: {
+            //     column: {
+            //         pointWidth: 20
+            //     }
+            // }
         };
         
         return (
@@ -68,16 +84,15 @@ class LineChartViz extends React.Component {
                 highcharts={Highcharts}
                 constructorType={'chart'}
                 options={options} />
-        );
+        ) 
     }
-
 }
 
-LineChartViz.propTypes = {
+DiffChartViz.propTypes = {
     width: PropTypes.number,
     result: PropTypes.array,
     query: PropTypes.object,
     chartKey: PropTypes.number,
 };
 
-export default LineChartViz;
+export default DiffChartViz;
