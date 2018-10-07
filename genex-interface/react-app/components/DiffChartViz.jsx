@@ -16,12 +16,9 @@ function nth(n) { return ["st", "nd", "rd"][((n + 90) % 100 - 10) % 10 - 1] || "
 function toOrdinal(n) { return n + '<sup>' + nth(n) + '</sup>'; }
 
 function getDiff(x, y) {
-    let diff = [];
     if (x.length > y.length)
-        diff = y.map((value, i) => [i, (x[i][1] - value[1])]);
-    else
-        diff = x.map((value, i) => [i, (value[1] - y[i][1])]);
-    return diff;
+        return y.map((value, i) => [i, (x[i][1] - value[1])]);
+    return x.map((value, i) => [i, (value[1] - y[i][1])]);
 }
 class DiffChartViz extends React.Component {
     state = {
