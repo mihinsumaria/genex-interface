@@ -14,7 +14,10 @@ import ReactResizeDetector from 'react-resize-detector';
 
 import { HEADER_SIZE, MAIN_COLOR } from '../constants';
 
+import Highcharts from 'highcharts/highstock';
+import NoDataToDisplay from 'highcharts/modules/no-data-to-display';
 
+NoDataToDisplay(Highcharts);
 class ResultVisualizationContainer extends React.Component {
   state = {
     numberOfSeries: 0,
