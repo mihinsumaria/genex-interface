@@ -7,7 +7,6 @@ export default (
 	state = {
     isWorking: false,
     type: 'ksim',
-    vizType: 'line',
     ksim: {
       query: {
         type: 'dataset',
@@ -18,6 +17,7 @@ export default (
         raw: []
       },
       result: [],
+      vizType: 'line',
     },
     motif: [],
 	}, 
@@ -34,6 +34,7 @@ export default (
           ...newState,
           type: action.resultType,   
           [action.resultType]: {
+            ...newState[action.resultType],
             query: action.frozenQuery,
             result: action.result
           }
@@ -43,7 +44,10 @@ export default (
     case UPDATE_VIZ_TYPE:
       return {
         ...state,
-        vizType: action.vizType
+        [state.type]: {
+          ...state[state.type],
+          vizType: action.vizType
+        }
       };
     default:
       return state;	
