@@ -6,7 +6,6 @@ require('highcharts/highcharts-more')(Highcharts);
 import HighchartsReact from 'highcharts-react-official';
 import NoDataToDisplay from 'highcharts/modules/no-data-to-display';
 
-NoDataToDisplay(Highcharts);
 
 function resetX(xy) {
     return xy.map((v, i) => ([i, v[1]]));

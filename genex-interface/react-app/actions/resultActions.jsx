@@ -1,7 +1,8 @@
 import queryString from 'query-string'
 import {
   LOAD_RESULTS,
-  UPDATE_VIZ_TYPE
+  UPDATE_VIZ_TYPE,
+  UPDATE_VISIBILITY,
 } from './actionTypes'
 
 import handleErrors, { logError } from './handleErrors';
@@ -56,7 +57,13 @@ const updateVizType = (vizType) => ({
   vizType
 });
 
+const updateVisibility = (visibility) => ({
+  type: UPDATE_VISIBILITY,
+  visibility
+}) 
+
 export {
   requestResult,
   updateVizType,
+  updateVisibility,
 };

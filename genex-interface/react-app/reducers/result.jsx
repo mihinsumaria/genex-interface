@@ -1,6 +1,7 @@
 import {
   LOAD_RESULTS,
-  UPDATE_VIZ_TYPE
+  UPDATE_VIZ_TYPE,
+  UPDATE_VISIBILITY,
 } from '../actions/actionTypes'
 
 export default (
@@ -18,6 +19,9 @@ export default (
       },
       result: [],
       vizType: 'line',
+      line: [],
+      radial: [],
+      bar: 0,
     },
     motif: [],
 	}, 
@@ -36,7 +40,10 @@ export default (
           [action.resultType]: {
             ...newState[action.resultType],
             query: action.frozenQuery,
-            result: action.result
+            result: action.result,
+            line: Array(action.result.length).fill(true),
+            radial: Array(action.result.length).fill(true),
+            bar: 0
           }
         };
       }
@@ -47,6 +54,14 @@ export default (
         [state.type]: {
           ...state[state.type],
           vizType: action.vizType
+        }
+      };
+    case UPDATE_VISIBILITY:
+      return {
+        ...state,
+        [state.type]: {
+          ...state[state.type],
+          [state[state.type].vizType]: action.visibility
         }
       };
     default:
