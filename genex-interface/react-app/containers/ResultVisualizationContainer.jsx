@@ -51,12 +51,13 @@ class ResultVisualizationContainer extends React.Component {
     const { resultInfo } = this.props;
     const query = resultInfo[resultInfo.type].query;
     const result = resultInfo[resultInfo.type].result;
+    const vizType = resultInfo[resultInfo.type].vizType;
     const menuItemStyle = {
       paddingTop: '2em',
       paddingBottom: '2em'
     }
     let viz = '';
-    if (resultInfo.vizType === 'line') {
+    if (vizType === 'line') {
       viz = (
         <LineChartViz
           width={this.state.contentWidth}
@@ -66,7 +67,7 @@ class ResultVisualizationContainer extends React.Component {
           /> 
       );
     }
-    else if (resultInfo.vizType === 'bar') {
+    else if (vizType === 'bar') {
       viz = (
         <DiffChartViz
           width={this.state.contentWidth}
@@ -76,7 +77,7 @@ class ResultVisualizationContainer extends React.Component {
           /> 
       )
     }
-    else if (resultInfo.vizType === 'radial') {
+    else if (vizType === 'radial') {
       viz = (
         <RadialChartViz
           width={this.state.contentWidth}
@@ -105,7 +106,7 @@ class ResultVisualizationContainer extends React.Component {
                   <Menu.Item 
                     as='a'
                     name='line'
-                    active={resultInfo.vizType === 'line'} 
+                    active={vizType === 'line'} 
                     style={menuItemStyle}
                     onClick={this.onItemClick}>
                       <Icon name='chart line' size='large' />
@@ -117,7 +118,7 @@ class ResultVisualizationContainer extends React.Component {
                   <Menu.Item
                     as='a'
                     name='bar'
-                    active={resultInfo.vizType === 'bar'} 
+                    active={vizType === 'bar'} 
                     style={menuItemStyle}
                     onClick={this.onItemClick}>
                       <Icon name='chart bar' size='large' />
@@ -129,7 +130,7 @@ class ResultVisualizationContainer extends React.Component {
                   <Menu.Item 
                     as='a'
                     name='radial' 
-                    active={resultInfo.vizType === 'radial'}
+                    active={vizType === 'radial'}
                     style={menuItemStyle}
                     onClick={this.onItemClick}>
                     <Icon name='sun' size='large' />
