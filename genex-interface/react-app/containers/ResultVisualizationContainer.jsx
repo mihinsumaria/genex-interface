@@ -9,6 +9,7 @@ import { updateVizType } from '../actions/resultActions'
 import ResultTable from '../components/ResultTable.jsx';
 import LineChartViz from '../components/LineChartViz.jsx';
 import DiffChartViz from '../components/DiffChartViz.jsx';
+import RadialChartViz from '../components/RadialChartViz.jsx'
 import ReactResizeDetector from 'react-resize-detector';
 
 import { HEADER_SIZE, MAIN_COLOR } from '../constants';
@@ -75,6 +76,16 @@ class ResultVisualizationContainer extends React.Component {
           /> 
       )
     }
+    else if (resultInfo.vizType === 'radial') {
+      viz = (
+        <RadialChartViz
+          width={this.state.contentWidth}
+          result={result}
+          query={query}
+          chartKey={this.state.chartKey}
+          /> 
+      )
+    }
     return (
       <Grid>
         <Grid.Row columns={1}>
@@ -119,7 +130,6 @@ class ResultVisualizationContainer extends React.Component {
                     as='a'
                     name='radial' 
                     active={resultInfo.vizType === 'radial'}
-                    disabled
                     style={menuItemStyle}
                     onClick={this.onItemClick}>
                     <Icon name='sun' size='large' />
