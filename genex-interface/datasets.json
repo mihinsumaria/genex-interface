@@ -8,5 +8,10 @@
 		"ID": "test",
 		"name": "Test",
 		"path": "./datasets/test/test_10_20_space.txt"
+	},
+	"ecg": {
+		"ID": "ecg",
+		"name": "ECG",
+		"path": "./datasets/TwoLeadECG"
 	}
 }
