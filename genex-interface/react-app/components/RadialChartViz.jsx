@@ -55,7 +55,10 @@ class RadialChartViz extends React.Component {
                 tickmarkPlacement: 'on',
                 lineWidth: 0
             },
-            
+            tooltip: {
+                shared: true,
+                pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.2f}</b><br/>'
+            },
             credits: {
                 enabled: false
             },

@@ -43,6 +43,10 @@ class LineChartViz extends React.Component {
             yAxis: {
                 title: { enabled: false }, // Turn off title
             },
+            tooltip: {
+                shared: true,
+                pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.2f}</b><br/>'
+            },
             // Smooth scrolling
             scrollbar: {
                 enabled: true
