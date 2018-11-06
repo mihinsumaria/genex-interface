@@ -46,42 +46,42 @@ class ResultTable extends React.Component {
                     cell={<ColorizedTextCell data={results} colorKey={COLOR_KEY} />}
                     fixed={true}
                     flexGrow={1}
-                    width={120} />
+                    width={100} />
                 <Column
                     header={<Cell>Timeseries</Cell>}
                     columnKey="name"
                     cell={<ColorizedTextCell data={results} colorKey={COLOR_KEY} />}
                     fixed={true}
                     flexGrow={1}
-                    width={120} />
+                    width={220} />
                 <Column
                     columnKey="length"
                     header={<Cell>Length</Cell>}
                     cell={<ColorizedTextCell data={results} colorKey={COLOR_KEY} />}
                     fixed={true}
                     flexGrow={1}
-                    width={120} />
+                    width={100} />
                 <Column
                     columnKey="start"
                     header={<Cell>Start</Cell>}
                     cell={<ColorizedTextCell data={results} colorKey={COLOR_KEY} />}
                     fixed={true}
                     flexGrow={1}
-                    width={120} />
+                    width={100} />
                 <Column
                     columnKey="end"
                     header={<Cell>End</Cell>}
                     cell={<ColorizedTextCell data={results} colorKey={COLOR_KEY} />}
                     fixed={true}
                     flexGrow={1}
-                    width={120} />
+                    width={100} />
                 <Column
                     columnKey="distance"
                     header={<Cell>Distance</Cell>}
                     cell={<ColorizedTextCell data={results} colorKey={COLOR_KEY}/>}
                     fixed={true}
                     flexGrow={1}
-                    width={200} />
+                    width={100} />
             </Table>
         );
     }

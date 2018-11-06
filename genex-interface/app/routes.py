@@ -76,9 +76,9 @@ def load_and_group_dataset(datasetID, st, distance):
             datasets = json.load(datasets_json)
         name = make_name(*key)
         path = str(datasets[datasetID]['path'])
-
+        hasNameCol = bool(datasets[datasetID]['hasNameCol'])
         # Load, normalize, and group the dataset
-        load_details = pygenex.loadDataset(name, path)
+        load_details = pygenex.loadDataset(name, path, hasNameCol=hasNameCol)
         pygenex.normalize(name)
         allTimeSeries = get_names_and_thumbnails(name, load_details['count'])
         group_count = pygenex.group(name, st, distance)

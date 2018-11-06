@@ -24,7 +24,7 @@ class QueryTable extends React.Component {
           columnKey="name"
           cell={<SelectableTextCell data={queries} selectedIndex={selectedIndex} />}
           fixed={true}
-          width={60} />
+          width={160} />
         <Column
           columnKey="thumbnail"
           header={<Cell>Preview</Cell>}
@@ -35,7 +35,7 @@ class QueryTable extends React.Component {
               width={500} />
           }
           flexGrow={1}
-          width={300} />
+          width={200} />
       </Table>
     );
   }
