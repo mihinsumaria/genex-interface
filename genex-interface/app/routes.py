@@ -195,3 +195,26 @@ def get_ksim():
         result['name'] = resultName
 
     return jsonify(ksim)
+
+@app.route('/matching')
+def get_matching():
+    args = request.args
+    datasetID = check_exists(args.get('datasetID'), 'datasetID')
+    st = check_exists(args.get('st', type=float), 'st')
+    distance = check_exists(args.get('distance', type=str), 'distance')
+    query_index = check_exists(args.get('query_index', type=int), 'query_index')
+    query_start = check_exists(args.get('query_start', -1, type=int), 'query_start')
+    query_end = check_exists(args.get('query_end', -1, type=int), 'query_end')
+    target_index = check_exists(args.get('target_index', type=int), 'target_index')
+    target_start = check_exists(args.get('target_start', -1, type=int), 'target_start')
+    target_end = check_exists(args.get('target_end', -1, type=int), 'target_end')
+
+    load_and_group_dataset(datasetID, st, distance)
+
+    name = make_name(datasetID, st, distance)
+    query_name = name
+    target_name = name
+    matching = pygenex.getMatching(query_name, query_index, query_start, query_end,
+                                   target_name, target_index, target_start, target_end, 
+                                   distance + "_dtw")
+    return jsonify(matching)
