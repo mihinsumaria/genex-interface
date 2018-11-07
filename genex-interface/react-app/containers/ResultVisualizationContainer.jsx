@@ -10,6 +10,7 @@ import ResultTable from '../components/ResultTable.jsx';
 import LineChartViz from '../components/LineChartViz.jsx';
 import DiffChartViz from '../components/DiffChartViz.jsx';
 import RadialChartViz from '../components/RadialChartViz.jsx'
+import AreaChartViz from '../components/AreaChartViz.jsx';
 import ReactResizeDetector from 'react-resize-detector';
 
 import { HEADER_SIZE, MAIN_COLOR } from '../constants';
@@ -90,6 +91,16 @@ class ResultVisualizationContainer extends React.Component {
           /> 
       )
     }
+    else if (vizType === 'area') {
+      viz = (
+        <AreaChartViz
+          width={this.state.contentWidth}
+          result={result}
+          query={query}
+          chartKey={this.state.chartKey}
+          /> 
+      )
+    }
     return (
       <Grid>
         <Grid.Row columns={1}>
@@ -139,6 +150,18 @@ class ResultVisualizationContainer extends React.Component {
                     <Icon name='sun' size='large' />
                   </Menu.Item>}
                 content='Radial Chart'
+                position='left center' />
+              <Popup
+                trigger={
+                  <Menu.Item 
+                    as='a'
+                    name='area' 
+                    active={vizType === 'area'}
+                    style={menuItemStyle}
+                    onClick={this.onItemClick}>
+                    <Icon name='chart area' size='large' />
+                  </Menu.Item>}
+                content='Stacked Area Chart'
                 position='left center' /> 
             </Sidebar>
             <Sidebar.Pusher>
