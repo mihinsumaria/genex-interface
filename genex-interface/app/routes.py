@@ -54,13 +54,14 @@ def get_distances():
     return jsonify(all_distances)
 
 
-def get_names_and_thumbnails(name, count):
+def get_names_lengths_thumbnails(name, count):
     allTimeSeries = []
     for i in range(count):
         ts = pygenex.getTimeSeries(name, i)
         allTimeSeries.append({
             'name': pygenex.getTimeSeriesName(name, i),
-            'thumbnail': get_line_thumbnail_base64(ts)
+            'thumbnail': get_line_thumbnail_base64(ts),
+            'length': pygenex.getTimeSeriesLength(name, i)
         })
     return allTimeSeries
 
@@ -80,7 +81,7 @@ def load_and_group_dataset(datasetID, st, distance):
         # Load, normalize, and group the dataset
         load_details = pygenex.loadDataset(name, path, hasNameCol=hasNameCol)
         pygenex.normalize(name)
-        allTimeSeries = get_names_and_thumbnails(name, load_details['count'])
+        allTimeSeries = get_names_lengths_thumbnails(name, load_details['count'])
         group_count = pygenex.group(name, st, distance)
 
         # Save group size
@@ -133,7 +134,7 @@ def upload_sequences():
                                            UPLOAD_PATH,
                                            hasNameCol=has_name_col)
         pygenex.normalize('upload')
-        allTimeSeries = get_names_and_thumbnails('upload',
+        allTimeSeries = get_names_lengths_thumbnails('upload',
                                                  load_details['count'])
         for i in range(load_details['count']):
             series = pygenex.getTimeSeries('upload', i)

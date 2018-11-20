@@ -107,7 +107,7 @@ const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
       updateSelectedQuery('dataset', {
         index: index,
         start: 0,
-        end: dataset.length,
+        end: allQueries.dataset[index].length,
       });
       requestGetSequence(dataset.ID, distance, st, index);
     },
