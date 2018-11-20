@@ -13,7 +13,7 @@ class QueryTable extends React.Component {
     }
     return (
       <Table
-        rowHeight={50}
+        rowHeight={100}
         rowsCount={queries.length}
         width={420}
         height={250}
