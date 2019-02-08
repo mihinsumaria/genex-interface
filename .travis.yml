@@ -7,7 +7,7 @@ git:
     false
 
 script:
-  - echo -e "machine github.com\n  login ctring\n  password $CI_USER_PASSWORD" >>~/.netrc
+  - echo -e "machine github.com\n  login mihinsumaria\n  password $CI_USER_PASSWORD" >>~/.netrc
   - git submodule update --init --recursive
   - sudo apt-get install -qq libreadline6 libreadline6-dev python-dev
   - sudo wget https://dl.bintray.com/boostorg/release/1.66.0/source/boost_1_66_0.tar.gz
@@ -18,7 +18,6 @@ script:
   - cd ..
   - ./install_pygenex.sh
   - cd genex-interface
-  - ./test.sh
   - npm install
   - npm run build
   
