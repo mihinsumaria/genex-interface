@@ -23,7 +23,8 @@ const requestResult = (
     if (operator.current == 'ksim') {
       const k = operator.ksim.k;
       const ke = k;
-      const params = { k, ke, datasetID, st, distance, queryType, index, start, end };
+      const include = query.selected.include;
+      const params = { k, ke, datasetID, st, distance, queryType, index, start, end, include };
       const stringified = queryString.stringify(params);
       fetch("/ksim?" + stringified)
         .then(handleErrors)

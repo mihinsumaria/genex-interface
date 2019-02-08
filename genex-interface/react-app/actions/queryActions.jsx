@@ -3,6 +3,7 @@ import {
   UPDATE_ALL_QUERIES,
   UPDATE_SELECTED_QUERY,
   UPDATE_SELECTED_QUERY_RAW_DATA,
+  UPDATE_INCLUDE_QUERY,
 } from './actionTypes';
 
 import handleErrors, { logError } from './handleErrors';
@@ -85,10 +86,21 @@ const uploadQuery = (formData) => {
   };
 }
 
+/**
+ * Updates inclusion of query related results.
+ * @param {boolean} include boolean that indicates 
+ * inclusion preference.
+ */
+const updateIncludeQuery = (include) => ({
+  type: UPDATE_INCLUDE_QUERY
+  , include
+})
+
 export {
   updateAllQueries
   , updateSelectedQuery
   , updateSelectedQueryRawData
   , requestGetSequence
   , uploadQuery
+  , updateIncludeQuery
 };

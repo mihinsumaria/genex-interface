@@ -179,21 +179,46 @@ def get_ksim():
     index = check_exists(args.get('index', type=int), 'index')
     start = check_exists(args.get('start', -1, type=int), 'start')
     end = check_exists(args.get('end', -1, type=int), 'end')
+    include = check_exists(args.get('include', type=str)) == 'true'
 
     load_and_group_dataset(datasetID, st, distance)
 
     name = make_name(datasetID, st, distance)
     query_name = name
     target_name = name
-    ksim = pygenex.ksim(k, ke, target_name, query_name, index, start, end)
-    for result in ksim:
-        raw = pygenex.getTimeSeries(name,
-                                    result['data']['index'],
-                                    result['data']['start'],
-                                    result['data']['end'])
-        resultName = pygenex.getTimeSeriesName(name, result['data']['index'])
-        result['raw'] = attach_index(raw)
-        result['name'] = resultName
+
+    if include:
+        ksim = pygenex.ksim(k, ke, target_name, query_name, index, start, end)
+        for result in ksim:
+            raw = pygenex.getTimeSeries(name,
+                                        result['data']['index'],
+                                        result['data']['start'],
+                                        result['data']['end'])
+            resultName = pygenex.getTimeSeriesName(name, result['data']['index'])
+            result['raw'] = attach_index(raw)
+            result['name'] = resultName
+    else:
+        count = 0
+        power = 0
+        while count < k:
+            power += 1
+            ksim_temp = pygenex.ksim(k ** power, ke ** power, target_name, query_name, index, start, end)
+            count = sum([result['data']['index'] != index for result in ksim_temp])
+
+        ksim = []
+        for result in ksim_temp:
+            if result['data']['index'] == index:
+                continue
+            if len(ksim) >= k:
+                break
+            raw = pygenex.getTimeSeries(name,
+                                        result['data']['index'],
+                                        result['data']['start'],
+                                        result['data']['end'])
+            resultName = pygenex.getTimeSeriesName(name, result['data']['index'])
+            result['raw'] = attach_index(raw)
+            result['name'] = resultName 
+            ksim.append(result)
 
     return jsonify(ksim)
 
