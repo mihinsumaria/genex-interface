@@ -1,7 +1,8 @@
 import {
   UPDATE_ALL_QUERIES,
   UPDATE_SELECTED_QUERY,
-  UPDATE_SELECTED_QUERY_RAW_DATA
+  UPDATE_SELECTED_QUERY_RAW_DATA,
+  UPDATE_INCLUDE_QUERY
 } from '../actions/actionTypes'
 
 export default (
@@ -22,6 +23,7 @@ export default (
         start: -1,
         end: -1,
       },
+      include: false,
     },
     selectedRaw: {
       isLoading: false,
@@ -47,6 +49,9 @@ export default (
       if (action.params) {
         selected[selected.type] = action.params;
       }
+      if (action.queryType == 'upload') {
+        selected.include = false;
+      }
       return {
         ...state,
         selected: selected
@@ -67,6 +72,14 @@ export default (
           ...state.selectedRaw,
           isLoading: false,
           [action.queryType]: action.raw
+        }
+      }
+    case UPDATE_INCLUDE_QUERY:
+      return {
+        ...state,
+        selected: {
+          ...state.selected,
+          include: action.include
         }
       }
     default:

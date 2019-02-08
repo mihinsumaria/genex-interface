@@ -17,24 +17,6 @@
 		"path": "./datasets/TwoLeadECG",
 		"hasNameCol": ""
 	},
-	"patient1": {
-		"ID": "patient1",
-		"name": "001-SART-August2017-MB",
-		"path": "./datasets/patients/001-SART-August2017-MB.txt",
-		"hasNameCol": "Yes"
-	},
-	"patient2": {
-		"ID": "patient2",
-		"name": "002-SART-August2017-JW",
-		"path": "./datasets/patients/002-SART-August2017-JW.txt",
-		"hasNameCol": "Yes"
-	},
-	"patient3": {
-		"ID": "patient3",
-		"name": "003-SART-August2017-CZ",
-		"path": "./datasets/patients/003-SART-August2017-CZ.txt",
-		"hasNameCol": "Yes"
-	},
 	"all_patients": {
 		"ID": "all_patients",
 		"name": "All Patients",
