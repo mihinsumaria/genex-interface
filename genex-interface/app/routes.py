@@ -13,6 +13,7 @@ from .picture import get_group_density_base64, get_line_thumbnail_base64
 from .utils import *
 
 GROUPS_SIZE_FOLDER = 'local/groupsize'
+GROUPS_SAVE_FOLDER = 'local/saved'
 UPLOAD_PATH = 'datasets/uploaded_query.txt'
 ALLOWED_EXTENSIONS = set(['txt', 'csv'])
 cache = GenexCache(default_timeout=0, threshold=10)
@@ -81,7 +82,14 @@ def load_and_group_dataset(datasetID, st, distance):
         load_details = pygenex.loadDataset(name, path)
         pygenex.normalize(name)
         allTimeSeries = get_names_and_thumbnails(name, load_details['count'])
-        group_count = pygenex.group(name, st, distance)
+
+        #Load and save group
+        groups_file_name = os.path.join(GROUPS_SAVE_FOLDER, name + '.txt')
+        if name + '.txt' in os.listdir(GROUPS_SAVE_FOLDER):
+            group_count = pygenex.loadGroups(name, groups_file_name)
+        else:
+            group_count = pygenex.group(name, st, distance)
+            pygenex.saveGroups(name, groups_file_name)
 
         # Save group size
         if not os.path.exists(GROUPS_SIZE_FOLDER):
