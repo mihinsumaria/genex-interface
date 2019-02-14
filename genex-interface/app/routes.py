@@ -13,7 +13,7 @@ from .picture import get_group_density_base64, get_line_thumbnail_base64
 from .utils import *
 
 GROUPS_SIZE_FOLDER = 'local/groupsize'
-GROUPS_SAVE_FOLDER = 'local/saved'
+GROUPS_SAVE_FOLDER = 'local/savedgroup'
 UPLOAD_PATH = 'datasets/uploaded_query.txt'
 ALLOWED_EXTENSIONS = set(['txt', 'csv'])
 cache = GenexCache(default_timeout=0, threshold=10)
@@ -55,13 +55,14 @@ def get_distances():
     return jsonify(all_distances)
 
 
-def get_names_and_thumbnails(name, count):
+def get_names_lengths_thumbnails(name, count):
     allTimeSeries = []
     for i in range(count):
         ts = pygenex.getTimeSeries(name, i)
         allTimeSeries.append({
             'name': pygenex.getTimeSeriesName(name, i),
-            'thumbnail': get_line_thumbnail_base64(ts)
+            'thumbnail': get_line_thumbnail_base64(ts),
+            'length': pygenex.getTimeSeriesLength(name, i)
         })
     return allTimeSeries
 
@@ -77,13 +78,14 @@ def load_and_group_dataset(datasetID, st, distance):
             datasets = json.load(datasets_json)
         name = make_name(*key)
         path = str(datasets[datasetID]['path'])
-
+        hasNameCol = bool(datasets[datasetID]['hasNameCol'])
         # Load, normalize, and group the dataset
-        load_details = pygenex.loadDataset(name, path)
+        load_details = pygenex.loadDataset(name, path, hasNameCol=hasNameCol)
         pygenex.normalize(name)
-        allTimeSeries = get_names_and_thumbnails(name, load_details['count'])
+        allTimeSeries = get_names_lengths_thumbnails(name, load_details['count'])
+        group_count = pygenex.group(name, st, distance)
 
-        #Load and save group
+        #Save groups
         groups_file_name = os.path.join(GROUPS_SAVE_FOLDER, name + '.txt')
         if name + '.txt' in os.listdir(GROUPS_SAVE_FOLDER):
             group_count = pygenex.loadGroups(name, groups_file_name)
@@ -141,7 +143,7 @@ def upload_sequences():
                                            UPLOAD_PATH,
                                            hasNameCol=has_name_col)
         pygenex.normalize('upload')
-        allTimeSeries = get_names_and_thumbnails('upload',
+        allTimeSeries = get_names_lengths_thumbnails('upload',
                                                  load_details['count'])
         for i in range(load_details['count']):
             series = pygenex.getTimeSeries('upload', i)
@@ -186,20 +188,68 @@ def get_ksim():
     index = check_exists(args.get('index', type=int), 'index')
     start = check_exists(args.get('start', -1, type=int), 'start')
     end = check_exists(args.get('end', -1, type=int), 'end')
+    include = check_exists(args.get('include', type=str)) == 'true'
 
     load_and_group_dataset(datasetID, st, distance)
 
     name = make_name(datasetID, st, distance)
     query_name = name
     target_name = name
-    ksim = pygenex.ksim(k, ke, target_name, query_name, index, start, end)
-    for result in ksim:
-        raw = pygenex.getTimeSeries(name,
-                                    result['data']['index'],
-                                    result['data']['start'],
-                                    result['data']['end'])
-        resultName = pygenex.getTimeSeriesName(name, result['data']['index'])
-        result['raw'] = attach_index(raw)
-        result['name'] = resultName
+
+    if include:
+        ksim = pygenex.ksim(k, ke, target_name, query_name, index, start, end)
+        for result in ksim:
+            raw = pygenex.getTimeSeries(name,
+                                        result['data']['index'],
+                                        result['data']['start'],
+                                        result['data']['end'])
+            resultName = pygenex.getTimeSeriesName(name, result['data']['index'])
+            result['raw'] = attach_index(raw)
+            result['name'] = resultName
+    else:
+        count = 0
+        power = 0
+        while count < k:
+            power += 1
+            ksim_temp = pygenex.ksim(k ** power, ke ** power, target_name, query_name, index, start, end)
+            count = sum([result['data']['index'] != index for result in ksim_temp])
+
+        ksim = []
+        for result in ksim_temp:
+            if result['data']['index'] == index:
+                continue
+            if len(ksim) >= k:
+                break
+            raw = pygenex.getTimeSeries(name,
+                                        result['data']['index'],
+                                        result['data']['start'],
+                                        result['data']['end'])
+            resultName = pygenex.getTimeSeriesName(name, result['data']['index'])
+            result['raw'] = attach_index(raw)
+            result['name'] = resultName 
+            ksim.append(result)
 
     return jsonify(ksim)
+
+@app.route('/matching')
+def get_matching():
+    args = request.args
+    datasetID = check_exists(args.get('datasetID'), 'datasetID')
+    st = check_exists(args.get('st', type=float), 'st')
+    distance = check_exists(args.get('distance', type=str), 'distance')
+    query_index = check_exists(args.get('query_index', type=int), 'query_index')
+    query_start = check_exists(args.get('query_start', -1, type=int), 'query_start')
+    query_end = check_exists(args.get('query_end', -1, type=int), 'query_end')
+    target_index = check_exists(args.get('target_index', type=int), 'target_index')
+    target_start = check_exists(args.get('target_start', -1, type=int), 'target_start')
+    target_end = check_exists(args.get('target_end', -1, type=int), 'target_end')
+
+    load_and_group_dataset(datasetID, st, distance)
+
+    name = make_name(datasetID, st, distance)
+    query_name = name
+    target_name = name
+    matching = pygenex.getMatching(query_name, query_index, query_start, query_end,
+                                   target_name, target_index, target_start, target_end, 
+                                   distance + "_dtw")
+    return jsonify(matching)
