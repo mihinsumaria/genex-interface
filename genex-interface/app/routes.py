@@ -88,7 +88,7 @@ def load_and_group_dataset(datasetID, st, distance):
         if not os.path.exists(GROUPS_SAVE_FOLDER):
             os.makedirs(GROUPS_SAVE_FOLDER)
         groups_path = os.path.join(GROUPS_SAVE_FOLDER, name)
-        if name + '.txt' in os.listdir(GROUPS_SAVE_FOLDER):
+        if os.path.exists(groups_path):
             group_count = pygenex.loadGroups(name, groups_path)
         else:
             group_count = pygenex.group(name, st, distance)
