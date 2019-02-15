@@ -209,10 +209,10 @@ def get_ksim():
             result['name'] = resultName
     else:
         count = 0
-        power = 0
+        power = 1
         while count < k:
             power += 1
-            ksim_temp = pygenex.ksim(k ** power, ke ** power, target_name, query_name, index, start, end)
+            ksim_temp = pygenex.ksim(k * power, ke * power, target_name, query_name, index, start, end)
             count = sum([result['data']['index'] != index for result in ksim_temp])
 
         ksim = []
