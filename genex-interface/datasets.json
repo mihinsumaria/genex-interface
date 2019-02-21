@@ -22,5 +22,17 @@
 		"name": "All Patients",
 		"path": "./datasets/patients/all_patients.txt",
 		"hasNameCol": "Yes"
+	},
+	"traj_lat": {
+		"ID": "traj_lat",
+		"name": "Trajectory - Latitude",
+		"path": "./datasets/traj/traj_1_lat.txt",
+		"hasNameCol": ""
+	},
+	"traj_lon": {
+		"ID": "traj_lon",
+		"name": "Trajectory - Longitude",
+		"path": "./datasets/traj/traj_0_lgt.txt",
+		"hasNameCol": ""
 	}
 }
