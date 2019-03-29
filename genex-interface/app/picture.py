@@ -5,15 +5,20 @@ import logging
 import os
 from io import BytesIO
 
+import matplotlib
+matplotlib.use('Agg')
+
 import matplotlib.cm
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from matplotlib.collections import PatchCollection
+from matplotlib.patches import Rectangle
+
 import pygal
 import pygenex
 import squarify
-from matplotlib.collections import PatchCollection
-from matplotlib.patches import Rectangle
+
 
 logger = logging.getLogger(__name__)
 
