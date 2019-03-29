@@ -1,0 +1,9 @@
+# Git
+.git
+.gitignore
+.gitmodules
+genex/.git
+genex/.gitignore
+
+# CI
+.travis.yml
